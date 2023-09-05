@@ -6,7 +6,8 @@
 }
 
 html{
-  background-color: #a4a1a1;
+  background: rgb(110,134,125);
+  background: radial-gradient(circle, rgba(110,134,125,1) 0%, rgba(205,222,233,1) 100%); 
 }
 
 .section_right{
@@ -30,4 +31,9 @@ html{
   object-fit: cover;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.link{
+  background: rgb(110,134,125);
+  background: linear-gradient(90deg, rgba(110,134,125,1) 0%, rgba(205,222,233,1) 100%); 
 }

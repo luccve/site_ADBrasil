@@ -9,7 +9,7 @@ const footer = () => {
 
         <>
             <div className="h-auto bg-white rounded shadow shadow-blue_l ">
-                <footer className="flex flex-col justify-center items-center space-x-0 md:flex-row md:space-x-12 ">
+                <footer className="flex text-blue flex-col justify-center items-center space-x-0 md:flex-row md:space-x-12 ">
 
 
                     <img src={Embrapa} alt="Logo da Embrapa" className='h-auto w-24' />
