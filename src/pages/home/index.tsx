@@ -14,15 +14,15 @@ const Home = () => {
 
     return (
         <>
-            <section id="section1" className='flex
+            <section id="section1" className='
+        flex
         flex-col
         justify-center
         items-center
         section_right h-screen rounded shadow shadown-blue_l drop-shadow drop-shadow-blue_l
-        space-y-10'
-
-            >
-
+        space-y-5
+    
+        ' >
                 <h1 className="text-white text-5xl max-lg:text-3xl font-bold tracking-wide">
                     Plataforma ADBrasil
                 </h1>
@@ -31,9 +31,9 @@ const Home = () => {
                     Com recursos de mapeamento de unidades de água no solo, detalhes dos componentes do solo,
                     um banco de dados para salvar pontos no mapa, catálogo de disponibilidade de água e 14 funções de pedotransferência.</p>
 
-                <div className='flex flex-row space-x-24 items-center max-lg:flex-col max-lg:space-x-0 max-lg:space-y-5 font-bold'>
+                <div className='flex flex-row space-x-24 items-center max-lg:flex-col max-lg:space-x-0 max-lg:space-y-5 font-bold sm:flex-row sm:space-y-0 sm:space-x-0'>
 
-                    <div className=' flex flex-col items-center '>
+                    <div className='flex flex-col items-center'>
                         <img className=' w-28 max-lg:w-16' src={Mapa} alt="Icone do Mapa" />
                         <BtnLink Title='Mapa' />
                     </div>
@@ -62,7 +62,7 @@ const Home = () => {
                     </h1>
                 </div>
 
-                <div className='flex flex-row space-x-24 items-center max-lg:flex-col max-lg:space-x-0 max-lg:space-y-5 font-bold'>
+                <div className='flex flex-row space-x-24 items-center max-lg:flex-col max-lg:space-x-0 max-lg:space-y-5 font-bold sm:flex-row sm:space-y-0  sm:space-x-0'>
 
                     <div className=' flex flex-col items-center '>
                         <img className=' w-28 max-lg:w-16' src={Logo} alt="Icone de água disponivel" />
@@ -98,8 +98,8 @@ const Home = () => {
 
             </section>
 
-            <section id='section4' className='flex flex-col justify-center h-screen p-2 section_grass rounded shadow shadow-blue_l'>
-                <div className='grid grid-cols-2 gap-4 justify-items-center max-lg:grid-cols-1'>
+            <section id='section4' className='flex flex-col justify-center h-screen p-2 section_grass rounded shadow shadow-blue_l md:h-full'>
+                <div className='grid grid-cols-2 justify-items-center max-lg:grid-cols-1 max-md:grid-cols-2 max-sm:grid-cols-1 '>
 
                     <Card Title='Projeto' Text='Uma iniciativa da Embrapa Solos UEP Recife adivinda dos esforços do ZARC...' />
                     <Card Title='Público' Text='Um dos principais públicos beneficiados serão agricultores e fazendeiros que querem aperfeiçoar suas produtividade agricola.' />
