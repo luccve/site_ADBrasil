@@ -12,6 +12,7 @@ export default {
       green_d: "#003C1D",
       gray: "#6E867D",
       white: "#FFFFFF",
+      black: "#000000",
     },
   },
   plugins: [],

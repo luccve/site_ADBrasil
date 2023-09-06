@@ -8,12 +8,13 @@ import Balaco from '/BalanceLogo.svg'
 import Mockup from '/mockup.png'
 import GooglePlay from '/google_play.png'
 import Card from '../../components/card'
+import BtnSave from '../../components/btnSave'
 
 const Home = () => {
 
     return (
         <>
-            <section id="section1 " className='flex
+            <section id="section1" className='flex
         flex-col
         justify-center
         items-center
@@ -53,7 +54,7 @@ const Home = () => {
             </section>
 
             <section id='section2' className=' flex p-2 flex-col h-screen  justify-center
-        items-center space-y-36 bg-white rounded shadow shadow-blue_l'>
+        items-center space-y-8 bg-white rounded shadow shadow-blue_l'>
 
                 <div className=" text-5xl max-lg:text-3xl font-bold tracking-wide">
                     <h1 >
@@ -81,7 +82,7 @@ const Home = () => {
                     </div>
 
                 </div>
-
+                <BtnSave Title='Educacional' />
             </section>
 
             <section id='section3' className='flex p-2 flex-col h-screen items-center justify-center section_left relative rounded shadow shadow-blue_l'>
@@ -92,18 +93,18 @@ const Home = () => {
                         <p className='text-3xl w-2/3 max-lg:text-lg'>Acesse também o aplicativo ADBrasil, contanto com as principais funcionalidades Mapa, Catálogo, PTF e um Banco de Dados.</p>
                         <img className='max-lg:w-24 h-auto' src={Mockup} alt="Imagem de um celular com o splash screen do aplicativo adbrasil" />
                     </div>
-                    <img className='object-contain h-auto w-64 max-lg:w-40' src={GooglePlay} alt="Google Play Imagem com link para o aplicativo adbrasil" />
+                    <img className='object-contain h-auto w-64 max-lg:w-40 cursor-pointer' src={GooglePlay} alt="Google Play Imagem com link para o aplicativo adbrasil" />
                 </div>
 
             </section>
 
-            <section id='section4' className='h-screen p-2 flex flex-col items-center justify-center section_grass rounded shadow shadow-blue_l'>
-                <div className='grid grid-cols-2 gap-4 content-center max-lg:grid-cols-1'>
-                
-                    <Card Title='Projeto' Text='Uma iniciativa da Embrapa Solos UEP Recife adivinda dos esforços do ZARC...'/>
-                    <Card Title='Público' Text='Um dos principais públicos beneficiados serão agricultores e fazendeiros que querem aperfeiçoar suas produtividade agricola.'/>
-                    <Card Title='Objetivos' Text='Democratizar todo o conhecimento de água disponivel em função da agricultura'/>
-                    <Card Title='Contéudo' Text='Haverá 5  funcionalidades, o Mapa, Catálogo, PTF, Educacional e Balanço hídrico.'/>
+            <section id='section4' className='flex flex-col justify-center h-screen p-2 section_grass rounded shadow shadow-blue_l'>
+                <div className='grid grid-cols-2 gap-4 justify-items-center max-lg:grid-cols-1'>
+
+                    <Card Title='Projeto' Text='Uma iniciativa da Embrapa Solos UEP Recife adivinda dos esforços do ZARC...' />
+                    <Card Title='Público' Text='Um dos principais públicos beneficiados serão agricultores e fazendeiros que querem aperfeiçoar suas produtividade agricola.' />
+                    <Card Title='Objetivos' Text='Democratizar todo o conhecimento de água disponivel em função da agricultura' />
+                    <Card Title='Contéudo' Text='Haverá 5  funcionalidades, o Mapa, Catálogo, PTF, Educacional e Balanço hídrico.' />
                 </div>
             </section>
         </>
