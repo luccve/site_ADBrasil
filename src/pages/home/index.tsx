@@ -98,7 +98,7 @@ const Home = () => {
 
             </section>
 
-            <section id='section4' className='flex flex-col justify-center h-screen p-2 section_grass rounded shadow shadow-blue_l md:h-full'>
+            <section id='section4' className='flex flex-col justify-center h-screen p-2 section_grass rounded shadow shadow-blue_l max-lg:h-full '>
                 <div className='grid grid-cols-2 justify-items-center max-lg:grid-cols-1 max-md:grid-cols-2 max-sm:grid-cols-1 '>
 
                     <Card Title='Projeto' Text='Uma iniciativa da Embrapa Solos UEP Recife adivinda dos esforços do ZARC...' />
