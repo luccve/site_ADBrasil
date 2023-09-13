@@ -3,18 +3,15 @@ import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet"
 
 import 'leaflet/dist/leaflet.css'
 
-export type MapContainerProps = {
-    width: string,
-    height: string
-}
 
-const Map = ({ width, height }: MapContainerProps) => {
+
+const Map = () => {
 
     const [userLocation, setUserLocation] = useState<[number, number] | null>(null);
 
-    
 
-    useEffect(() => {
+
+    const hancleClick = () => {
 
         navigator.geolocation.getCurrentPosition(
             position => {
@@ -25,7 +22,7 @@ const Map = ({ width, height }: MapContainerProps) => {
                 console.error(error.message);
             }
         );
-    }, []);
+    };
 
 
 
@@ -34,19 +31,21 @@ const Map = ({ width, height }: MapContainerProps) => {
     const mapKey = userLocation ? userLocation.join('_') : 'default';
 
     return (
+        <>
+            <button className='absolute w' onClick={hancleClick}>Minha localização</button>
+            <MapContainer fadeAnimation={true} tap={true} key={mapKey} style={{ width: '1280px', height: '100vh' }} center={userLocation ? userLocation : [-12.1, -46.2]} zoom={4} scrollWheelZoom={true}>
+                <TileLayer
 
-        <MapContainer key={mapKey} style={{ width: width, height: height }} center={userLocation ? userLocation : [-12.1, -46.2]} zoom={4} scrollWheelZoom={true}>
-            <TileLayer
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            {userLocation && <Marker position={userLocation}>
-                <Popup>
-                   Você está aqui!
-                </Popup>
-            </Marker>}
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+                {userLocation && <Marker position={userLocation}>
+                    <Popup>
+                        Você está aqui!
+                    </Popup>
+                </Marker>}
 
-        </MapContainer>
+            </MapContainer>
+        </>
 
     );
 

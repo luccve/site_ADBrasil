@@ -10,11 +10,13 @@ import GooglePlay from '/google_play.png'
 import Card from '../../components/card'
 import BtnSave from '../../components/btnSave'
 
+
+
 const Home = () => {
 
     return (
         <>
-            <section id="section1" className='
+        <section id="section1" className='
         flex
         flex-col
         justify-center
@@ -35,17 +37,19 @@ const Home = () => {
 
                     <div className='flex flex-col items-center'>
                         <img className=' w-28 max-lg:w-16' src={Mapa} alt="Icone do Mapa" />
-                        <BtnLink Title='Mapa' />
+                        <BtnLink Title='Mapa' Path={"/map"} />
+
+
                     </div>
 
                     <div className=' flex flex-col items-center '>
                         <img src={Catalog} className='w-28 max-lg:w-16' alt="Icone da ferramenta do catalogo" />
-                        <BtnLink Title='Catálogo' />
+                        <BtnLink Title='Catálogo' Path={"/catalogo"} />
                     </div>
 
                     <div className='flex flex-col items-center '>
                         <img className=' w-28 max-lg:w-16' src={Ptf} alt="Icone da ferramenta de pedotransferencia" />
-                        <BtnLink Title='Pedotransferência' />
+                        <BtnLink Title='Pedotransferência' Path={"/ptf"} />
                     </div>
 
 
@@ -66,19 +70,19 @@ const Home = () => {
 
                     <div className=' flex flex-col items-center '>
                         <img className=' w-28 max-lg:w-16' src={Logo} alt="Icone de água disponivel" />
-                        <BtnLink Title='Água disponível' />
+                        <BtnLink Title='Água disponível' Path={"/"} />
                     </div>
 
 
 
                     <div className='flex flex-col items-center '>
                         <img className=' w-28 max-lg:w-16' src={Ptf} alt="Icone da ferramenta de pedotransferencia" />
-                        <BtnLink Title='Pedotransferência' />
+                        <BtnLink Title='Pedotransferência' Path={"/ptf"} />
                     </div>
 
                     <div className=' flex flex-col items-center '>
                         <img src={Balaco} className='w-28 max-lg:w-16' alt="Icone da ferramenta do catalogo" />
-                        <BtnLink Title='Balanço Hídrico' />
+                        <BtnLink Title='Balanço Hídrico' Path={"/balance"} />
                     </div>
 
                 </div>
