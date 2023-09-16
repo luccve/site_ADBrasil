@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet"
 import { MdOutlineGpsFixed } from 'react-icons/md';
 import { FiLayers } from 'react-icons/fi';
