@@ -16,7 +16,7 @@ const Home = () => {
 
     return (
         <>
-        <section id="section1" className='
+            <section id="section1" className='
         flex
         flex-col
         justify-center

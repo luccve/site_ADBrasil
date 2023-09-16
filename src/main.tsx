@@ -1,4 +1,4 @@
-import React, { lazy } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App.tsx';
@@ -6,21 +6,22 @@ import './index.css';
 import Footer from './components/footer/index.tsx';
 import Nav from './components/nav/index.tsx';
 
-const Map = lazy(() => import('./pages/map/index.tsx'));
-
-const Catalog = lazy(() => import('./pages/catalogo/index.tsx'));
-const Ptf = lazy(() => import('./pages/ptf/index.tsx'));
-const Balance = lazy(() => import('./pages/balance/index.tsx'));
-const Educacional = lazy(() => import('./pages/educacional/index.tsx'));
+import Map from './pages/map/index.tsx';
+import NotFound from './components/notFound/index.tsx';
+import Catalog from './pages/catalogo/index.tsx';
+import Ptf from './pages/ptf/index.tsx';
+import Balance from './pages/balance/index.tsx';
+import Educacional from './pages/educacional/index.tsx';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+
   },
   {
     path: '/map',
-    element: <Map />,
+    element: <Map />
   },
   {
     path: '/balance',
@@ -33,17 +34,25 @@ const router = createBrowserRouter([
   {
     path: '/catalogo',
     element: <Catalog />,
+
   },
   {
     path: '/edu',
     element: <Educacional />,
-  },
+  }
+  ,
+  {
+    path: '*',
+    element: <NotFound />,
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
+
     <Nav />
     <RouterProvider router={router} />
     <Footer />
+
   </React.StrictMode>
 );
