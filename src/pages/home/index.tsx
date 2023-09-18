@@ -2,13 +2,13 @@
 import Ptf from '/ptf.svg'
 import Mapa from '/localizacao.svg'
 import Catalog from '/catalogo.svg'
-import BtnLink from '../../components/btnLink'
+import BtnLink from '../../components/btn/btnLink'
 import Logo from '/agua_logo.svg'
 import Balaco from '/BalanceLogo.svg'
 import Mockup from '/mockup.png'
 import GooglePlay from '/google_play.png'
 import Card from '../../components/card'
-import BtnSave from '../../components/btnSave'
+import BtnSave from '../../components/btn/btnSave'
 
 
 
@@ -33,7 +33,8 @@ const Home = () => {
                     Com recursos de mapeamento de unidades de água no solo, detalhes dos componentes do solo,
                     um banco de dados para salvar pontos no mapa, catálogo de disponibilidade de água e 14 funções de pedotransferência.</p>
 
-                <div className='flex flex-row space-x-24 items-center max-lg:flex-col max-lg:space-x-0 max-lg:space-y-5 font-bold sm:flex-row sm:space-y-0 sm:space-x-0'>
+                <div className='flex flex-row p-5 w-[150px] h-auto items-center justify-around 
+                max-lg:flex-col max-lg:space-x-0 max-lg:space-y-5 max-lg:w-auto font-bold sm:flex-row sm:space-y-0 sm:space-x-0'>
 
                     <div className='flex flex-col items-center'>
                         <img className=' w-28 max-lg:w-16' src={Mapa} alt="Icone do Mapa" />
@@ -86,7 +87,7 @@ const Home = () => {
                     </div>
 
                 </div>
-                <BtnSave Title='Educacional' />
+                <BtnSave Title='Educacional' Path='/edu' />
             </section>
 
             <section id='section3' className='flex p-2 flex-col h-screen items-center justify-center section_left relative rounded shadow shadow-blue_l'>

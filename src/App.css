@@ -38,6 +38,11 @@ html{
   background: linear-gradient(150deg, rgba(255,255,255,0.329551889115021) 0%, rgba(8,168,216,1) 100%); 
 }
 
+.link2{
+  background: rgb(255,255,255);
+  background: linear-gradient(50deg, rgba(225, 230, 233, 0.076) 0%, rgba(179, 203, 211, 0.522) 100%); 
+}
+
 .btn_save{
   background: rgb(6,97,124);
   background: linear-gradient(115deg, rgba(6,97,124,1) 0%, rgba(0,153,255,1) 100%); 

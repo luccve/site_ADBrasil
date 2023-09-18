@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import {  BrowserRouter, Route, Routes } from 'react-router-dom';
 import App from './App.tsx';
 import './index.css';
 import Footer from './components/footer/index.tsx';
@@ -13,46 +13,57 @@ import Ptf from './pages/ptf/index.tsx';
 import Balance from './pages/balance/index.tsx';
 import Educacional from './pages/educacional/index.tsx';
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <App />,
+// const router = createBrowserRouter([
+//   {
+//     path: '/',
+//     element: <App />,
 
-  },
-  {
-    path: '/map',
-    element: <Map />
-  },
-  {
-    path: '/balance',
-    element: <Balance />,
-  },
-  {
-    path: '/ptf',
-    element: <Ptf />,
-  },
-  {
-    path: '/catalogo',
-    element: <Catalog />,
+//   },
+//   {
+//     path: '/map',
+//     element: <Map />
+//   },
+//   {
+//     path: '/balance',
+//     element: <Balance />,
+//   },
+//   {
+//     path: '/ptf',
+//     element: <Ptf />,
+//   },
+//   {
+//     path: '/catalogo',
+//     element: <Catalog />,
 
-  },
-  {
-    path: '/edu',
-    element: <Educacional />,
-  }
-  ,
-  {
-    path: '*',
-    element: <NotFound />,
-  }
-]);
+//   },
+//   {
+//     path: '/edu',
+//     element: <Educacional />,
+//   }
+//   ,
+//   {
+//     path: '*',
+//     element: <NotFound />,
+//   }
+// ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
 
-    <Nav />
-    <RouterProvider router={router} />
-    <Footer />
+    
+    <BrowserRouter basename={"/adbrasil_site"}>
+      <Routes>
+        <Route path="/" element={<><Nav/><App /><Footer/></>} />
+        <Route path="/map" element={<><Nav/><Map /><Footer/></>} />
+        <Route path="/balance" element={<><Nav/><Balance /><Footer/></>} />
+        <Route path="/catalogo" element={<><Nav/><Catalog /><Footer/></>} />
+        <Route path="/ptf" element={<><Nav/><Ptf /><Footer/></>} />
+        <Route path="/edu" element={<><Nav/><Educacional /><Footer/></>} />
+        <Route path="*" element={<><Nav/><NotFound /><Footer/></>} />
+        {/* <RouterProvider router={router} /> */}
+      </Routes>
+    </BrowserRouter>
+    
 
   </React.StrictMode>
 );

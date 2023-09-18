@@ -6,7 +6,7 @@ const Educacional = () => {
     return (
 
         <>
-        <div>
+        <div className="h-screen bg-green">
             <h1>Educacional</h1>
         </div>
         </>

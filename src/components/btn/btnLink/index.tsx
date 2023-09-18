@@ -1,4 +1,4 @@
-import '../../App.css'
+import '../../../App.css'
 import { useNavigate } from "react-router-dom";
 
 interface BtnLinkProps {
@@ -14,8 +14,9 @@ const BtnLink = ({ Title, Path }: BtnLinkProps) => {
     };
 
     return (
-        <button onClick={handleClick} className="bg-black p-2 rounded-md m-2 cursor-pointer link">
-            <h2 className='text-white max-md:text-xs'>{Title}</h2>
+        <button onClick={handleClick} className="bg-black p-2 hover:scale-125 rounded-md mx-5 cursor-pointer 
+        link transition-all duration-300 ease-in-out hover:translate-x-1 hover:translate-y-1">
+            <h2 className='text-white max-md:text-xs w-[150px]'>{Title}</h2>
         </button>
     );
 }
