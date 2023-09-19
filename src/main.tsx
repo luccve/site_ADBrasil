@@ -13,45 +13,22 @@ import Ptf from './pages/ptf/index.tsx';
 import Balance from './pages/balance/index.tsx';
 import Educacional from './pages/educacional/index.tsx';
 
-// const router = createBrowserRouter([
-//   {
-//     path: '/',
-//     element: <App />,
 
-//   },
-//   {
-//     path: '/map',
-//     element: <Map />
-//   },
-//   {
-//     path: '/balance',
-//     element: <Balance />,
-//   },
-//   {
-//     path: '/ptf',
-//     element: <Ptf />,
-//   },
-//   {
-//     path: '/catalogo',
-//     element: <Catalog />,
+let basename="/";
 
-//   },
-//   {
-//     path: '/edu',
-//     element: <Educacional />,
-//   }
-//   ,
-//   {
-//     path: '*',
-//     element: <NotFound />,
-//   }
-// ]);
+if(import.meta.env._ENV !== "DEV"){
+  basename = import.meta.env.BASENAME_GITHUB
+  console.log(basename)
+}
+
+
+
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
 
     
-    <BrowserRouter basename={"/adbrasil_site"}>
+    <BrowserRouter basename={basename}>
       <Routes>
         <Route path="/" element={<><Nav/><App /><Footer/></>} />
         <Route path="/map" element={<><Nav/><Map /><Footer/></>} />
@@ -60,7 +37,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path="/ptf" element={<><Nav/><Ptf /><Footer/></>} />
         <Route path="/edu" element={<><Nav/><Educacional /><Footer/></>} />
         <Route path="*" element={<><Nav/><NotFound /><Footer/></>} />
-        {/* <RouterProvider router={router} /> */}
+        
       </Routes>
     </BrowserRouter>
     

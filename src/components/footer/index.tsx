@@ -23,7 +23,7 @@ const footer = () => {
 
                     <p className="w-1/4 py-4 max-sm:w-2/4">Parque Estação Biológica - PqEB s/nº Brasília, DF - Brasil - CEP 70770-901
                         <br/>SAC:&nbsp;
-                        <a className=' text-blue border-b-2' href="https://www.embrapa.br/fale-conosco">Fale conosco</a>
+                        <a className='text-blue border-b-2' target='_blank'  rel="noreferrer noopener" href="https://www.embrapa.br/fale-conosco">Fale conosco</a>
                     </p>
 
 

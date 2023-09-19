@@ -482,7 +482,7 @@ const FormPTF = ({ type, tab, region }: PTFttypes) => {
     return <>
 
         <div className='relative min-h-screen w-full grid grid-cols-2 content-center max-md:grid-cols-1 place-items-center p-5'>
-            <div className='flex flex-col items-center h-full justify-center rounded-md shadow-md bg-white link2'>
+            <div className='flex flex-col items-center justify-center rounded-md shadow-md bg-white link2'>
                 {/* AREA FORMULARIO */}
                 <div className='mt-3 mb-5'>
                     {type !== "AVC" &&
