@@ -27,6 +27,11 @@ export default {
           "0%": { transform: "scale(0.6) translateY(-200px)", opacity: "0" },
           "50%": { transform: "translateY(-10px)" },
           "100%": { transform: "translateY(0px)", opacity: "1" },
+        },
+        show_card:{
+          "0%": { transform: "scale(0.6) translateY(-200px)", opacity: "0" },
+          "50%": { transform: "translateY(-10px)" },
+          "100%": { transform: "translateY(0px)", opacity: "1" },
         }
       }
     },

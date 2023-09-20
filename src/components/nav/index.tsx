@@ -39,7 +39,6 @@ const nav = () => {
 
 
 
-
     return (
 
         <>
@@ -75,7 +74,7 @@ const nav = () => {
                                     {item.title}
                                 </a> */}
 
-                                <Link className='className="block border-b-blue border-b-2 hover:bg-blue p-2 rounded-md tracking-wide  hover:text-white duration-300 hover:ease-in-out transition-all'
+                                <Link className='"block border-b-blue border-b-2 hover:bg-blue p-2 rounded-md tracking-wide  hover:text-white duration-300 hover:ease-in-out transition-all'
                                     to={item.link} >{item.title}</Link>
 
                             </li>
@@ -90,31 +89,19 @@ const nav = () => {
                             <img src={Icone} alt="Icone do Aplicativo" className='w-24 max-lg:w-16 h-auto max-sm:m-auto cursor-pointer' />
                         </Link>
                         {menuDesktop.map((item, index) => {
-                            if (item.title === 'Funcionalidades') {
+                            
                                 return (
-                                    <li key={index} onMouseOver={() => console.log('passei por cima')}
+                                    <li key={index}
                                         className='w-36 rounded-md tracking-wide hover:scale-110 hover:bg-blue 
                                                          hover:text-white transition-all duration-500 ease-in-out '>
                                         {/* <a href={item.link}>
                                             {item.title}
                                         </a> */}
-                                        <Link to={item.link} >{item.title}</Link>
+                                        <Link to={{hash:item.link}} >{item.title}</Link>
                                     </li>
                                 )
-                            } else {
-                                return (
-                                    <li key={index}
-                                        className='w-36 rounded-md tracking-wide hover:bg-blue hover:scale-110
-                                     hover:text-white transition-all duration-500 ease-in-out'>
-                                        {/* <a href={item.link}>
-                                            {item.title}
-                                        </a> */}
-
-                                        <Link to={item.link} >{item.title}</Link>
-
-                                    </li>
-                                )
-                            }
+                            
+                            
                         }
                         )}
                         <button className='text-3xl active:animate-[wiggle_1s_ease-in-out_infinite] text-blue  m-auto cursor-pointer'

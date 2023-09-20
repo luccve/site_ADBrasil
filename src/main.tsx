@@ -14,12 +14,12 @@ import Balance from './pages/balance/index.tsx';
 import Educacional from './pages/educacional/index.tsx';
 
 
-let basename="/";
+// let _basename="/";
 
-if(import.meta.env._ENV !== "DEV"){
-  basename = import.meta.env.BASENAME_GITHUB
-  console.log(basename)
-}
+// if(import.meta.env._ENV !== "DEV"){
+//   _basename = "/adbrasil_site";
+
+// }
 
 
 
@@ -28,7 +28,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
 
     
-    <BrowserRouter basename={basename}>
+    <BrowserRouter basename={"/"}>
       <Routes>
         <Route path="/" element={<><Nav/><App /><Footer/></>} />
         <Route path="/map" element={<><Nav/><Map /><Footer/></>} />

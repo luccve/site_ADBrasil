@@ -53,7 +53,7 @@ const ResultadoPTF: React.FC<ResultadoPTFProps> = ({ ptf, author, cc, unidade, p
 
 
                 <CardList ArrayTitle={['Autor', 'AD (mm/cm)', 'Tipo']} ArrayRes={[author, ((Number(ptf[0]) - Number(ptf[2])) * 10).toFixed(3), curva]} />
-                <a className='text-sm text-white py-5 hover:scale-105' href={url} target='_blank'>Acesse o trabalho referência do autor</a>
+                <a rel="noreferrer noopener" className='text-sm text-white py-5 hover:scale-105' href={url} target='_blank'>Acesse o trabalho referência do autor</a>
 
                 {pin &&
                     <div className='rounded flex flex-col space-x-3 p-3 pt-5 justify-center items-center max-md:w-3/4
@@ -78,7 +78,7 @@ const ResultadoPTF: React.FC<ResultadoPTFProps> = ({ ptf, author, cc, unidade, p
 
 
                 <CardList ArrayTitle={['Autor', 'AD (mm/cm)', 'Tipo']} ArrayRes={[author, ((Number(ptf[0]) - Number(ptf[1])) * 10).toFixed(3), curva]} />
-                <a className='text-sm text-white py-5 hover:scale-105' href={url} target='_blank'>Acesse o trabalho referência do autor</a>
+                <a rel="noreferrer noopener" className='text-sm text-white py-5 hover:scale-105' href={url} target='_blank'>Acesse o trabalho referência do autor</a>
 
                 {pin &&
                     <div className='rounded flex flex-col space-x-3 p-3 pt-5 justify-center items-center max-md:w-3/4
@@ -106,7 +106,7 @@ const ResultadoPTF: React.FC<ResultadoPTFProps> = ({ ptf, author, cc, unidade, p
 
 
             <CardList ArrayTitle={['Autor', 'AD (mm/cm)', 'Tipo']} ArrayRes={[author, Number(ptf).toFixed(3), curva]} />
-            <a className='text-sm text-white py-5 hover:scale-105' href={url} target='_blank'>Acesse o trabalho referência do autor</a>
+            <a rel="noreferrer noopener" className='text-sm text-white py-5 hover:scale-105' href={url} target='_blank'>Acesse o trabalho referência do autor</a>
 
             {pin &&
                 <div className='rounded flex flex-col space-x-3 p-3 pt-5 justify-center items-center max-md:w-3/4
