@@ -31,7 +31,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <BrowserRouter basename={"/"}>
       <Routes>
         <Route path="/" element={<><Nav/><App /><Footer/></>} />
-        <Route path="/map" element={<><Nav/><Map /><Footer/></>} />
+        <Route path="/map" element={<Map />} />
         <Route path="/balance" element={<><Nav/><Balance /><Footer/></>} />
         <Route path="/catalogo" element={<><Nav/><Catalog /><Footer/></>} />
         <Route path="/ptf" element={<><Nav/><Ptf /><Footer/></>} />

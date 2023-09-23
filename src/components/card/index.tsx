@@ -1,7 +1,4 @@
-interface CardProps {
-    Title: string;
-    Text: string;
-}
+import type { CardProps } from "../../@types/data";
 
 const Card = ({ Title, Text }: CardProps) => {
     return (<>

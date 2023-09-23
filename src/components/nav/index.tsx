@@ -4,12 +4,12 @@ import { FiMenu } from 'react-icons/fi';
 import { AiOutlineClose } from 'react-icons/ai';
 import { BsFillSunFill } from 'react-icons/bs';
 import { MdDarkMode } from 'react-icons/md';
-import { Link } from 'react-router-dom';
-
+import { NavLink, Link, useNavigate } from 'react-router-dom';
+import ScrollToHashElement from '../ScrollToHashElement';
 
 
 const nav = () => {
-
+    const navigate = useNavigate();
     const [close, setClose] = useState(false);
     const [modeTheme, setModeTheme] = useState(false);
     const menu = [
@@ -22,10 +22,10 @@ const nav = () => {
     ]
 
     const menuDesktop = [
-        { title: 'Projeto', link: "/#section4" },
-        { title: 'Funcionalidades', link: "/#section1" },
-        { title: 'Educacional', link: "/#section2" },
-        { title: 'Balanço Hídrico', link: "/balance" },
+        { title: 'Projeto', link: "#section4" },
+        { title: 'Funcionalidades', link: "#section1" },
+        { title: 'Educacional', link: "#section2" },
+        { title: 'Balanço Hídrico', link: "balance" },
     ]
 
     const handleMenu = () => {
@@ -37,6 +37,10 @@ const nav = () => {
         setModeTheme(!modeTheme);
     }
 
+    const toogleClick = (url: string) => {
+        navigate(url);
+    }
+
 
 
     return (
@@ -44,7 +48,7 @@ const nav = () => {
         <>
             <div className="bg-white w-auto rounded shadow shadow-blue_l h-auto py-4 ">
 
-
+                <ScrollToHashElement />
                 <nav className="text-blue text-md font-bold inline-block max-lg:text-xs space-y-5 ">
 
                     {/* Imagem */}
@@ -89,19 +93,35 @@ const nav = () => {
                             <img src={Icone} alt="Icone do Aplicativo" className='w-24 max-lg:w-16 h-auto max-sm:m-auto cursor-pointer' />
                         </Link>
                         {menuDesktop.map((item, index) => {
-                            
+                            if (index != 3) {
                                 return (
                                     <li key={index}
                                         className='w-36 rounded-md tracking-wide hover:scale-110 hover:bg-blue 
-                                                         hover:text-white transition-all duration-500 ease-in-out '>
+                                                             hover:text-white transition-all duration-500 ease-in-out '>
                                         {/* <a href={item.link}>
+                                                {item.title}
+                                            </a> */}
+
+                                        <NavLink onClick={() => toogleClick(item.link)} to={{ hash: item.link, pathname: '/' }} >
                                             {item.title}
-                                        </a> */}
-                                        <Link to={{hash:item.link}} >{item.title}</Link>
+                                        </NavLink>
                                     </li>
                                 )
-                            
-                            
+                            }
+
+                            else if (index === 3) {
+                                return (<li key={index}
+                                    className='w-36 rounded-md tracking-wide hover:scale-110 hover:bg-blue 
+                                                         hover:text-white transition-all duration-500 ease-in-out '>
+                                    <Link to={item.link}>
+                                        {item.title}
+                                    </Link>
+                                </li>)
+
+                            }
+
+
+
                         }
                         )}
                         <button className='text-3xl active:animate-[wiggle_1s_ease-in-out_infinite] text-blue  m-auto cursor-pointer'

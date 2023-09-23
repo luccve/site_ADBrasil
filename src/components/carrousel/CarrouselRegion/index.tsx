@@ -8,7 +8,6 @@ const CarrouselRegion = ({ Array, onSelect, title, initialPosition }: CarrouselR
     const [selectedItemIndex, setSelectedItemIndex] = useState(initialPosition);
 
     const handleItemPress = (index: number) => {
-        console.log(index);
         setSelectedItemIndex(index);
         onSelect(index);
     };

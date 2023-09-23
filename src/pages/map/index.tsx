@@ -10,7 +10,10 @@ import 'leaflet/dist/leaflet.css'
 import { LatLngExpression, DivIcon } from 'leaflet';
 import { renderToString } from 'react-dom/server';
 
+
 import ModalComponente from '../../components/modal/modalComponente';
+import { Link } from 'react-router-dom';
+import { HiHome } from 'react-icons/hi';
 
 
 const Map = () => {
@@ -85,13 +88,13 @@ const Map = () => {
     const toggleModal = () => {
         if (position) {
 
-      
+
             setTimeout(() => {
                 ZoomMap();
 
                 const timer = setInterval(ZoomMap, 500);
 
-              
+
                 clearInterval(timer);
             }, 500);
 
@@ -116,8 +119,8 @@ const Map = () => {
 
     return (
         <>
-            <div className='relative h-screen'>
-                <div className='z-1'>
+            <div className='min-h-screen min-w-screen grid place-self-center'>
+                <div className='z-1 relative'>
 
                     <MemoizedMapContainer
                         mapKey={mapKey}
@@ -132,43 +135,39 @@ const Map = () => {
                     </MemoizedMapContainer>
 
 
-                    {/* <MapContainer fadeAnimation={true} tap={true} key={mapKey} style={{ width: '100%', height: '100vh', zIndex: 0 }} center={userLocation ? userLocation : center} zoom={zoom} scrollWheelZoom={true}>
-                        <TileLayer
 
-                            url={layer}
-                        />
-                        {userLocation && <Marker position={userLocation}>
-                        </Marker>}
-                        <LocationMarker />
 
-                    </MapContainer> */}
-                </div>
-
-                {/* AreaBTN */}
-                <div className='absolute w-auto top-20 left-1 flex flex-col max-md:flex-row rounded-xl bg-blue 
+                    {/* AreaBTN */}
+                    <div className='absolute w-auto top-20 left-1 flex flex-col max-md:flex-row rounded-xl bg-blue 
                    max-md:top-10 max-md:left-1/2 max-md:transform max-md:-translate-x-1/2 max-md:-translate-y-1/2 z-50
                 '>
 
-                    <button className=' h-[35px] z-20 text-white p-2 m-2 ' onClick={handlePosition}>
-                        <MdOutlineGpsFixed className='hover:scale-125 hover:text-white text-xl' />
-                    </button>
-                    <button className=' h-[35px] z-20 text-white p-2 m-2' onClick={toggleLayer}>
-                        <FiLayers className='hover:scale-125 hover:text-white text-xl' />
-                    </button>
-                    <button className=' h-[35px] z-20 text-white p-2 m-2' onClick={clearMarker}>
-                        <AiOutlineClear className='hover:scale-125 hover:text-white text-xl' />
-                    </button>
-                    <button className=' h-[35px] z-20 text-white p-2 m-2' onClick={toggleModal}>
-                        <AiOutlineSearch className='hover:scale-125 hover:text-white text-xl' />
-                    </button>
+                        <button className=' h-[35px] z-20 text-white p-2 m-2 ' onClick={handlePosition}>
+                            <MdOutlineGpsFixed className='hover:scale-125 hover:text-white text-xl' />
+                        </button>
+                        <button className=' h-[35px] z-20 text-white p-2 m-2' onClick={toggleLayer}>
+                            <FiLayers className='hover:scale-125 hover:text-white text-xl' />
+                        </button>
+                        <button className=' h-[35px] z-20 text-white p-2 m-2' onClick={clearMarker}>
+                            <AiOutlineClear className='hover:scale-125 hover:text-white text-xl' />
+                        </button>
+                        <button className=' h-[35px] z-20 text-white p-2 m-2' onClick={toggleModal}>
+                            <AiOutlineSearch className='hover:scale-125 hover:text-white text-xl' />
+                        </button>
+                        <Link className=' h-[35px] z-20 text-white p-2 m-2' to={"/"}>
+                            <HiHome className='hover:scale-125 hover:text-white text-xl' />
+                        </Link>
+                    </div>
+
                 </div>
+
+
 
 
                 {modal &&
                     <ModalComponente coords={position} title='Digite as coordenadas do ponto que será selecionada no mapa, as coordenadas estão na projeção 3857 Web Mercator'
                         latLong={setPosition} onClose={toggleModal} />}
             </div>
-
         </>
 
     );

@@ -7,7 +7,7 @@ import theme from '../../../themes/colors';
 
 const ChartLine: React.FC<CharLineProps<number>> = ({ alpha, n, theta_r, theta_s }: CharLineProps<number>) => {
 
-    const [data, setSelectedData] = useState<number|null>(null);
+    const [data, setSelectedData] = useState<number | null>(null);
 
     return <>
         <div className='h-[400px] max-[869px]:h-[300px] w-full relative m-3 bg-white rounded-md' id={alpha.toString()}>
@@ -44,9 +44,12 @@ const ChartLine: React.FC<CharLineProps<number>> = ({ alpha, n, theta_r, theta_s
                 <VictoryAxis
 
 
-                    tickFormat={(_, i) => {
-                        // console.log(x);
-                        if (i === 1) {
+                    tickFormat={(_x, i) => {
+                        // console.log(_x);
+                        if (i === 0) {
+                            return "0";
+                        }
+                        else if (i === 1) {
                             return "6";
                         } else if (i === 2) {
                             return "10";
@@ -54,8 +57,7 @@ const ChartLine: React.FC<CharLineProps<number>> = ({ alpha, n, theta_r, theta_s
                             return "33";
                         } else if (i === 4) {
                             return "100"
-                        } else if (i === 5) {
-                            return "500"
+
                         } else if (i === 6) {
                             return "1000"
                         } else if (i === 11) {
@@ -94,7 +96,12 @@ const ChartLine: React.FC<CharLineProps<number>> = ({ alpha, n, theta_r, theta_s
                                             mutation: (props) => {
                                                 const { datum } = props;
                                                 
-                                                setSelectedData(datum.theta.toFixed(3));
+                                                if (datum.xName === "1500") {
+                                                    setSelectedData(Number(theta_r.toFixed(3)));
+                                                } else {
+
+                                                    setSelectedData(datum.theta.toFixed(3));
+                                                }
                                             },
                                         },
                                     ];
@@ -107,7 +114,7 @@ const ChartLine: React.FC<CharLineProps<number>> = ({ alpha, n, theta_r, theta_s
 
             </VictoryChart>
 
-             {data&&<h1 className='bg-white text-sm absolute block rounded-md p-2 top-[30%] left-[50%] text-black max-md:text-[11px]'>{data} (m⁻³.m⁻³)</h1>}
+            {data && <h1 className='bg-white text-sm absolute block rounded-md p-2 top-[30%] left-[50%] text-black max-md:text-[11px]'>{data} (m⁻³.m⁻³)</h1>}
         </div>
     </>;
 }

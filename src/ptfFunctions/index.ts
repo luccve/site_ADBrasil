@@ -185,7 +185,7 @@ class PTF {
 
         for (let i of potenciais) {
 
-            list.push({ index: `${Math.log10(i)}`, theta: this.theta(alpha, n, theta_r, theta_s, i) });
+            list.push({ index: `${i}`, theta: this.theta(alpha, n, theta_r, theta_s, i) });
         };
 
 
