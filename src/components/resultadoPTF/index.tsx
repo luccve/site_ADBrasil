@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import BtnToggleArrow from '../btn/BtnToggleArrow';
 import '../../App.css'
 import { ResultadoPTFProps } from '../../@types/components';
-import PTF from '../../ptfFunctions';
+// import PTF from '../../ptfFunctions';
 import ChartLine from '../chart/ChartLine';
 import CardList from '../card/cardList';
 
 const ResultadoPTF: React.FC<ResultadoPTFProps> = ({ ptf, author, cc, unidade, parametros, url, curva }) => {
 
-    const [pin, setPin] = useState(false);
+    const [pin, setPin] = useState(true);
 
     const togglePin = () => {
         setPin(!pin);
@@ -23,7 +23,7 @@ const ResultadoPTF: React.FC<ResultadoPTFProps> = ({ ptf, author, cc, unidade, p
                     <div className='relative bg-blue rounded-xl my-3 pb-5 flex flex-col w-[80%] justify-center items-center shadow-md'>
 
 
-                        <CardList ArrayTitle={['Autor (es)', 'AD (mm/cm)', 'Tipo']} ArrayRes={[author, (PTF.van_genuchten(ptf[0], ptf[1], ptf[2], ptf[3])*10).toFixed(3), curva]} />
+                        <CardList ArrayTitle={['Autor (es)', 'Tipo']} ArrayRes={[author,  curva]} />
                         <a className='text-sm text-white py-5 hover:scale-105' href={url} rel="noreferrer noopener" target='_blank'>Acesse o trabalho referência do autor</a>
 
                         {pin &&

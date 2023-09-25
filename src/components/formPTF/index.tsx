@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../../App.css'
-import type { PTFttypes, ResultadoPTFProps } from '../../@types/components';
+import type { PTFttypes } from '../../@types/components';
 import PTF from '../../ptfFunctions';
 import { MdCleaningServices } from 'react-icons/md'
 import { MdCalculate } from 'react-icons/md'
@@ -8,11 +8,18 @@ import { TbTestPipe2 } from 'react-icons/tb'
 import ModalAlert from '../modal/modalAlert';
 import BtnRegular from '../btn/BtnRegular';
 import InputText from '../input/inputText';
-
+import ptfJson from '../../database/data/ptfJson';
 import ResultadoPTF from '../resultadoPTF';
 
+interface PtfTypeProps {
 
-const FormPTF = ({ type, tab, region }: PTFttypes) => {
+    author: string;
+    ptf: number[] | number;
+}
+
+
+
+const FormPTF = ({ tab, region }: PTFttypes) => {
 
     const [modalAlert, setModalAlert] = useState(false);
     const [titleAlert, setTitleAlert] = useState("");
@@ -24,15 +31,19 @@ const FormPTF = ({ type, tab, region }: PTFttypes) => {
     const [argila, setArgila] = useState("");
     const [densidade, setDensidade] = useState("");
     const [carbonoOrganico, setCarbonoOrganico] = useState("");
+    const [materiaOrganico, setMateriaOrganico] = useState("");
     const [pH, setpH] = useState("");
     const [ctc, setCtc] = useState("");
     const [umidadeEquivalente, setUmidadeEquivalente] = useState("");
-    const [resultadoPTF, setResultadoPTF] = useState<ResultadoPTFProps[]>([]);
+    const [resultadoPTF, setResultadoPTF] = useState<PtfTypeProps[]>([]);
     const [resultadoView, setResultadoView] = useState(false);
+    const [ptfSelectIndex, setPtfIndex] = useState<number>(-1);
     const [_isFocused, setIsFocused] = useState(false);
 
 
-
+    useEffect(() => {
+        setResultadoView(false);
+    }, [ptfSelectIndex]);
 
     const handleFocus = () => {
         setIsFocused(true);
@@ -58,8 +69,10 @@ const FormPTF = ({ type, tab, region }: PTFttypes) => {
         setCarbonoOrganico("");
         setCtc("");
         setpH("");
+        setMateriaOrganico("");
         setUmidadeEquivalente("");
         setResultadoView(false)
+        setPtfIndex(-1);
     };
 
     const handleTeste = () => {
@@ -87,6 +100,7 @@ const FormPTF = ({ type, tab, region }: PTFttypes) => {
             const novaSilte = Math.floor(Math.random() * 15) + 1;
             const novaArgila = Math.abs((novaAreiaFina + novaAreiaGrossa + novaSilte) - 100);
             const novoCarbonoOrganico = (Math.random() * 2).toFixed(3);
+            const novoMateriaOrganico = (Math.random() * 2).toFixed(3);
             const densidade = Math.random() * 2;
             const novaDensidade = densidade < 1.6 ? 1.7 : densidade.toPrecision(3);
             const eq = Math.random();
@@ -103,6 +117,7 @@ const FormPTF = ({ type, tab, region }: PTFttypes) => {
             setDensidade(novaDensidade.toString());
             setCtc(novaCtc.toString());
             setpH(novoPh.toPrecision(3))
+            setMateriaOrganico(novoMateriaOrganico.toString());
             setUmidadeEquivalente(novaEq.toPrecision(3))
             return
         } else {
@@ -202,109 +217,45 @@ const FormPTF = ({ type, tab, region }: PTFttypes) => {
                             {
                                 author: "Arruda",
                                 ptf: PTF.arruda(Number(silte), Number(argila)),
-                                type: 0,
-                                region: 4,
-                                cc: "33",
-                                funcionamento: "ok",
-                                unidade: "kg/kg",
-                                autoria: "ARRUDA, F. B.; ZULLO JÚNIOR, J.; OLIVEIRA, J. B. de. Parâmetros de solo para o cálculo da água disponível com base na textura do solo. Revista Brasileira de Ciência do Solo, Viçosa, v. 11, n. 1, p. 11-15, 1987.",
-                                titulo: "Parâmetros de solo para o cálculo da água disponível com base na textura do solo.",
-                                parametros: "Silte e Argila",
-                                url: "",
-                                curva: "Pontual",
+
                             },
                             {
                                 author: "Giarola A",
                                 ptf: PTF.giarola(Number(silte), Number(argila)),
-                                type: 0,
-                                region: 0,
-                                funcionamento: "ok",
-                                cc: "10",
-                                unidade: "m³/m³",
-                                autoria: "GIAROLA, N. F. B.; SILVA, A. P.; IMHOFF, S. Relações entre propriedades físicas e características de solos da região sul do Brasil. Revista Brasileira de Ciência do Solo, Viçosa, v. 26, n. 4, p. 885-893, dez. 2002.",
-                                titulo: "Relações entre propriedades físicas e características de solos da região sul do Brasil",
-                                parametros: "Silte e Argila",
-                                url: "https://doi.org/10.1590/S0100-06832002000400005",
-                                curva: "Pontual",
+
 
                             },
                             {
                                 author: "Giarola B",
                                 ptf: PTF.giarolab(Number(silte), Number(argila)),
-                                type: 0,
-                                region: 0,
-                                funcionamento: "ok",
-                                cc: "10",
-                                unidade: "m³/m³",
-                                autoria: "GIAROLA, N. F. B.; SILVA, A. P.; IMHOFF, S. Relações entre propriedades físicas e características de solos da região sul do Brasil. Revista Brasileira de Ciência do Solo, Viçosa, v. 26, n. 4, p. 885-893, dez. 2002.",
-                                titulo: "Relações entre propriedades físicas e características de solos da região sul do Brasil",
-                                parametros: "Silte e Argila",
-                                url: "https://doi.org/10.1590/S0100-06832002000400005",
-                                curva: "Pontual",
 
                             },
                             {
                                 author: "Masutti",
                                 ptf: PTF.masutti(Number(argila), Number(silte)),
-                                type: 0,
-                                region: 2,
-                                cc: "33",
-                                funcionamento: "ok",
-                                unidade: "kg/kg",
-                                autoria: "MASUTTI, M. M.; RODRIGUES, J. J. V. Estimating soil water parameters from texture and organic matter for soils of the coastal forest zone of Pernambuco - Brazil.  In: WORLD CONGRESS OF SOIL SCIENCE, 16., 1998. Montpellier. Proceedings... Montpellier, International Union of Soil Sciences, 1998.",
-                                titulo: "Estimating soil water parameters from texture and organic matter for soils of the coastal forest zone of Pernambuco - Brazil",
-                                parametros: "Silte e Argila",
-                                url: "",
-                                curva: "Pontual",
+
                             },
                             {
                                 author: "Wenceslau (ZARC)",
                                 ptf: PTF.wenceslau(Number(areia), Number(silte), Number(argila)),
-                                type: 0,
-                                region: 0,
-                                funcionamento: "ok",
-                                cc: "",
-                                unidade: "m³/m³",
-                                autoria: "TEIXEIRA, W. G.; VICTORIA, D. de C.; BARROS, A. H. C.; LUMBRERAS, J. F.; ARAÚJO FILHO, J. C. de; SILVA, F. A. M. da; LIMA, E. de P.; BUENO FILHO, J. S. de S.; MONTEIRO, J. E. B. de A. Predição da Água Disponível no Solo em Função da Granulometria para Uso nas Análises de Risco no Zoneamento Agrícola de Risco Climático. Rio de Janeiro: Embrapa Solos, 2021. 97 p.",
-                                titulo: "Predição da Água Disponível no Solo em Função da Granulometria para Uso nas Análises de Risco no Zoneamento Agrícola de Risco Climático",
-                                parametros: "Areia, Silte e Argila",
-                                url: "https://www.embrapa.br/busca-de-publicacoes/-/publicacao/1131095/predicao-da-agua-disponivel-no-solo-em-funcao-da-granulometria-para-uso-nas-analises-de-risco-no-zoneamento-agricola-de-risco-climatico",
-                                curva: "Pontual",
+
 
                             },
                             {
                                 author: "Barros Simplificado",
                                 ptf: PTF.barros_simplificada(Number(areia), Number(silte), Number(argila)),
-                                type: 0,
-                                region: 2,
-                                cc: "33",
-                                funcionamento: "ok",
-                                unidade: "kg/kg",
-                                autoria: "BARROS, A. H. C. Desenvolvimento de funções de pedotransferência e sua utilização em modelo agro hidrológico. 2010. 149 f. Tese (Doutorado em Física do Ambiente Agrícola) - Universidade de São Paulo - Escola Superior de Agricultura Luiz de Queiroz, Piracicaba.",
-                                titulo: "Desenvolvimento de funções de pedotransferência e sua utilização em modelo agro hidrológico",
-                                parametros: "Areia, Silte e Argila",
-                                url: "https://teses.usp.br/teses/disponiveis/11/11131/tde-17092010-145335/pt-br.php",
-                                curva: "Paramétrica",
+
                             },
 
                             {
                                 author: "Leonor Assad",
                                 ptf: PTF.leonorAssad(Number(areia)),
-                                type: 0,
-                                region: 4,
-                                cc: "",
-                                funcionamento: "ok",
-                                unidade: "mm/cm",
-                                autoria: "ASSAD, M. L. L.; SANS, L. M. A.; ASSAD, E. D.; ZULLO JR, J. Relação entre água retida e conteúdo de areia em solos brasileiros. Revista Brasileira de Agrometeorologia, Passo Fundo, v. 9, n. 3, p. 588-596, 2001.",
-                                titulo: "Relação entre água retida e conteúdo de areia em solos brasileiros",
-                                parametros: "Areia",
-                                url: "https://www.embrapa.br/busca-de-publicacoes/-/publicacao/473298/relacao-entre-agua-retida-e-conteudo-de-areia-em-solos-brasileiros",
-                                curva: "Pontual",
+
                             },
 
                         ])
                         setResultadoView(true);
-                        console.log(resultadoPTF);
+
 
                         break;
                     case tab = 1:
@@ -314,30 +265,12 @@ const FormPTF = ({ type, tab, region }: PTFttypes) => {
                             {
                                 author: "Oliveira",
                                 ptf: PTF.oliveira(Number(AT), Number(silte), Number(argila), Number(densidade)),
-                                type: 1,
-                                region: 2,
-                                funcionamento: "ok",
-                                cc: "33",
-                                unidade: "m³/m³",
-                                autoria: "OLIVEIRA, L. B.; RIBEIRO, M. R.; JACOMINE, P. K. T.; RODRIGUES, J. J. V.; MARQUES, F. A. Funções de pedotransferência para predição da umidade retida a potenciais específicos em solos do estado de Pernambuco. Revista Brasileira de Ciência do Solo, Viçosa, v. 26, n. 2, p. 315-323, jun. 2002.",
-                                titulo: "Funções de pedotransferência para predição da umidade retida a potenciais específicos em solos do estado de Pernambuco",
-                                parametros: "Areia, Silte, Argila e Densidade",
-                                url: "https://doi.org/10.1590/S0100-06832002000200004",
-                                curva: "Pontual",
+
                             },
                             {
                                 author: "Oliveira Parametros",
                                 ptf: PTF.oliveira_p(Number(AT), Number(silte), Number(argila), Number(densidade)),
-                                type: 1,
-                                region: 2,
-                                funcionamento: "ok",
-                                cc: "33",
-                                unidade: "m³/m³",
-                                autoria: "OLIVEIRA, L. B.; RIBEIRO, M. R.; JACOMINE, P. K. T.; RODRIGUES, J. J. V.; MARQUES, F. A. Funções de pedotransferência para predição da umidade retida a potenciais específicos em solos do estado de Pernambuco. Revista Brasileira de Ciência do Solo, Viçosa, v. 26, n. 2, p. 315-323, jun. 2002.",
-                                titulo: "Funções de pedotransferência para predição da umidade retida a potenciais específicos em solos do estado de Pernambuco",
-                                parametros: "Areia, Silte, Argila e Densidade",
-                                url: "https://doi.org/10.1590/S0100-06832002000200004",
-                                curva: "Pontual",
+
                             },])
 
                         setResultadoView(true);
@@ -350,105 +283,42 @@ const FormPTF = ({ type, tab, region }: PTFttypes) => {
                             {
                                 author: "Andrade && Stone",
                                 ptf: PTF.andrade_stone(Number(silte), Number(argila), Number(areiaFina) + Number(areiaGrossa), Number(carbonoOrganico)),
-                                type: 2,
-                                region: 3,
-                                cc: "6",
-                                funcionamento: "ok",
-                                unidade: "kg/kg",
-                                autoria: "ANDRADE, R. da S.; STONE, L. F. Estimativa da umidade na capacidade de campo em solos sob Cerrado. Revista Brasileira de Engenharia Agrícola e Ambiental, Campina Grande, v. 15, n. 2, p. 111-116, fev. 2011.",
-                                titulo: "Estimativa da umidade na capacidade de campo em solos sob Cerrado",
-                                parametros: "Areia, Silte, Argila e Carbono Orgânico",
-                                url: "https://doi.org/10.1590/S1415-43662011000200001",
-                                curva: "Pontual",
+
                             },
                             {
                                 author: "Reichert",
                                 ptf: PTF.reichert(Number(argila), Number(silte), Number(carbonoOrganico), Number(densidade)),
-                                type: 2,
-                                region: 5,
-                                cc: "10",
-                                funcionamento: "ok",
-                                unidade: "kg/kg",
-                                autoria: "REICHERT, J. M.; ALBUQUERQUE, J. A.; KAISER, D. R.; REINERT, D. J.; URACH, F. L.; CARLESSO, R. Estimation of water retention and availability in soils of Rio Grande do Sul. Revista Brasileira de Ciência do Solo, Viçosa, v. 33, n. 6, p. 1547-1560, dez. 2009.",
-                                titulo: "Estimation of water retention and availability in soils of Rio Grande do Sul",
-                                parametros: "Silte, Argila, Densidade e Carbono Orgânico",
-                                url: "https://doi.org/10.1590/S0100-06832009000600004",
-                                curva: "Pontual",
+
                             },
 
                             {
                                 author: "Peraza",
                                 ptf: PTF.peraza(Number(argila), Number(silte), Number(carbonoOrganico)),
-                                type: 2,
-                                region: 5,
-                                cc: "10",
-                                unidade: "kg/kg",
-                                funcionamento: "ok",
-                                autoria: "PERAZA, J. E. S. Retenção de Água e Pedofunções para Solos do Rio Grande do Sul. 2003. 118 f. Dissertação (Mestrado em Engenharia Agrícola) - Universidade Federal de Santa Maria, Santa Maria.",
-                                titulo: "Retenção de Água e Pedofunções para Solos do Rio Grande do Sul",
-                                parametros: "Silte, Argila e Carbono Ôrganico",
-                                url: "",
-                                curva: "Pontual",
+
                             },
 
 
                             {
                                 author: "Tomasella N2",
                                 ptf: PTF.tomasella_n2(Number(areiaGrossa), Number(areiaFina), Number(silte), Number(argila), Number(carbonoOrganico), Number(umidadeEquivalente)),
-                                type: 2,
-                                region: 0,
-                                cc: "",
-                                funcionamento: "ok",
-                                unidade: "m³/m³",
-                                autoria: "TOMASELLA, J.; HODNETT, M. G.; ROSSATO, L. Pedotransfer Functions for the Estimation of Soil Water Retention in Brazilian Soils. Soil Science Society of America Journal, v. 64, n. 1, p. 327-338, jan. 2000. ",
-                                titulo: "Pedotransfer Functions for the Estimation of Soil Water Retention in Brazilian Soils",
-                                parametros: "Areia Fina, Areia Grossa, Silte, Argila, Carbono Orgânico e Umidade Equivalente",
-                                url: "https://doi.org/10.2136/sssaj2000.641327x",
-                                curva: "Paramétrica",
+
                             },
                             {
                                 author: "Tomasella N3",
                                 ptf: PTF.tomasella_n3(Number(areiaGrossa), Number(areiaFina), Number(silte), Number(argila), Number(carbonoOrganico), Number(densidade)),
-                                type: 2,
-                                region: 0,
-                                cc: "",
-                                funcionamento: "ok",
-                                unidade: "m³/m³",
-                                autoria: "TOMASELLA, J.; HODNETT, M. G.; ROSSATO, L. Pedotransfer Functions for the Estimation of Soil Water Retention in Brazilian Soils. Soil Science Society of America Journal, v. 64, n. 1, p. 327-338, jan. 2000. ",
-                                titulo: "Pedotransfer Functions for the Estimation of Soil Water Retention in Brazilian Soils",
-                                parametros: "Areia Fina, Areia Grossa, Silte, Argila, Densidade e Carbono Orgânico",
-                                url: "https://doi.org/10.2136/sssaj2000.641327x",
-                                curva: "Paramétrica",
+
                             },
 
 
                             {
                                 author: "Van den Berg",
                                 ptf: PTF.vandenBerg(Number(silte), Number(argila), Number(carbonoOrganico)),
-                                type: 2,
-                                region: 0,
-                                funcionamento: "ok",
-                                unidade: "%",
-                                cc: "33",
-                                autoria: "VAN DEN BERG, M.; KLAMT, E.; VAN REEUWIJK, L. P.; SOMBROEK, W. G. Pedotransfer functions for the estimation of moisture retention characteristics of Ferralsols and related soils. Geoderma, Amsterdam, v. 78, n. 3-4, p. 161-180, ago. 1997.",
-                                titulo: "Pedotransfer functions for the estimation of moisture retention characteristics of Ferralsols and related soils",
-                                parametros: "Silte, Argila, Matéria Orgânica",
-                                url: "https://doi.org/10.1016/S0016-7061(97)00045-1",
-                                curva: "Pontual",
+
                             },
                             {
                                 author: "DASAM",
                                 ptf: PTF.DASAM(Number(areiaFina) + Number(areiaGrossa), Number(silte), Number(argila), Number(densidade)),
-                                type: 2,
-                                region: 2,
-                                funcionamento: "ok",
-                                unidade: "m³/m³",
-                                cc: "33",
-                                autoria: "BARROS, A. H. C. Desenvolvimento de funções de pedotransferência e sua utilização em modelo agro hidrológico. 2010. 149 f. Tese (Doutorado em Física do Ambiente Agrícola) - Universidade de São Paulo - Escola Superior de Agricultura Luiz de Queiroz, Piracicaba.",
-                                titulo: "Desenvolvimento de funções de pedotransferência e sua utilização em modelo agro hidrológico",
-                                parametros: "Areia, Silte, Argila e Densidade",
-                                url: "https://teses.usp.br/teses/disponiveis/11/11131/tde-17092010-145335/pt-br.php",
-                                curva: "Paramétrica",
+
                             },])
                         setResultadoView(true);
 
@@ -467,130 +337,135 @@ const FormPTF = ({ type, tab, region }: PTFttypes) => {
 
 
 
-        } else {
+        }
+        else {
 
             setTitleAlert("Erro!");
             setMessageAlert("Selecione uma região no canto superior.");
             setModalAlert(!modalAlert);
             return
         }
-
-
-
     }
 
     return <>
 
         <div className='relative min-h-screen w-full grid grid-cols-2 content-center max-md:grid-cols-1 place-items-center p-5'>
+
             <div className='flex flex-col items-center justify-center rounded-md shadow-md bg-white link2'>
+
+                <select onChange={(e) => setPtfIndex(Number(e.target.value))} 
+                className='rounded p-2 w-full my-4 max-md:text-sm text-lg text-center' >
+                    <option value="-1">Selecione uma função de PTF</option>
+                    {ptfJson.map((item, index) => {
+                        if (item.region === region && item.type == tab)
+                            return <>
+
+                                <option key={index} value={index}>{item.author}
+
+                                </option>
+
+                            </>
+
+                    })}
+                </select>
+
+
                 {/* AREA FORMULARIO */}
                 <div className='mt-3 mb-5'>
-                    {type !== "AVC" &&
-                        (<>
-                            <InputText Title='Areia (%)'
-                                handleFocus={handleFocus} handleBlur={handleBlur}
-                                handleTextChange={handleTextChange}
-                                state={setAreia}
-                                value={areia}
-                            />
+                    {
+                        ptfSelectIndex >= 0 ?
+                            ptfJson[ptfSelectIndex].inputProps.map((item, index) => {
+                                if (item === "ARE") {
+                                    return <InputText key={index + item} Title={"Areia (%)"}
+                                        handleFocus={handleFocus} handleBlur={handleBlur}
+                                        handleTextChange={handleTextChange}
+                                        state={setAreia}
+                                        value={areia}
+                                    />
+                                }
+                                else if (item === "ARG") {
+                                    return <InputText key={index + item} Title={"Argila (%)"}
+                                        handleFocus={handleFocus} handleBlur={handleBlur}
+                                        handleTextChange={handleTextChange}
+                                        state={setArgila}
+                                        value={argila}
+                                    />
+                                }
+                                else if (item === "AREF") {
+                                    return <InputText key={index + item} Title={"Areia Fina (%)"}
+                                        handleFocus={handleFocus} handleBlur={handleBlur}
+                                        handleTextChange={handleTextChange}
+                                        state={setAreiaFina}
+                                        value={areiaFina}
+                                    />
+                                }
+                                else if (item === "AREG") {
+                                    return <InputText key={index + item} Title={"Areia Grossa (%)"}
+                                        handleFocus={handleFocus} handleBlur={handleBlur}
+                                        handleTextChange={handleTextChange}
+                                        state={setAreiaGrossa}
+                                        value={areiaGrossa}
+                                    />
+                                }
+                                else if (item === "SIL") {
+                                    return <InputText key={index + item} Title={"Silte (%)"}
+                                        handleFocus={handleFocus} handleBlur={handleBlur}
+                                        handleTextChange={handleTextChange}
+                                        state={setSilte}
+                                        value={silte}
+                                    />
+                                }
+                                else if (item === "DS") {
+                                    return <InputText key={index + item} Title={"Densidade (g/cm³)"}
+                                        handleFocus={handleFocus} handleBlur={handleBlur}
+                                        handleTextChange={handleTextChange}
+                                        state={setDensidade}
+                                        value={densidade}
+                                    />
+                                }
+                                else if (item === "CO") {
+                                    return <InputText key={index + item} Title={"Carbono Orgânico (g/cm³)"}
+                                        handleFocus={handleFocus} handleBlur={handleBlur}
+                                        handleTextChange={handleTextChange}
+                                        state={setCarbonoOrganico}
+                                        value={carbonoOrganico}
+                                    />
+                                }
+                                else if (item === "UE") {
+                                    return <InputText key={index + item} Title={"Umidade Equivalente (g/g)"}
+                                        handleFocus={handleFocus} handleBlur={handleBlur}
+                                        handleTextChange={handleTextChange}
+                                        state={setUmidadeEquivalente}
+                                        value={umidadeEquivalente}
+                                    />
+                                }
+                                else if (item === "CTC") {
+                                    return <InputText key={index + item} Title={"CTC (cmol/kg)"}
+                                        handleFocus={handleFocus} handleBlur={handleBlur}
+                                        handleTextChange={handleTextChange}
+                                        state={setCtc}
+                                        value={ctc}
+                                    />
+                                }
+                                else if (item === "PH") {
+                                    return <InputText key={index + item} Title={"pH"}
+                                        handleFocus={handleFocus} handleBlur={handleBlur}
+                                        handleTextChange={handleTextChange}
+                                        state={setpH}
+                                        value={pH}
+                                    />
+                                }
+                                else if (item === "MO") {
+                                    return <InputText key={index + item} Title={"Materia Organica (%)"}
+                                        handleFocus={handleFocus} handleBlur={handleBlur}
+                                        handleTextChange={handleTextChange}
+                                        state={setMateriaOrganico}
+                                        value={materiaOrganico}
+                                    />
+                                }
 
-                        </>)}
-
-
-
-                    {type === 'AVC' && (<>
-
-
-                        <InputText Title='Areia Fina (%)'
-                            handleFocus={handleFocus} handleBlur={handleBlur}
-                            handleTextChange={handleTextChange}
-                            state={setAreiaFina}
-                            value={areiaFina}
-                        />
-
-                        <InputText Title='Areia Grossa (%)'
-                            handleFocus={handleFocus} handleBlur={handleBlur}
-                            handleTextChange={handleTextChange}
-                            state={setAreiaGrossa}
-                            value={areiaGrossa}
-                        />
-
-
-                    </>)}
-
-                    <InputText Title='Silte (%)'
-                        handleFocus={handleFocus} handleBlur={handleBlur}
-                        handleTextChange={handleTextChange}
-                        state={setSilte}
-                        value={silte}
-                    />
-
-
-                    <InputText Title='Argila (%)'
-                        handleFocus={handleFocus} handleBlur={handleBlur}
-                        handleTextChange={handleTextChange}
-                        state={setArgila}
-                        value={argila}
-                    />
-
-
-                    {type !== 'SIM' && (<>
-
-                        <InputText Title='Densidade (g/cm³)'
-                            handleFocus={handleFocus} handleBlur={handleBlur}
-                            handleTextChange={handleTextChange}
-                            state={setDensidade}
-                            value={densidade}
-                        />
-
-
-                    </>)}
-                    {type === 'AVC' && (<>
-
-
-
-                        <InputText Title='Carbono Orgânico (%)'
-                            handleFocus={handleFocus} handleBlur={handleBlur}
-                            handleTextChange={handleTextChange}
-                            state={setCarbonoOrganico}
-                            value={carbonoOrganico}
-                        />
-
-
-                    </>)}
-
-                    {type === 'AVC' && (<>
-
-                        <InputText Title='pH'
-                            handleFocus={handleFocus} handleBlur={handleBlur}
-                            handleTextChange={handleTextChange}
-                            state={setpH}
-                            value={pH}
-                        />
-
-                    </>)}
-
-                    {type === 'AVC' && (<>
-                        <InputText Title='Umidade Equivalente (g/g)'
-                            handleFocus={handleFocus} handleBlur={handleBlur}
-                            handleTextChange={handleTextChange}
-                            state={setUmidadeEquivalente}
-                            value={umidadeEquivalente}
-                        />
-
-                    </>)}
-
-                    {type === 'AVC' && (<>
-
-                        <InputText Title='CTC (cmolc/kg)'
-                            handleFocus={handleFocus} handleBlur={handleBlur}
-                            handleTextChange={handleTextChange}
-                            state={setCtc}
-                            value={ctc}
-                        />
-
-
-                    </>)}
+                            }) : <h5 className='text-sm'>Obs.: Dependendo da região não há PTF disponível </h5>
+                    }
 
                 </div>
                 {/* AREA BTN */}
@@ -612,17 +487,20 @@ const FormPTF = ({ type, tab, region }: PTFttypes) => {
             <div className='grid place-items-center'>
 
                 {resultadoView && resultadoPTF.map((item, index) => {
-                    
-                    if (item.region === region && item.type === tab) {
-                        return <ResultadoPTF curva={item.curva} autoria={item.autoria} parametros={item.parametros} url={item.url} titulo={item.titulo} ptf={item.ptf} key={index} author={item.author} region={item.region} type={item.type} cc={item.cc} unidade={item.unidade} />
+
+                    if (ptfJson[ptfSelectIndex].region === region && ptfJson[ptfSelectIndex].type === tab && ptfJson[ptfSelectIndex].author === item.author) {
+                        return <ResultadoPTF key={index} inputProps={ptfJson[ptfSelectIndex].inputProps} curva={ptfJson[ptfSelectIndex].curva}
+                            autoria={ptfJson[ptfSelectIndex].autoria} parametros={ptfJson[ptfSelectIndex].parametros} url={ptfJson[ptfSelectIndex].url}
+                            titulo={ptfJson[ptfSelectIndex].titulo} ptf={item.ptf} author={item.author} region={ptfJson[ptfSelectIndex].region}
+                            type={ptfJson[ptfSelectIndex].type} cc={ptfJson[ptfSelectIndex].cc} unidade={ptfJson[ptfSelectIndex].unidade} />
 
                     }
 
                 })}
             </div>
-            
+
             <ModalAlert message={messageAlert} title={titleAlert} onClose={setModalAlert} visible={modalAlert} />
-        </div>
+        </div >
     </>
 }
 

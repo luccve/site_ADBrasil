@@ -50,8 +50,8 @@ const Catalog = () => {
         { label: 'Ordem' },
         { label: 'Subordem' },
         { label: 'Textura do perfil' },
-        { label: 'Subordem e textura do perfil' },
-        { label: 'Subordem e textura estimado' },
+        { label: 'Subordem e textura do perfil' }
+       
     ];
 
     const [view, setView] = useState(false);
@@ -114,13 +114,16 @@ const Catalog = () => {
 
                 {region != 3 ? <div className="flex flex-col justify-center items-center">
                     {data && <Select onClick={toggleView} onSelect={selectName} onValue={selectValue} array={data} inputTitle={arrayRegions[Number(region)].label} />}
-
+                    
                     {view && <CardList ArrayRes={[`${value} mm/cm`]} ArrayTitle={[`AD`]} />}
 
                 </div> :
                     <div className="flex flex-col justify-center items-center">
                         {subordem && <Select onClick={toggleView} onValue={selectValue} onSelect={selectName} array={subordem} inputTitle={arrayRegions[Number(region)].label} />}
-
+                        <h1>{value}</h1>
+                        <h1>{name}</h1>
+                        <h1>{region}</h1>
+                        
 
                         {view &&
                             <>
