@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { MapContainer, Marker, TileLayer, useMapEvents } from "react-leaflet"
+import { MapContainer, Marker, TileLayer, useMapEvents, } from "react-leaflet"
+// import GeoCode from "../../../public/adpe.json";
 
 import { MdOutlineGpsFixed } from 'react-icons/md';
 import { FiLayers } from 'react-icons/fi';
@@ -17,7 +18,7 @@ import { HiHome } from 'react-icons/hi';
 
 
 const Map = () => {
-
+   
     const [modal, setModal] = useState<Boolean>(false);
     const [position, setPosition] = useState<LatLngExpression | null>(null);
     const [userLocation, setUserLocation] = useState<[number, number] | null>(null);
@@ -37,10 +38,11 @@ const Map = () => {
 
         const map = useMapEvents({
             click(e) {
-
+              
                 setPosition(e.latlng);
+                
 
-                map.setZoomAround(e.latlng, 8);
+                // map.setZoomAround(e.latlng, 8);
             },
             dblclick(e) {
 
@@ -50,6 +52,8 @@ const Map = () => {
 
 
         });
+
+        map.tap
 
         return position === null ? null : (
             <Marker icon={icon} position={position} />
@@ -131,6 +135,7 @@ const Map = () => {
 
                         {userLocation && <Marker icon={icon} position={userLocation}>
                         </Marker>}
+                        {/* {geoData && <GeoJSON bubblingMouseEvents data={geoData} />} */}
                         <LocationMarker />
                     </MemoizedMapContainer>
 
