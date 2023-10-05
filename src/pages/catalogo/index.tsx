@@ -5,7 +5,7 @@ import dataCatalogo from "../../database/data";
 import CardList from "../../components/card/cardList";
 import type { perfis, perfisSubOrdem, textura, adProps, ValueMapProps } from "../../@types/data";
 import Catalog2 from '../../database/data/catalog2.json'
-
+import SelectText from "../../components/input/selectText"
 
 
 
@@ -18,6 +18,7 @@ const Catalog = () => {
         const valueMap: ValueMapProps[] = [];
         if (value) {
             Catalog2.ad.map((item: adProps) => {
+
                 if (item.solo_subordem.toLowerCase().includes(value.toString().toLowerCase())) {
                     valueMap.push({ textura: item.textura, ad: item.mediana });
                 }
@@ -38,11 +39,14 @@ const Catalog = () => {
 
         await Catalog2.ad.map((item: adProps, index: number) => {
 
+            let index2 = index + 1;
+
             if (subordem.find((item2: perfis) => item2.value === item.solo_subordem) === undefined) {
-                subordem.push({ value: item.solo_subordem, mediana: item.mediana, key: index.toString() });
+                subordem.push({ value: item.solo_subordem, mediana: item.mediana, key: index2.toString() });
             }
 
         })
+        
         setSubOrdem(subordem);
     };
 
@@ -50,8 +54,8 @@ const Catalog = () => {
         { label: 'Ordem' },
         { label: 'Subordem' },
         { label: 'Textura do perfil' },
-        { label: 'Subordem e textura do perfil' },
-        { label: 'Subordem e textura estimado' },
+        { label: 'Subordem e textura do perfil' }
+
     ];
 
     const [view, setView] = useState(false);
@@ -86,8 +90,6 @@ const Catalog = () => {
         else if (region === 3) {
             searchQuery(name);
 
-
-
         } else {
             setData(null);
         }
@@ -119,8 +121,9 @@ const Catalog = () => {
 
                 </div> :
                     <div className="flex flex-col justify-center items-center">
-                        {subordem && <Select onClick={toggleView} onValue={selectValue} onSelect={selectName} array={subordem} inputTitle={arrayRegions[Number(region)].label} />}
-
+                        {subordem &&
+                            <SelectText SelectName={selectName} onClick={toggleView} Valores={subordem} />
+                        }
 
                         {view &&
                             <>

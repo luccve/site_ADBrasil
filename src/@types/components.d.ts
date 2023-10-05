@@ -43,6 +43,7 @@ export interface ResultadoPTFProps {
     url: string;
     titulo: string;
     parametros: string;
+    inputProps: string[];
     curva: string;
 }
 
