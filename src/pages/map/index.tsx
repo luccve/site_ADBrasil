@@ -7,7 +7,7 @@ import { AiOutlineClear } from 'react-icons/ai';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { TiLocation } from 'react-icons/ti';
 import 'leaflet/dist/leaflet.css'
-import { LatLngExpression, DivIcon } from 'leaflet';
+import { LatLngExpression, DivIcon, LatLng } from 'leaflet';
 import { renderToString } from 'react-dom/server';
 
 
@@ -20,10 +20,12 @@ const Map = () => {
 
     const [modal, setModal] = useState<Boolean>(false);
     const [position, setPosition] = useState<LatLngExpression | null>(null);
+    const [layersAdd, setLayersAdd] = useState<string[]>([]);
     const [userLocation, setUserLocation] = useState<[number, number] | null>(null);
     const [center, setCenter] = useState<[number, number]>([-12.1, -46.2]);
     const tileStreet = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
     const tileSattelite = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
+    const [_info, setInfo] = useState('');
     const [layer, setLayer] = useState<string>(tileStreet);
     const [zoom, setZoom] = useState<number>(4);
     const icon = new DivIcon({
@@ -39,14 +41,10 @@ const Map = () => {
             click(e) {
 
                 setPosition(e.latlng);
-
                 map.setZoomAround(e.latlng, 8);
+                SetQuery(e.latlng);
             },
-            dblclick(e) {
 
-                setPosition(e.latlng);
-                toggleModal();
-            }
 
 
         });
@@ -84,6 +82,18 @@ const Map = () => {
         setZoom(8);
     };
 
+    const State = (prefix: string) => {
+        const url = `http://geoinfo.cnpa.embrapa.br/geoserver/gwc/service/gmaps?layers=geonode:pluv_${prefix}_2&zoom={z}&x={x}&y={y}&format=image/png8`;
+        setLayersAdd(old => [...old, url]);
+    };
+
+    const SetQuery = (latLng: LatLng) => {
+        const { lat, lng } = transform4326To3857(latLng.lat, latLng.lng);
+        const url = `http://geoinfo.cnpa.embrapa.br/geoserver/gwc/service/gmaps?layers=geonode:pluv_${lat}_${lng}_2&zoom={z}&x={x}&y={y}&format=image/png8`;
+        setInfo(url);
+        console.log(url);
+    };
+
 
     const toggleModal = () => {
         if (position) {
@@ -110,6 +120,23 @@ const Map = () => {
         setZoom(4);
         setCenter([-12.1, -46.2]);
 
+    };
+
+    const transform4326To3857 = (y: number, x: number) => {
+        const X = 20037508.34;
+
+        let long3857 = (x * X) / 180;
+
+        let lat3857 = Number(y) + 90;
+
+        lat3857 = lat3857 * (Math.PI / 360);
+        lat3857 = Math.tan(lat3857);
+        lat3857 = Math.log(lat3857);
+        lat3857 = lat3857 / (Math.PI / 180);
+
+        lat3857 = (lat3857 * X) / 180;
+
+        return { lat: Number(lat3857), lng: Number(long3857) };
     }
 
 
@@ -132,6 +159,9 @@ const Map = () => {
                         {userLocation && <Marker icon={icon} position={userLocation}>
                         </Marker>}
                         <LocationMarker />
+                        {layersAdd.map((item, index) => {
+                            return <TileLayer key={index * Math.random() * 0.2} url={item} />
+                        })}
                     </MemoizedMapContainer>
 
 
@@ -157,6 +187,18 @@ const Map = () => {
                         <Link className=' h-[35px] z-20 text-white p-2 m-2' to={"/"}>
                             <HiHome className='hover:scale-125 hover:text-white text-xl' />
                         </Link>
+                        <button className=' h-[35px] z-20 text-white p-2 m-2' onClick={() => State('pe')}>
+                            <h1>PE</h1>
+                        </button>
+                        <button className=' h-[35px] z-20 text-white p-2 m-2' onClick={() => State('al')}>
+                            <h1>AL</h1>
+                        </button>
+                        <button className=' h-[35px] z-20 text-white p-2 m-2' onClick={() => State('se')}>
+                            <h1>SE</h1>
+                        </button>
+                        <button className=' h-[35px] z-20 text-white p-2 m-2' onClick={() => State('ba')}>
+                            <h1>BA</h1>
+                        </button>
                     </div>
 
                 </div>
