@@ -104,6 +104,41 @@ export type perfisSubOrdem = {
   classe: string;
 }
 
+export interface WFSObject {
+  ABR?: number;
+  AGO?: number;
+  AMJ?: number;
+  ASO?: number;
+  CD_GEOCODM?: string;
+  DEZ?: number;
+  DJF?: number;
+  FEV?: number;
+  FMA?: number;
+  ID?: number;
+  JAN?: number;
+  JAS?: number;
+  JFM?: number;
+  JJA?: number;
+  JUL?: number;
+  JUN?: number;
+  MAI?: number;
+  MAM?: number;
+  MAR?: number;
+  MAX?: number;
+  MIN?: number;
+  MJJ?: number;
+  N?: number;
+  NDJ?: number;
+  NM_MUNICIP?: string;
+  NOV?: number;
+  OND?: number;
+  OUT?: number;
+  SET?: number;
+  SON?: number;
+  TRIMESTRE2?: string;
+  TRIMESTRE_?: string;
+}
+
 
 export type textura = {
   key: number;
