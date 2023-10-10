@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { MapContainer, Marker, TileLayer, useMapEvents, } from "react-leaflet"
+import { MapContainer, Marker, TileLayer, useMapEvents } from "react-leaflet"
 // import GeoCode from "../../../public/adpe.json";
 
 import { MdOutlineGpsFixed } from 'react-icons/md';
@@ -16,21 +16,26 @@ import ModalComponente from '../../components/modal/modalComponente';
 import { Link } from 'react-router-dom';
 import { HiHome } from 'react-icons/hi';
 import { WFSObject } from '../../@types/data';
+import ModalAlert from '../../components/modal/modalAlert';
+import { InfoUmProps } from '../../@types/components';
 
 
 const Map = () => {
 
+    const [infoMapa, setInfoMapa] = useState(false);
+    const [message, setMessage] = useState<string | InfoUmProps>('');
     const [modal, setModal] = useState<Boolean>(false);
     const [position, setPosition] = useState<LatLngExpression | null>(null);
-    const [layersAdd, setLayersAdd] = useState<string[]>([]);
+    const [layersAdd, setLayersAdd] = useState<string[]>([`https://geoinfo.cnpa.embrapa.br/geoserver/gwc/service/gmaps?layers=geonode:pluv_pe_2&zoom={z}&x={x}&y={y}&format=image/png8`]);
     const [userLocation, setUserLocation] = useState<[number, number] | null>(null);
     const [center, setCenter] = useState<[number, number]>([-12.1, -46.2]);
     const tileStreet = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
     const tileSattelite = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
     const [_info, setInfo] = useState<WFSObject>({});
-    const [prefix, setPrefix] = useState('');
     const [layer, setLayer] = useState<string>(tileStreet);
     const [zoom, setZoom] = useState<number>(4);
+
+
     const icon = new DivIcon({
         html: renderToString(<div className='text-4xl text-[#000]'><TiLocation /></div>),
         iconAnchor: [18, 20],
@@ -38,21 +43,29 @@ const Map = () => {
 
     })
 
-    const LocationMarker = () => {
+    const icon2 = new DivIcon({
+        html: renderToString(<div className='text-4xl text-[#bf4b4b]'><TiLocation /></div>),
+        iconAnchor: [18, 20],
+        className: 'marker'
 
-        const map = useMapEvents({
+    })
+
+    const ListeningEventsMaps = () => {
+
+        useMapEvents({
             click(e) {
 
                 setPosition(e.latlng);
                 // map.setZoomAround(e.latlng, 8);
                 SetQuery(e.latlng);
+                setInfoMapa(true);
             },
+
 
 
 
         });
 
-        map.tap
 
         return position === null ? null : (
             <Marker icon={icon} position={position} />
@@ -87,25 +100,22 @@ const Map = () => {
         setZoom(8);
     };
 
-    const State = (prefix: string) => {
-        const url = `http://geoinfo.cnpa.embrapa.br/geoserver/gwc/service/gmaps?layers=geonode:pluv_${prefix}_2&zoom={z}&x={x}&y={y}&format=image/png8`;
-        // setLayersAdd(old => [...old, url]);
-        setLayersAdd([url]);
-        setPrefix(prefix);
-    };
 
     const SetQuery = (latLng: LatLng) => {
         const { lat, lng } = latLng;
-        const url = `http://geoinfo.cnpa.embrapa.br/geoserver/wfs?srsName=EPSG%3A4326&typename=geonode%3Apluv_${prefix}_2&outputFormat=json&version=1.0.0&service=WFS&request=GetFeature&CQL_FILTER=INTERSECTS%28the_geom%2CPOINT%28${lng}%20${lat}%29%29`;
-
-
-
-        if (layersAdd[0].split(':')[2].split('_')[1].includes(prefix)) {
-
-            fetchQuery(url);
-        }
-
-
+        const url = `https://geoinfo.cnpa.embrapa.br/geoserver/wfs?srsName=EPSG%3A4326&typename=geonode%3Apluv_pe_2&outputFormat=json&version=1.0.0&service=WFS&request=GetFeature&CQL_FILTER=INTERSECTS%28the_geom%2CPOINT%28${lng}%20${lat}%29%29`;
+        fetchQuery(url);
+        setMessage({
+            cidade: _info.NM_MUNICIP,
+            classe_solo: _info.ABR?.toString(),
+            cod_um: _info.CD_GEOCODM?.toString(),
+            id_um: _info.JUL?.toString(),
+            lat: _info.NM_MUNICIP,
+            lng: _info.NM_MUNICIP,
+            relevo: _info.NM_MUNICIP,
+            texture: _info.NM_MUNICIP,
+            valor_ad: _info.NM_MUNICIP
+        })
     };
 
     const fetchQuery = async (url: string) => {
@@ -149,26 +159,9 @@ const Map = () => {
         setZoom(4);
         setCenter([-12.1, -46.2]);
         setLayersAdd([]);
-        setPrefix('');
 
     };
 
-    // const transform4326To3857 = (y: number, x: number) => {
-    //     const X = 20037508.34;
-
-    //     let long3857 = (x * X) / 180;
-
-    //     let lat3857 = Number(y) + 90;
-
-    //     lat3857 = lat3857 * (Math.PI / 360);
-    //     lat3857 = Math.tan(lat3857);
-    //     lat3857 = Math.log(lat3857);
-    //     lat3857 = lat3857 / (Math.PI / 180);
-
-    //     lat3857 = (lat3857 * X) / 180;
-
-    //     return { lat: Number(lat3857), lng: Number(long3857) };
-    // }
 
 
     let mapKey = position ? center.join('_') : 'default';
@@ -180,6 +173,8 @@ const Map = () => {
             <div className='min-h-screen min-w-screen grid place-self-center'>
                 <div className='z-1 relative'>
 
+                    <ModalAlert message={message} onClose={setInfoMapa} visible={infoMapa} title={'Unidade de Mapeamento Selecionada'} />
+
                     <MemoizedMapContainer
                         mapKey={mapKey}
                         center={center}
@@ -187,13 +182,28 @@ const Map = () => {
                         layer={layer}
                     >
 
-                        {userLocation && <Marker icon={icon} position={userLocation}>
+                        {userLocation && <Marker icon={icon2} position={userLocation}>
                         </Marker>}
                         {/* {geoData && <GeoJSON bubblingMouseEvents data={geoData} />} */}
-                        <LocationMarker />
+                        <ListeningEventsMaps />
                         {layersAdd.map((item, index) => {
                             return <TileLayer key={index * Math.random() * 0.2} url={item} />
                         })}
+
+                        {/* {<WMSTileLayer
+                            layers='CREN:PD_ORDEM'
+                            format='image/png'
+                            transparent
+                            url='https://geoservicos.ibge.gov.br/geoserver/CREN/wms?service=WMS'
+                            // layers='geonode:brasil_ad_solos_v5'
+                            // url='http://geoinfo.cnps.embrapa.br/geoserver/wms?'
+                            version='1.1.0'
+                            crs={CRS.EPSG4326}
+                            tileSize={512}
+                            tms
+
+                        />} */}
+
                     </MemoizedMapContainer>
 
 
@@ -219,32 +229,8 @@ const Map = () => {
                         <Link className=' h-[35px] z-20 text-white p-2 m-2' to={"/"}>
                             <HiHome className='hover:scale-125 hover:text-white text-xl' />
                         </Link>
-                        <button className=' h-[35px] z-20 text-white p-2 m-2' onClick={() => State('pe')}>
-                            <h1>PE</h1>
-                        </button>
-                        <button className=' h-[35px] z-20 text-white p-2 m-2' onClick={() => State('al')}>
-                            <h1>AL</h1>
-                        </button>
-                        <button className=' h-[35px] z-20 text-white p-2 m-2' onClick={() => State('se')}>
-                            <h1>SE</h1>
-                        </button>
-                        <button className=' h-[35px] z-20 text-white p-2 m-2' onClick={() => State('ba')}>
-                            <h1>BA</h1>
-                        </button>
+
                     </div>
-
-
-
-                    {/* Info */}
-                    {prefix && <div className='absolute w-auto top-20 right-1 flex flex-col max-md:flex-row rounded-xl bg-blue 
-                   max-md:top-[90%] max-md:h-[100px] max-md:left-2/3 max-md:transform max-md:-translate-x-2/3 max-md:-translate-y-1/2 z-50
-                '>
-
-                        <button className='h-[35px] z-20 text-white p-2 m-2'>
-                            <h1 className='hover:scale-125 hover:text-white text-sm font-bold' >{_info.NM_MUNICIP}</h1>
-                        </button>
-
-                    </div>}
 
                 </div>
 

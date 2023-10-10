@@ -50,7 +50,7 @@ export interface ResultadoPTFProps {
 
 interface ModalAlertProps {
     title?: string;
-    message: string;
+    message: InfoUmProps | string;
     visible: boolean;
     onClose: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -80,11 +80,24 @@ interface CharLineProps<T> extends van_genuchtenProps {
 }
 
 interface BtnToggleArrowProps {
-    pin:boolean;
+    pin: boolean;
     togglePin: () => void;
 }
 
 interface CardListProps {
     ArrayTitle: T[];
     ArrayRes: T[];
+}
+
+type InfoUmProps = {
+    cidade?: string;
+    cod_um?: string;
+    id_um?: string;
+    texture?: string;
+    relevo?: string;
+    classe_solo?: string;
+    lat?: string;
+    lng?: string;
+    valor_ad?: string;
+
 }

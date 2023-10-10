@@ -21,17 +21,72 @@ const Home = () => {
         flex-col
         justify-center
         items-center
-        section_right h-screen rounded shadow shadown-blue_l drop-shadow drop-shadow-blue_l
+        section_right min-h-screen rounded shadow shadown-blue_l drop-shadow drop-shadow-blue_l
         space-y-5
-    
+        py-[52px]
         ' >
-                <h1 className="text-white text-5xl max-lg:text-3xl font-bold tracking-wide">
-                    Plataforma ADBrasil
+                <h1 className="text-white text-xl max-lg:text-3sm font-bold tracking-wide">
+                    Plataforma sobre Avaliação, Predição e Mapeamento de Água Disponível em Solos do Brasil.
                 </h1>
 
-                <p className='text-white w-3/4 text-lg max-lg:text-base font-semibold'>Oferece informações de água disponivel para análise de solos no Brasil.
-                    Com recursos de mapeamento de unidades de água no solo, detalhes dos componentes do solo,
-                    um banco de dados para salvar pontos no mapa, catálogo de disponibilidade de água e 14 funções de pedotransferência.</p>
+                <p className='text-blue w-3/4 text-base max-lg:text-sm font-semibold p-5 bg-white rounded'>
+                    A plataforma AD Brasil é uma iniciativa da <a href="https://www.embrapa.br/" target='_blank' rel='noopener noreferrer'>Embrapa</a> Solos para apoiar estudos sobre o manejo,
+                    a retenção e o armazenamento de água dos solos do Brasil; e o aperfeiçoamento de métodos
+                    (diretos e indiretos) para estimativa da condutividade hidráulica e do teor de água no solo.</p>
+
+                <p className='text-blue w-3/4 text-base max-lg:text-sm font-semibold p-5 bg-white rounded'>
+                    Diante às dimensões do país e da diversidade produtiva e ambiental das diferentes características
+                    hidrodinâmicas dos solos do território nacional, a estratégia da plataforma visa estabelecer um sistema
+                    de apoio aos estudos sobre água dos solos do Brasil e apoiar a rede do Zoneamento Agrícola de Risco Climático
+                    (Zarc) e de projetos que utilizam informações sobre a dinâmica da água do solo, tais como manejo, irrigação,
+                    erosão, simulação do crescimento,
+                    desenvolvimento e da produtividade de culturas agrícolas e dos impactos das mudanças climáticas na agricultura.</p>
+
+                <p className='text-blue w-3/4 text-base max-lg:text-sm font-semibold p-5 bg-white rounded'>
+                    A plataforma AD Brasil contempla o aplicativo AD Brasil desenvolvido para dispositivos Android e a interface online WebGis, a qual comunica-se diretamente com o aplicativo e permiti prover os usuários de forma rápida aos dados e informações sobre Avaliação, Predição e Mapeamento de Água Disponível em Solos do Brasil.
+
+                    Baseado no conceito WebGIS, no qual integra um ambiente de Sistemas de Informações Geográficas (SIG), viabiliza o acesso às informações espaciais, juntamente com as informações coletadas em campo, para realização de consultas e análises de informações físico-hídricas dos solos do Brasil.
+                </p>
+
+
+
+
+                <h1 className="text-white text-xl max-lg:text-lg font-bold tracking-wide">
+                    Objetivos
+                </h1>
+
+                <p className='text-blue w-3/4 text-base max-lg:text-sm font-semibold p-5 bg-white rounded'>
+                    Ampliar e suprir a demanda de informações sobre a disponibilidade de água e o conhecimento das características físico-hídricas das principais classes de solos brasileiros;
+
+                    Aperfeiçoamento de uso dos métodos integrados de análise de sistemas interpretativos do uso do solo e da água, visando subsidiar políticas públicas de planejamento, manejo e conservação para utilização dos solos brasileiros em base sustentável;
+
+                    Melhorar a estimativa de métodos diretos e  indiretos de predição (pedotransferência) de condutividade hidráulica e da retenção de água no solo;
+
+                    Propor protocolos experimentais de análises de estimativas de água no solo;
+
+
+
+                    Prover informações para o uso e manejo racional da água no solo;
+
+
+
+                    Conhecer o comportamento físico-hídrico de distintas classes de solos brasileiros para contribuir com as inovações para o uso eficiente da água, principalmente quanto à implantação de sistemas de zoneamentos, monitoramento, apoio à decisão e serviços ambientais, diante às incertezas climáticas e à intensificação de estresses bióticos e abióticos previstos para as próximas décadas.
+                </p>
+
+                <h1 className="text-white text-xl max-lg:text-lg font-bold tracking-wide">
+                    Público
+                </h1>
+
+                <p className='text-blue w-3/4 text-base max-lg:text-sm font-semibold p-5 bg-white rounded'>
+                    Usuários da informação do manejo da água no solo na agropecuária
+                </p>
+
+
+
+                <h1 className="text-white text-xl max-lg:text-lg font-bold tracking-wide">
+                    Funcionalidades
+                </h1>
+
 
                 <div className='flex flex-row p-5 w-[150px] h-auto items-center justify-around 
                 max-lg:flex-col max-lg:space-x-0 max-lg:space-y-5 max-lg:w-auto font-bold sm:flex-row sm:space-y-0 sm:space-x-0'>
