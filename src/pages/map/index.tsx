@@ -101,10 +101,11 @@ const Map = () => {
     };
 
 
-    const SetQuery = (latLng: LatLng) => {
+    const SetQuery = async (latLng: LatLng) => {
         const { lat, lng } = latLng;
         const url = `https://geoinfo.cnpa.embrapa.br/geoserver/wfs?srsName=EPSG%3A4326&typename=geonode%3Apluv_pe_2&outputFormat=json&version=1.0.0&service=WFS&request=GetFeature&CQL_FILTER=INTERSECTS%28the_geom%2CPOINT%28${lng}%20${lat}%29%29`;
-        fetchQuery(url);
+
+        await fetchQuery(url);
         setMessage({
             cidade: _info.NM_MUNICIP,
             classe_solo: _info.ABR?.toString(),

@@ -4,7 +4,9 @@ export default {
   theme: {
     extend: {
       animation: {
-        "home": "show_card 1s ease-in-out",
+        home: "show_card 1s ease-in-out",
+        home1: "show_card_1 1s ease-in-out",
+        home2: "show_card_2 1s ease-in-out",
         "fade-menu": "fade 300ms ease-in-out",
         "spin-slow": "spin 3s linear infinite",
         wiggle: "wiggle 300ms ease-in-out ",
@@ -39,6 +41,16 @@ export default {
           "0%": { transform: "scale(0.6) translateY(-200px)", opacity: "0" },
           "50%": { transform: "translateY(-10px)" },
           "100%": { transform: "translateY(0px)", opacity: "1" },
+        },
+        show_card_1: {
+          "0%": { transform: "scale(0.6) translateX(-200px)", opacity: "0" },
+          "50%": { transform: "translateX(-100px)" },
+          "100%": { transform: "translateX(0px)", opacity: "1" },
+        },
+        show_card_2: {
+          "0%": { transform: "scale(0.6) translateX(-200px)", opacity: "0" },
+          "50%": { transform: "translateX(100px)" },
+          "100%": { transform: "scale(1) translateX(0px)", opacity: "1" },
         },
       },
     },
