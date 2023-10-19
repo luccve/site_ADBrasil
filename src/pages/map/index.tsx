@@ -1,13 +1,11 @@
 import React, { useState } from 'react'
 import { MapContainer, Marker, TileLayer, useMapEvents } from "react-leaflet"
-// import GeoCode from "../../../public/adpe.json";
 
 import { MdOutlineGpsFixed } from 'react-icons/md';
 import { FiLayers } from 'react-icons/fi';
 import { AiOutlineClear } from 'react-icons/ai';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { TiLocation } from 'react-icons/ti';
-import 'leaflet/dist/leaflet.css'
 import { LatLngExpression, DivIcon, LatLng } from 'leaflet';
 import { renderToString } from 'react-dom/server';
 
@@ -15,12 +13,14 @@ import { renderToString } from 'react-dom/server';
 import ModalComponente from '../../components/modal/modalComponente';
 import { Link } from 'react-router-dom';
 import { HiHome } from 'react-icons/hi';
-import { WFSObject } from '../../@types/data';
 import ModalAlert from '../../components/modal/modalAlert';
 import { InfoUmProps } from '../../@types/components';
 
+import 'leaflet/dist/leaflet.css'
+
 
 const Map = () => {
+
 
     const [infoMapa, setInfoMapa] = useState(false);
     const [message, setMessage] = useState<string | InfoUmProps>('');
@@ -31,7 +31,6 @@ const Map = () => {
     const [center, setCenter] = useState<[number, number]>([-12.1, -46.2]);
     const tileStreet = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
     const tileSattelite = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
-    const [_info, setInfo] = useState<WFSObject>({});
     const [layer, setLayer] = useState<string>(tileStreet);
     const [zoom, setZoom] = useState<number>(4);
 
@@ -50,6 +49,7 @@ const Map = () => {
 
     })
 
+
     const ListeningEventsMaps = () => {
 
         useMapEvents({
@@ -58,14 +58,11 @@ const Map = () => {
                 setPosition(e.latlng);
                 // map.setZoomAround(e.latlng, 8);
                 SetQuery(e.latlng);
-                setInfoMapa(true);
+                setZoom(e.sourceTarget._animateToZoom);
             },
 
 
-
-
         });
-
 
         return position === null ? null : (
             <Marker icon={icon} position={position} />
@@ -101,35 +98,44 @@ const Map = () => {
     };
 
 
+
+
     const SetQuery = async (latLng: LatLng) => {
+
         const { lat, lng } = latLng;
         const url = `https://geoinfo.cnpa.embrapa.br/geoserver/wfs?srsName=EPSG%3A4326&typename=geonode%3Apluv_pe_2&outputFormat=json&version=1.0.0&service=WFS&request=GetFeature&CQL_FILTER=INTERSECTS%28the_geom%2CPOINT%28${lng}%20${lat}%29%29`;
-
         await fetchQuery(url);
-        setMessage({
-            cidade: _info.NM_MUNICIP,
-            classe_solo: _info.ABR?.toString(),
-            cod_um: _info.CD_GEOCODM?.toString(),
-            id_um: _info.JUL?.toString(),
-            lat: _info.NM_MUNICIP,
-            lng: _info.NM_MUNICIP,
-            relevo: _info.NM_MUNICIP,
-            texture: _info.NM_MUNICIP,
-            valor_ad: _info.NM_MUNICIP
-        })
+
     };
 
     const fetchQuery = async (url: string) => {
         try {
             let object = await fetch(url, { method: 'GET' });
 
-            let data = await object.json();
+            await object.json().then((response) => {
+                setMessage({
+                    cidade: response['features'][0]['properties'].NM_MUNICIP,
+                    classe_solo: response['features'][0]['properties'].ABR?.toString(),
+                    cod_um: response['features'][0]['properties'].CD_GEOCODM?.toString(),
+                    id_um: response['features'][0]['properties'].JUL?.toString(),
+                    lat: response['features'][0]['properties'].NM_MUNICIP,
+                    lng: response['features'][0]['properties'].NM_MUNICIP,
+                    relevo: response['features'][0]['properties'].NM_MUNICIP,
+                    texture: response['features'][0]['properties'].NM_MUNICIP,
+                    valor_ad: response['features'][0]['properties'].NM_MUNICIP
+                })
 
-            setInfo(data['features'][0]['properties']);
+            })
+
+
+
 
         } catch (error) {
-            alert('Selecione a área exata do estado');
+            setMessage('Selecione a área exata do estado');
+        } finally {
+            setInfoMapa(true);
         }
+
 
 
     }

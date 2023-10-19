@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import {  BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import App from './App.tsx';
 import './index.css';
 import Footer from './components/footer/index.tsx';
@@ -27,20 +27,19 @@ import Educacional from './pages/educacional/index.tsx';
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
 
-    
     <BrowserRouter basename={"/adbrasil_site"}>
       <Routes>
-        <Route path="/" element={<><Nav/><App /><Footer/></>} />
+        <Route path="/" element={<><Nav /><App /><Footer /></>} />
         <Route path="/map" element={<Map />} />
-        <Route path="/balance" element={<><Nav/><Balance /><Footer/></>} />
-        <Route path="/catalogo" element={<><Nav/><Catalog /><Footer/></>} />
-        <Route path="/ptf" element={<><Nav/><Ptf /><Footer/></>} />
-        <Route path="/edu" element={<><Nav/><Educacional /><Footer/></>} />
-        <Route path="*" element={<><Nav/><NotFound /><Footer/></>} />
-        
+        <Route path="/balance" element={<><Nav /><Balance /><Footer /></>} />
+        <Route path="/catalogo" element={<><Nav /><Catalog /><Footer /></>} />
+        <Route path="/ptf" element={<><Nav /><Ptf /><Footer /></>} />
+        <Route path="/edu" element={<><Nav /><Educacional /><Footer /></>} />
+        <Route path="*" element={<><Nav /><NotFound /><Footer /></>} />
+
       </Routes>
     </BrowserRouter>
-    
+
 
   </React.StrictMode>
 );
