@@ -27,7 +27,7 @@ import Educacional from './pages/educacional/index.tsx';
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
 
-    <BrowserRouter basename={"/adbrasil_site"}>
+    <BrowserRouter basename={"/"}>
       <Routes>
         <Route path="/" element={<><Nav /><App /><Footer /></>} />
         <Route path="/map" element={<Map />} />
