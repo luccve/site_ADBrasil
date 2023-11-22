@@ -8,7 +8,7 @@ const Balance = () => {
         <>
         <div className="h-screen bg-blue flex items-center justify-center text-white text-2xl font-bold">
             <img src={BalanceLogo} alt="Icone de Balanço Hídrico" />
-            <h1>BALANÇO HÍDRICO</h1>
+            <h1>AI Soil</h1>
         </div>
         </>
 

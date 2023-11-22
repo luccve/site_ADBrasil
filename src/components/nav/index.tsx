@@ -18,14 +18,14 @@ const nav = () => {
         { title: 'AD Funções para cálculo (PTF)', link: "/ptf" },
         { title: 'AD no mapa', link: "/map" },
         { title: 'Educacional', link: "/#section2" },
-        { title: 'Balanço Hídrico', link: "/balance" },
+        { title: 'AI Soil', link: "/balance" },
     ]
 
     const menuDesktop = [
         { title: 'Projeto', link: "#section4" },
         { title: 'Funcionalidades', link: "#section1" },
         { title: 'Educacional', link: "#section2" },
-        { title: 'Balanço Hídrico', link: "balance" },
+        { title: 'AI Soil', link: "balance" },
     ]
 
     const handleMenu = () => {
