@@ -120,7 +120,7 @@ const Home = () => {
 
                     <div className=' flex flex-col items-center '>
                         <img src={Balaco} className='w-28 max-lg:w-16' alt="Icone da ferramenta do catalogo" />
-                        <BtnLink Title='Balanço Hídrico' Path={"/balance"} />
+                        <BtnLink Title='AI Soil' Path={"/balance"} />
                     </div>
 
                 </div>

@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import { MapContainer, Marker, TileLayer, WMSTileLayer, useMapEvents } from "react-leaflet"
+import { MapContainer, Marker, TileLayer, useMapEvents, GeoJSON } from "react-leaflet"
 
 import { MdOutlineGpsFixed } from 'react-icons/md';
 import { FiLayers } from 'react-icons/fi';
 import { AiOutlineClear } from 'react-icons/ai';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { TiLocation } from 'react-icons/ti';
-import { LatLngExpression, DivIcon, LatLng, CRS } from 'leaflet';
+import { LatLngExpression, DivIcon, LatLng } from 'leaflet';
 import { renderToString } from 'react-dom/server';
 
 
@@ -21,19 +21,29 @@ import 'leaflet/dist/leaflet.css'
 
 const Map = () => {
 
-
+    const [color_geoData, setColor_geoData] = useState<string>('#000');
     const [infoMapa, setInfoMapa] = useState(false);
     const [message, setMessage] = useState<string | InfoUmProps>('');
     const [modal, setModal] = useState<Boolean>(false);
     const [position, setPosition] = useState<LatLngExpression | null>(null);
-    const [layersAdd, setLayersAdd] = useState<string[]>([`https://geoinfo.cnpa.embrapa.br/geoserver/gwc/service/gmaps?layers=geonode:pluv_pe_2&zoom={z}&x={x}&y={y}&format=image/png8`]);
+    // const [layersAdd, setLayersAdd] = useState<string[]>([`https://geoinfo.cnpa.embrapa.br/geoserver/gwc/service/gmaps?layers=geonode:pluv_pe_2&zoom={z}&x={x}&y={y}&format=image/png8`]);
+    const [layersAdd, _setLayersAdd] = useState<string[]>([`https://geoportal.sgb.gov.br/server/rest/services/pronasolos/agua_disponivel/MapServer?`]);
     const [userLocation, setUserLocation] = useState<[number, number] | null>(null);
     const [center, setCenter] = useState<[number, number]>([-12.1, -46.2]);
     const tileStreet = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
     const tileSattelite = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
     const [layer, setLayer] = useState<string>(tileStreet);
     const [zoom, setZoom] = useState<number>(4);
-
+    const [geoData, setGeoData] = useState<any>({
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [1, 1],
+        },
+        "properties": {
+            "name": "Dinagat Islands"
+        }
+    });
 
     const icon = new DivIcon({
         html: renderToString(<div className='text-4xl text-[#000]'><TiLocation /></div>),
@@ -54,11 +64,11 @@ const Map = () => {
 
         useMapEvents({
             click(e) {
-
+                setGeoData(null);
                 setPosition(e.latlng);
                 // map.setZoomAround(e.latlng, 8);
                 SetQuery(e.latlng);
-                setZoom(e.sourceTarget._animateToZoom);
+                // setZoom(e.sourceTarget._animateToZoom);
             },
 
 
@@ -85,6 +95,29 @@ const Map = () => {
         );
     };
 
+    function changeColor(ad: number | null) {
+        const colorRanges = [
+            { min: 1.84, max: Infinity, color: "#8500A8" },
+            { min: 1.4, max: 1.84, color: "#005CE6" },
+            { min: 1.06, max: 1.4, color: "#00C4FF" },
+            { min: 0.8, max: 1.06, color: "#37A800" },
+            { min: 0.61, max: 0.8, color: "#4DE600" },
+            { min: 0.46, max: 0.61, color: "#FFAB00" },
+            { min: 0.34, max: 0.46, color: "#FFFF73" },
+            { min: -Infinity, max: 0.34, color: "#9C9C9C" },
+        ];
+
+        let newAd = Number(ad);
+        if (newAd === null) {
+            return "transparent";
+        }
+
+        let colorRange = colorRanges.find(
+            (range) => range.min <= newAd && newAd <= range.max
+        );
+        return colorRange ? colorRange.color : "transparent";
+    }
+
     const toggleLayer = () => {
 
         setLayer(layer == tileStreet ? tileSattelite : tileStreet);
@@ -103,27 +136,53 @@ const Map = () => {
     const SetQuery = async (latLng: LatLng) => {
 
         const { lat, lng } = latLng;
-        const url = `https://geoinfo.cnpa.embrapa.br/geoserver/wfs?srsName=EPSG%3A4326&typename=geonode%3Apluv_pe_2&outputFormat=json&version=1.0.0&service=WFS&request=GetFeature&CQL_FILTER=INTERSECTS%28the_geom%2CPOINT%28${lng}%20${lat}%29%29`;
-        await fetchQuery(url);
+        // const url = `https://geoinfo.cnpa.embrapa.br/geoserver/wfs?srsName=EPSG%3A4326&typename=geonode%3Apluv_pe_2&outputFormat=json&version=1.0.0&service=WFS&request=GetFeature&CQL_FILTER=INTERSECTS%28the_geom%2CPOINT%28${lng}%20${lat}%29%29`;
+        const url = `https://geoportal.sgb.gov.br/server/rest/services/pronasolos/agua_disponivel/MapServer/0/query?f=json&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&geometry={"x": ${lng}, "y": ${lat}, "spatialReference": {"wkid": 4326}}&outFields=ordem,subordem,grande_gru,subgrupos,textura,horizonte,relevo,total_ad,legad,objectid_1&outSR=4326&tolerance=10`;
+        await fetchQuery(url, lat, lng);
 
     };
 
-    const fetchQuery = async (url: string) => {
+    const fetchQuery = async (url: string, lat: number, lng: number) => {
         try {
             let object = await fetch(url, { method: 'GET' });
 
             await object.json().then((response) => {
-                setMessage({
-                    cidade: response['features'][0]['properties'].NM_MUNICIP,
-                    classe_solo: response['features'][0]['properties'].ABR?.toString(),
-                    cod_um: response['features'][0]['properties'].CD_GEOCODM?.toString(),
-                    id_um: response['features'][0]['properties'].JUL?.toString(),
-                    lat: response['features'][0]['properties'].NM_MUNICIP,
-                    lng: response['features'][0]['properties'].NM_MUNICIP,
-                    relevo: response['features'][0]['properties'].NM_MUNICIP,
-                    texture: response['features'][0]['properties'].NM_MUNICIP,
-                    valor_ad: response['features'][0]['properties'].NM_MUNICIP
-                })
+
+                setColor_geoData(changeColor(response.features[0].attributes.total_ad));
+                if (response.features[0].attributes.total_ad > 0) {
+                    setMessage({
+                        ID: response.features[0].attributes.objectid_1,
+                        Ordem: response.features[0].attributes.ordem,
+                        Subordem: response.features[0].attributes.subordem,
+                        Textura: response.features[0].attributes.textura,
+                        AD: `${response.features[0].attributes.total_ad} mm/cm`,
+                        Relevo: response.features[0].attributes.relevo,
+
+                        Latitude: Number(lat.toPrecision(5)),
+                        Longitude: Number(lng.toPrecision(5))
+                    })
+                } else {
+                    setMessage({
+                        ID: response.features[0].attributes.objectid_1,
+                        Ordem: response.features[0].attributes.ordem,
+                        Latitude: Number(lat.toPrecision(5)),
+                        Longitude: Number(lng.toPrecision(5))
+                    })
+                }
+                setGeoData(
+                    {
+                        "type": "Feature",
+                        "geometry": {
+                            "type": "MultiPolygon",
+                            "coordinates": [response.features[0].geometry.rings],
+                        },
+                        "properties": {
+                            "name": "Dinagat Islands"
+                        }
+                    }
+                );
+
+
 
             })
 
@@ -165,7 +224,7 @@ const Map = () => {
         setUserLocation(null);
         setZoom(4);
         setCenter([-12.1, -46.2]);
-        setLayersAdd([]);
+        // setLayersAdd([]);
 
     };
 
@@ -191,13 +250,19 @@ const Map = () => {
 
                         {userLocation && <Marker icon={icon2} position={userLocation}>
                         </Marker>}
-                        {/* {geoData && <GeoJSON bubblingMouseEvents data={geoData} />} */}
+                        {geoData &&
+
+                            <GeoJSON bubblingMouseEvents data={geoData}
+                                style={{ color: color_geoData, weight: 1, fillOpacity: 1 }}
+                            />
+                        }
                         <ListeningEventsMaps />
+
                         {layersAdd.map((item, index) => {
                             return <TileLayer key={index * Math.random() * 0.2} url={item} />
                         })}
 
-                        {<WMSTileLayer
+                        {/* {<WMSTileLayer
                             // layers='CREN:PD_ORDEM'
                             format='image/png'
                             transparent
@@ -209,7 +274,10 @@ const Map = () => {
                             tileSize={512}
                             tms
 
-                        />}
+                        />} */}
+
+
+
 
                     </MemoizedMapContainer>
 
@@ -272,6 +340,7 @@ const MemoizedMapContainer: React.FC<{
         scrollWheelZoom={true}
     >
         <TileLayer url={layer} />
+
         {children}
     </MapContainer>
 ));

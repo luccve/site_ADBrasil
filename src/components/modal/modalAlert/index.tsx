@@ -38,7 +38,7 @@ const ModalAlert: React.FC<ModalAlertProps> = ({ message, title, onClose, visibl
             {visible && (
                 <div className='absolute h-auto w-[30%] max-md:w-[50%] border border-blue_l
                 bg-white rounded-lg shadow-md flex items-center justify-center animate-fade-menu
-                    top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50'>
+                    top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 p-5'>
                     <div className='py-5'>
                         {!isLoading && <h1 className='text-xl py-4 leading-snug -tracking-tighter font-semibold text-blue'>{title ? title : "Erro!"}</h1>}
                         {isLoading ? (

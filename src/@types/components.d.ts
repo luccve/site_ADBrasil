@@ -90,14 +90,14 @@ interface CardListProps {
 }
 
 type InfoUmProps = {
-    cidade?: string;
-    cod_um?: string;
-    id_um?: string;
-    texture?: string;
-    relevo?: string;
-    classe_solo?: string;
-    lat?: string;
-    lng?: string;
-    valor_ad?: string;
+    Ordem?: string;
+    Subordem?: string;
+    Textura?: string;
+    AD?: string;
+    ID?: number;
+    Relevo?: string;
+    Latitude?: number;
+    Longitude?: number;
+    
 
 }

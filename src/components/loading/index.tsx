@@ -8,9 +8,9 @@ const LoadingPage = () => {
     return (
 
         <>
-            <div className='flex text-center z-50'>
+            <div className='flex px-12 items-center text-center z-50'>
                 <button className='flex flex-col items-center justify-center text-blue font-bold' type="button" disabled>
-                    <span className="animate-spin h-5 w-5 mr-3 ...">
+                    <span className="text-center animate-spin h-5 w-5 mr-3 ...">
                         ---
                     </span>
                     Carregando...
