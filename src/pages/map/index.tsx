@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import { MapContainer, Marker, TileLayer, useMapEvents, GeoJSON } from "react-leaflet"
+import { MapContainer, Marker, TileLayer, useMapEvents, GeoJSON, WMSTileLayer } from "react-leaflet"
 
 import { MdOutlineGpsFixed } from 'react-icons/md';
 import { FiLayers } from 'react-icons/fi';
 import { AiOutlineClear } from 'react-icons/ai';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { TiLocation } from 'react-icons/ti';
-import { LatLngExpression, DivIcon, LatLng } from 'leaflet';
+import { LatLngExpression, DivIcon, LatLng, CRS } from 'leaflet';
 import { renderToString } from 'react-dom/server';
 
 
@@ -262,19 +262,19 @@ const Map = () => {
                             return <TileLayer key={index * Math.random() * 0.2} url={item} />
                         })}
 
-                        {/* {<WMSTileLayer
-                            // layers='CREN:PD_ORDEM'
-                            format='image/png'
+                        {<WMSTileLayer
+                            
+                            format='image/png8'
                             transparent
-                            // url='https://geoservicos.ibge.gov.br/geoserver/CREN/wms?service=WMS'
-                            layers='geonode:brasil_ad_solos_v5'
-                            url='http://geoinfo.cnps.embrapa.br/geoserver/wms?'
+                            layers='0'
+                            url='https://geoportal.sgb.gov.br/server/services/pronasolos/agua_disponivel/MapServer/WMSServer?'
                             version='1.1.0'
-                            crs={CRS.EPSG4326}
-                            tileSize={512}
+                            crs={CRS.EPSG3857}
+                            tileSize={1024}
                             tms
+                            
 
-                        />} */}
+                        />}
 
 
 
