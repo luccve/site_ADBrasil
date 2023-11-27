@@ -3,19 +3,29 @@ import BalanceLogo from "/BalanceLogo.svg";
 
 const Balance = () => {
 
-    const raw = JSON.stringify({ "sand": 30, "clay": 40, "silt": 30, "density": 1.5, "org_mat": 0.02, "porosity": 0.15 });
+
 
     useEffect((
 
     ) => { fetch_ptf() }, []);
 
     const fetch_ptf = async () => {
-        const dados = await fetch("https://api-ptf.onrender.com/ptf", {
-            method: 'POST', headers: {
-                'Content-Type': 'application/json'
-            }, body: raw, redirect: 'follow'
-        })
-        console.log(dados.json());
+        const raw = JSON.stringify({ "sand": 30, "clay": 40, "silt": 30, "density": 1.5, "org_mat": 0.02, "porosity": 0.15 });
+        try {
+            const dados = await fetch("https://api-ptf.onrender.com/ptf", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: raw,
+                redirect: 'follow'
+            });
+
+            const resposta = await dados.json();
+            console.log(resposta);
+        } catch (error) {
+            console.error("Erro ao fazer a requisição:", error);
+        }
     }
 
     return (
