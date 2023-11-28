@@ -8,7 +8,7 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import { TiLocation } from 'react-icons/ti';
 import { LatLngExpression, DivIcon, LatLng, CRS } from 'leaflet';
 import { renderToString } from 'react-dom/server';
-
+import { MdOutlineWaterDrop } from "react-icons/md";
 
 import ModalComponente from '../../components/modal/modalComponente';
 import { Link } from 'react-router-dom';
@@ -21,6 +21,8 @@ import 'leaflet/dist/leaflet.css'
 
 const Map = () => {
 
+    const [adLayer, setAdLayer] = useState(false);
+    const [eventClick, setEventClick] = useState(true);
     const [color_geoData, setColor_geoData] = useState<string>('#000');
     const [infoMapa, setInfoMapa] = useState(false);
     const [message, setMessage] = useState<string | InfoUmProps>('');
@@ -33,17 +35,10 @@ const Map = () => {
     const tileStreet = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
     const tileSattelite = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
     const [layer, setLayer] = useState<string>(tileStreet);
-    const [zoom, setZoom] = useState<number>(4);
-    const [geoData, setGeoData] = useState<any>({
-        "type": "Feature",
-        "geometry": {
-            "type": "Point",
-            "coordinates": [1, 1],
-        },
-        "properties": {
-            "name": "Dinagat Islands"
-        }
-    });
+    const [zoom, setZoom] = useState<number>(8);
+
+    const [geoData, setGeoData] = useState<any>(null);
+
 
     const icon = new DivIcon({
         html: renderToString(<div className='text-4xl text-[#000]'><TiLocation /></div>),
@@ -61,18 +56,22 @@ const Map = () => {
 
 
     const ListeningEventsMaps = () => {
+        if (eventClick) {
 
-        useMapEvents({
-            click(e) {
-                setGeoData(null);
-                setPosition(e.latlng);
-                // map.setZoomAround(e.latlng, 8);
-                SetQuery(e.latlng);
-                // setZoom(e.sourceTarget._animateToZoom);
-            },
+            useMapEvents({
+                click(e) {
+                    setEventClick(false);
+                    setGeoData(null);
+                    setPosition(e.latlng);
+                    SetQuery(e.latlng);
+                    // map.setZoomAround(e.latlng, 8);
+                    // setZoom(e.sourceTarget._animateToZoom);
+                },
 
 
-        });
+
+            });
+        }
 
         return position === null ? null : (
             <Marker icon={icon} position={position} />
@@ -144,6 +143,7 @@ const Map = () => {
 
     const fetchQuery = async (url: string, lat: number, lng: number) => {
         try {
+
             let object = await fetch(url, { method: 'GET' });
 
             await object.json().then((response) => {
@@ -193,6 +193,7 @@ const Map = () => {
             setMessage('Selecione a área exata do estado');
         } finally {
             setInfoMapa(true);
+
         }
 
 
@@ -215,6 +216,7 @@ const Map = () => {
 
 
         }
+
         setModal(!modal);
 
     };
@@ -224,13 +226,15 @@ const Map = () => {
         setUserLocation(null);
         setZoom(4);
         setCenter([-12.1, -46.2]);
+        setGeoData(null);
         // setLayersAdd([]);
 
     };
 
 
 
-    let mapKey = position ? center.join('_') : 'default';
+    // let mapKey = position ? center.join('_') : 'default';
+    let mapKey = 'default';
 
 
 
@@ -239,7 +243,7 @@ const Map = () => {
             <div className='min-h-screen min-w-screen grid place-self-center'>
                 <div className='z-1 relative'>
 
-                    <ModalAlert message={message} onClose={setInfoMapa} visible={infoMapa} title={'Unidade de Mapeamento Selecionada'} />
+                    <ModalAlert message={message} onClose={() => { setInfoMapa(false); setEventClick(true); }} visible={infoMapa} title={'Unidade de Mapeamento Selecionada'} />
 
                     <MemoizedMapContainer
                         mapKey={mapKey}
@@ -253,7 +257,7 @@ const Map = () => {
                         {geoData &&
 
                             <GeoJSON bubblingMouseEvents data={geoData}
-                                style={{ color: color_geoData, weight: 1, fillOpacity: 1 }}
+                                style={{ fillColor: color_geoData, color: "#000", weight: 2, fillOpacity: 1, }}
                             />
                         }
                         <ListeningEventsMaps />
@@ -262,17 +266,20 @@ const Map = () => {
                             return <TileLayer key={index * Math.random() * 0.2} url={item} />
                         })}
 
-                        {<WMSTileLayer
-                            
+                        {adLayer && <WMSTileLayer
+
                             format='image/png8'
                             transparent
                             layers='0'
                             url='https://geoportal.sgb.gov.br/server/services/pronasolos/agua_disponivel/MapServer/WMSServer?'
                             version='1.1.0'
                             crs={CRS.EPSG3857}
-                            tileSize={1024}
-                            tms
-                            
+                            tileSize={256}
+                            tms={true}
+                            updateInterval={2000}
+                            pane='overlayPane'
+                            updateWhenIdle={true}
+                            keepBuffer={10}
 
                         />}
 
@@ -300,6 +307,9 @@ const Map = () => {
                         </button>
                         <button className=' h-[35px] z-20 text-white p-2 m-2' onClick={toggleModal}>
                             <AiOutlineSearch className='hover:scale-125 hover:text-white text-xl' />
+                        </button>
+                        <button className=' h-[35px] z-20 text-white p-2 m-2' onClick={() => setAdLayer(!adLayer)}>
+                            <MdOutlineWaterDrop className='hover:scale-125 hover:text-white text-xl' />
                         </button>
                         <Link className=' h-[35px] z-20 text-white p-2 m-2' to={"/"}>
                             <HiHome className='hover:scale-125 hover:text-white text-xl' />
