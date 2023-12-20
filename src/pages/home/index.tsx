@@ -9,6 +9,7 @@ import Mockup from '/mockup.png'
 import GooglePlay from '/google_play.png'
 import Card from '../../components/card'
 import BtnSave from '../../components/btn/btnSave'
+import { SiGooglescholar, SiSmartthings } from "react-icons/si";
 
 
 
@@ -16,25 +17,54 @@ const Home = () => {
 
     const text_home = [
 
-        { title: 'Projeto', text: `A plataforma AD Brasil é uma iniciativa da Embrapa Solos para apoiar estudos sobre o manejo, a retenção e o armazenamento de água dos solos do Brasil; e o aperfeiçoamento de métodos (diretos e indiretos) para estimativa da condutividade hidráulica e do teor de água no solo.` },
         {
-            title: 'Objetivos', text:
-                `Ampliar e suprir a demanda de informações sobre a disponibilidade de água e o conhecimento das características físico-hídricas das principais classes de solos brasileiros;
-    
-        Aperfeiçoamento de uso dos métodos integrados de análise de sistemas interpretativos do uso do solo e da água, visando subsidiar políticas públicas de planejamento, manejo e conservação para utilização dos solos brasileiros em base sustentável;
-    
-        Melhorar a estimativa de métodos diretos e  indiretos de predição (pedotransferência) de condutividade hidráulica e da retenção de água no solo;
-    
-        Propor protocolos experimentais de análises de estimativas de água no solo;
-    
-        Prover informações para o uso e manejo racional da água no solo;
-    
-        Conhecer o comportamento físico-hídrico de distintas classes de solos brasileiros para contribuir com as inovações para o uso eficiente da água, principalmente quanto à implantação de sistemas de zoneamentos, monitoramento, apoio à decisão e serviços ambientais, diante às incertezas climáticas e à intensificação de estresses bióticos e abióticos previstos para as próximas décadas.`
+            title: 'Projeto',
+            text: `A plataforma AD Brasil é uma iniciativa da Embrapa Solos para apoiar estudos sobre o manejo, 
+        a retenção e o armazenamento de água dos solos do Brasil; e o aperfeiçoamento de métodos (diretos e indiretos) 
+        Fpara estimativa da condutividade hidráulica e do teor de água no solo.` },
+
+        {
+            title: 'Objetivos',
+            text: (
+                <div>
+                    Ampliar e suprir a demanda de informações sobre a disponibilidade de água e o conhecimento das características físico-hídricas das principais classes de solos brasileiros;<br />
+                    <br />
+                    1 - Aperfeiçoamento de uso dos métodos integrados de análise de sistemas interpretativos do uso do solo e da água,
+                    visando subsidiar políticas públicas de planejamento, manejo e conservação para utilização dos solos brasileiros em base sustentável;<br />
+                    <br />
+                    2 - Melhorar a estimativa de métodos diretos e indiretos de predição (pedotransferência) de condutividade hidráulica e da retenção de água no solo;<br />
+                    <br />
+                    3 - Propor protocolos experimentais de análises de estimativas de água no solo;<br />
+                    <br />
+                    4 - Prover informações para o uso e manejo racional da água no solo;<br />
+                    <br />
+                    5 - Conhecer o comportamento físico-hídrico de distintas classes de solos brasileiros para contribuir com as inovações para o uso eficiente da água, principalmente quanto à implantação de sistemas de zoneamentos, monitoramento, apoio à decisão e serviços ambientais, diante às incertezas climáticas e à intensificação de estresses bióticos e abióticos previstos para as próximas décadas.
+                </div>
+            ),
         },
 
 
-        { title: 'Público', text: `Usuários da informação do manejo da água no solo na agropecuária` },
-        { title: 'Contéudo', text: `A plataforma AD Brasil contempla o aplicativo AD Brasil desenvolvido para dispositivos Android e a interface online WebGis, a qual comunica-se diretamente com o aplicativo e permiti prover os usuários de forma rápida aos dados e informações sobre Avaliação, Predição e Mapeamento de Água Disponível em Solos do Brasil. Baseado no conceito WebGIS, no qual integra um ambiente de Sistemas de Informações Geográficas (SIG), viabiliza o acesso às informações espaciais, juntamente com as informações coletadas em campo, para realização de consultas e análises de informações físico-hídricas dos solos do Brasil.` },
+        {
+            title: 'Público',
+            text: `Usuários da informação do  teor de água  no solo`
+        },
+        {
+            title: 'Contéudo',
+            text: (
+                <div>
+                    <p>
+                        A plataforma AD Brasil contempla o aplicativo AD Brasil desenvolvido para dispositivos Android e a interface online WebGis,
+                        a qual comunica-se diretamente com o aplicativo e permiti prover os usuários de forma rápida aos dados e informações sobre Avaliação,
+                        Predição e Mapeamento de Água Disponível em Solos do Brasil.
+
+                    </p>
+                    <br />
+                    <p>Baseado no conceito WebGIS, no qual integra um ambiente de Sistemas de Informações Geográficas (SIG), viabiliza o acesso às informações
+                        espaciais, juntamente com as informações coletadas em campo, para realização de consultas e análises de informações físico-hídricas dos solos do Brasil.
+                    </p>
+                </div>)
+
+        },
     ]
 
 
@@ -55,12 +85,9 @@ const Home = () => {
                 </h1>
 
                 <p className='text-blue w-3/4 text-base max-lg:text-sm font-semibold p-5 bg-white rounded'>
-                    Diante às dimensões do país e da diversidade produtiva e ambiental das diferentes características
-                    hidrodinâmicas dos solos do território nacional, a estratégia da plataforma visa estabelecer um sistema
-                    de apoio aos estudos sobre água dos solos do Brasil e apoiar a rede do Zoneamento Agrícola de Risco Climático
-                    (Zarc) e de projetos que utilizam informações sobre a dinâmica da água do solo, tais como manejo, irrigação,
-                    erosão, simulação do crescimento,
-                    desenvolvimento e da produtividade de culturas agrícolas e dos impactos das mudanças climáticas na agricultura.</p>
+                    Diante às dimensões do país e da diversidade produtiva e ambiental das diferentes características hidrodinâmicas dos solos do território nacional,
+                    a estratégia da plataforma visa estabelecer um sistema de apoio aos estudos sobre água dos solos do Brasil.
+                </p>
 
 
 
@@ -88,6 +115,18 @@ const Home = () => {
                     <div className='flex flex-col items-center '>
                         <img className=' w-28 max-lg:w-16' src={Ptf} alt="Icone da ferramenta de pedotransferencia" />
                         <BtnLink Title='Pedotransferência' Path={"/ptf"} />
+                    </div>
+
+                    <div className='flex flex-col items-center '>
+                        {/* <img className=' w-28 max-lg:w-16' src={Ptf} alt="Icone da aba de educação" /> */}
+                        <SiGooglescholar className='text-white w-16 h-28 max-lg:w-16 max-lg:h-28' />
+                        <BtnLink Title='Educação' Path={"/ptf"} />
+                    </div>
+
+                    <div className='flex flex-col items-center '>
+                        {/* <img className=' w-28 max-lg:w-16' src={Ptf} alt="Icone da ferramenta de IA" /> */}
+                        <SiSmartthings className='text-white w-16 h-28 max-lg:w-16 max-lg:h-28' />
+                        <BtnLink Title='IA' Path={"/ptf"} />
                     </div>
 
 
@@ -142,8 +181,8 @@ const Home = () => {
 
             <section id='section4' className='flex flex-col justify-center min-h-screen p-2 section_grass rounded shadow shadow-blue_l max-lg:h-full '>
                 <div className='grid grid-cols-2 justify-items-center max-lg:grid-cols-1 max-md:grid-cols-2 max-sm:grid-cols-1 '>
-                    {text_home.map((item: { title: string, text: string }, index: number) =>
-                        <Card key={item.text + index} Title={item.title} Text={item.text} />
+                    {text_home.map((item: { title: string, text: string | JSX.Element }, index: number) =>
+                        <Card key={index + Math.random()} Title={item.title} Text={item.text} />
 
                     )}
 

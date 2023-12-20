@@ -157,10 +157,16 @@ export type adProps = {
 
 export interface CardProps {
   Title: string;
-  Text: string;
+  Text: string | JSX.Element;
 }
 
 export type ValueMapProps = {
   textura: string,
   ad: string
+}
+
+interface PtfTypeProps {
+
+  author: string;
+  ptf: number[] | number;
 }

@@ -241,7 +241,7 @@ const Map = () => {
     return (
         <>
             <div className='min-h-screen min-w-screen grid place-self-center'>
-                <div className='z-1 relative'>
+                <div className='z-1 relative '>
 
                     <ModalAlert message={message} onClose={() => { setInfoMapa(false); setEventClick(true); }} visible={infoMapa} title={'Unidade de Mapeamento Selecionada'} />
 
@@ -344,7 +344,7 @@ const MemoizedMapContainer: React.FC<{
         fadeAnimation={true}
         tap={true}
         key={mapKey}
-        style={{ width: '100%', height: '100vh', zIndex: 1 }}
+        style={{ width: '100%', height: '100%', zIndex: 1 }}
         center={center}
         zoom={zoom}
         scrollWheelZoom={true}

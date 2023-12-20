@@ -10,12 +10,8 @@ import BtnRegular from '../btn/BtnRegular';
 import InputText from '../input/inputText';
 import ptfJson from '../../database/data/ptfJson';
 import ResultadoPTF from '../resultadoPTF';
+import type {PtfTypeProps} from '../../@types/data'
 
-interface PtfTypeProps {
-
-    author: string;
-    ptf: number[] | number;
-}
 
 
 
@@ -206,7 +202,7 @@ const FormPTF = ({ tab, region }: PTFttypes) => {
     function executePTF() {
         //region: 0 - norte, 1 - nordeste, 2 - CO, 3 - SE, 4 - SUL e 5 Nacional.
         // type: 0 - Simplificada, 1 - Intermediaria, 2 - Avançada
-        let AT = Number(areiaFina) + Number(areiaGrossa);
+        // let AT = Number(areiaFina) + Number(areiaGrossa);
 
         if (region != null) {
             try {
@@ -214,27 +210,27 @@ const FormPTF = ({ tab, region }: PTFttypes) => {
                     case tab = 0:
 
                         setResultadoPTF([
-                            {
-                                author: "Arruda",
-                                ptf: PTF.arruda(Number(silte), Number(argila)),
+                            // {
+                            //     author: "Arruda",
+                            //     ptf: PTF.arruda(Number(silte), Number(argila)),
 
-                            },
-                            {
-                                author: "Giarola A",
-                                ptf: PTF.giarola(Number(silte), Number(argila)),
+                            // },
+                            // {
+                            //     author: "Giarola A",
+                            //     ptf: PTF.giarola(Number(silte), Number(argila)),
 
 
-                            },
-                            {
-                                author: "Giarola B",
-                                ptf: PTF.giarolab(Number(silte), Number(argila)),
+                            // },
+                            // {
+                            //     author: "Giarola B",
+                            //     ptf: PTF.giarolab(Number(silte), Number(argila)),
 
-                            },
-                            {
-                                author: "Masutti",
-                                ptf: PTF.masutti(Number(argila), Number(silte)),
+                            // },
+                            // {
+                            //     author: "Masutti",
+                            //     ptf: PTF.masutti(Number(argila), Number(silte)),
 
-                            },
+                            // },
                             {
                                 author: "Wenceslau (ZARC)",
                                 ptf: PTF.wenceslau(Number(areia), Number(silte), Number(argila)),
@@ -247,11 +243,11 @@ const FormPTF = ({ tab, region }: PTFttypes) => {
 
                             },
 
-                            {
-                                author: "Leonor Assad",
-                                ptf: PTF.leonorAssad(Number(areia)),
+                            // {
+                            //     author: "Leonor Assad",
+                            //     ptf: PTF.leonorAssad(Number(areia)),
 
-                            },
+                            // },
 
                         ])
                         setResultadoView(true);
@@ -260,18 +256,19 @@ const FormPTF = ({ tab, region }: PTFttypes) => {
                         break;
                     case tab = 1:
 
-                        setResultadoPTF([
+                        // setResultadoPTF([
 
-                            {
-                                author: "Oliveira",
-                                ptf: PTF.oliveira(Number(AT), Number(silte), Number(argila), Number(densidade)),
+                        //     {
+                        //         author: "Oliveira",
+                        //         ptf: PTF.oliveira(Number(AT), Number(silte), Number(argila), Number(densidade)),
 
-                            },
-                            {
-                                author: "Oliveira Parametros",
-                                ptf: PTF.oliveira_p(Number(AT), Number(silte), Number(argila), Number(densidade)),
+                        //     },
+                        //     {
+                        //         author: "Oliveira Parametros",
+                        //         ptf: PTF.oliveira_p(Number(AT), Number(silte), Number(argila), Number(densidade)),
 
-                            },])
+                        //     },])
+                        setResultadoPTF([]);
 
                         setResultadoView(true);
 
@@ -280,41 +277,41 @@ const FormPTF = ({ tab, region }: PTFttypes) => {
 
                         setResultadoPTF([
 
-                            {
-                                author: "Andrade && Stone",
-                                ptf: PTF.andrade_stone(Number(silte), Number(argila), Number(areiaFina) + Number(areiaGrossa), Number(carbonoOrganico)),
+                            // {
+                            //     author: "Andrade && Stone",
+                            //     ptf: PTF.andrade_stone(Number(silte), Number(argila), Number(areiaFina) + Number(areiaGrossa), Number(carbonoOrganico)),
 
-                            },
-                            {
-                                author: "Reichert",
-                                ptf: PTF.reichert(Number(argila), Number(silte), Number(carbonoOrganico), Number(densidade)),
+                            // },
+                            // {
+                            //     author: "Reichert",
+                            //     ptf: PTF.reichert(Number(argila), Number(silte), Number(carbonoOrganico), Number(densidade)),
 
-                            },
+                            // },
 
-                            {
-                                author: "Peraza",
-                                ptf: PTF.peraza(Number(argila), Number(silte), Number(carbonoOrganico)),
+                            // {
+                            //     author: "Peraza",
+                            //     ptf: PTF.peraza(Number(argila), Number(silte), Number(carbonoOrganico)),
 
-                            },
-
-
-                            {
-                                author: "Tomasella N2",
-                                ptf: PTF.tomasella_n2(Number(areiaGrossa), Number(areiaFina), Number(silte), Number(argila), Number(carbonoOrganico), Number(umidadeEquivalente)),
-
-                            },
-                            {
-                                author: "Tomasella N3",
-                                ptf: PTF.tomasella_n3(Number(areiaGrossa), Number(areiaFina), Number(silte), Number(argila), Number(carbonoOrganico), Number(densidade)),
-
-                            },
+                            // },
 
 
-                            {
-                                author: "Van den Berg",
-                                ptf: PTF.vandenBerg(Number(silte), Number(argila), Number(carbonoOrganico)),
+                            // {
+                            //     author: "Tomasella N2",
+                            //     ptf: PTF.tomasella_n2(Number(areiaGrossa), Number(areiaFina), Number(silte), Number(argila), Number(carbonoOrganico), Number(umidadeEquivalente)),
 
-                            },
+                            // },
+                            // {
+                            //     author: "Tomasella N3",
+                            //     ptf: PTF.tomasella_n3(Number(areiaGrossa), Number(areiaFina), Number(silte), Number(argila), Number(carbonoOrganico), Number(densidade)),
+
+                            // },
+
+
+                            // {
+                            //     author: "Van den Berg",
+                            //     ptf: PTF.vandenBerg(Number(silte), Number(argila), Number(carbonoOrganico)),
+
+                            // },
                             {
                                 author: "DASAM",
                                 ptf: PTF.DASAM(Number(areiaFina) + Number(areiaGrossa), Number(silte), Number(argila), Number(densidade)),
