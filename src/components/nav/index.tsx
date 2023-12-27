@@ -46,7 +46,7 @@ const nav = () => {
     return (
 
         <>
-            <div className="bg-white w-auto rounded shadow shadow-blue_l h-auto py-4 ">
+            <div className="bg-white w-auto rounded shadow shadow-blue_l h-auto py-4">
 
                 <ScrollToHashElement />
                 <nav className="text-blue text-md font-bold inline-block max-lg:text-xs space-y-5 ">
