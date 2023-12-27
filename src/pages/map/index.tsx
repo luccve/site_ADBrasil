@@ -1,360 +1,69 @@
-import React, { useState } from 'react'
-import { MapContainer, Marker, TileLayer, useMapEvents, GeoJSON, WMSTileLayer } from "react-leaflet"
 
-import { MdOutlineGpsFixed } from 'react-icons/md';
-import { FiLayers } from 'react-icons/fi';
-import { AiOutlineClear } from 'react-icons/ai';
-import { AiOutlineSearch } from 'react-icons/ai';
-import { TiLocation } from 'react-icons/ti';
-import { LatLngExpression, DivIcon, LatLng, CRS } from 'leaflet';
-import { renderToString } from 'react-dom/server';
-import { MdOutlineWaterDrop } from "react-icons/md";
+import NavMap from '../../components/navMap';
+import ModalMap from '../../components/modal/ModalMap';
+import MinimapControl from '../../components/miniMap';
+import GeoJSONMap from '../../components/GeoJSONMap';
+import GetCoordinates from '../../components/getCoordinates';
+import LayersMap from '../../components/layersMap';
+import MapEvents from '../../components/mapEvents';
+import { MapContainer, ScaleControl, } from 'react-leaflet';
+import { useContext, useEffect, useState } from 'react';
+import GetPosition from '../../components/getPosition';
+import { Map } from 'leaflet';
+import { MyContextProps } from '../../@types/data';
+import { ContextMap } from '../../contexts';
+const MapPage = () => {
 
-import ModalComponente from '../../components/modal/modalComponente';
-import { Link } from 'react-router-dom';
-import { HiHome } from 'react-icons/hi';
-import ModalAlert from '../../components/modal/modalAlert';
-import { InfoUmProps } from '../../@types/components';
+    const [_map, _setMap] = useState<Map | null>(null);
+    const [modal, setModal] = useState(false);
+    const [message, setMessage] = useState<MyContextProps>({});
+    const context = useContext(ContextMap)
+    useEffect(() => {
+        if (context){
 
-import 'leaflet/dist/leaflet.css'
-
-
-const Map = () => {
-
-    const [adLayer, setAdLayer] = useState(false);
-    const [eventClick, setEventClick] = useState(true);
-    const [color_geoData, setColor_geoData] = useState<string>('#000');
-    const [infoMapa, setInfoMapa] = useState(false);
-    const [message, setMessage] = useState<string | InfoUmProps>('');
-    const [modal, setModal] = useState<Boolean>(false);
-    const [position, setPosition] = useState<LatLngExpression | null>(null);
-    // const [layersAdd, setLayersAdd] = useState<string[]>([`https://geoinfo.cnpa.embrapa.br/geoserver/gwc/service/gmaps?layers=geonode:pluv_pe_2&zoom={z}&x={x}&y={y}&format=image/png8`]);
-    const [layersAdd, _setLayersAdd] = useState<string[]>([`https://geoportal.sgb.gov.br/server/rest/services/pronasolos/agua_disponivel/MapServer?`]);
-    const [userLocation, setUserLocation] = useState<[number, number] | null>(null);
-    const [center, setCenter] = useState<[number, number]>([-12.1, -46.2]);
-    const tileStreet = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
-    const tileSattelite = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
-    const [layer, setLayer] = useState<string>(tileStreet);
-    const [zoom, setZoom] = useState<number>(8);
-
-    const [geoData, setGeoData] = useState<any>(null);
-
-
-    const icon = new DivIcon({
-        html: renderToString(<div className='text-4xl text-[#000]'><TiLocation /></div>),
-        iconAnchor: [18, 20],
-        className: 'marker'
-
-    })
-
-    const icon2 = new DivIcon({
-        html: renderToString(<div className='text-4xl text-[#bf4b4b]'><TiLocation /></div>),
-        iconAnchor: [18, 20],
-        className: 'marker'
-
-    })
-
-
-    const ListeningEventsMaps = () => {
-        if (eventClick) {
-
-            useMapEvents({
-                click(e) {
-                    setEventClick(false);
-                    setGeoData(null);
-                    setPosition(e.latlng);
-                    SetQuery(e.latlng);
-                    // map.setZoomAround(e.latlng, 8);
-                    // setZoom(e.sourceTarget._animateToZoom);
-                },
-
-
-
+            setMessage({
+                ID: context.ID,
+                AD: context.AD,
+                Ordem: context.Ordem,
+                Subordem: context.Subordem,
+                Relevo: context.Relevo,
+                Textura: context.Textura,
+                Latitude: context.Latitude,
+                Longitude: context.Longitude,
             });
         }
-
-        return position === null ? null : (
-            <Marker icon={icon} position={position} />
-        );
-    }
-
-    const handlePosition = () => {
-
-        navigator.geolocation.getCurrentPosition(
-            position => {
-                const { latitude, longitude } = position.coords;
-                setCenter([latitude, longitude]);
-                setZoom(8);
-                setUserLocation([latitude, longitude]);
-
-            },
-            error => {
-                console.error(error.message);
-            }
-        );
-    };
-
-    function changeColor(ad: number | null) {
-        const colorRanges = [
-            { min: 1.84, max: Infinity, color: "#8500A8" },
-            { min: 1.4, max: 1.84, color: "#005CE6" },
-            { min: 1.06, max: 1.4, color: "#00C4FF" },
-            { min: 0.8, max: 1.06, color: "#37A800" },
-            { min: 0.61, max: 0.8, color: "#4DE600" },
-            { min: 0.46, max: 0.61, color: "#FFAB00" },
-            { min: 0.34, max: 0.46, color: "#FFFF73" },
-            { min: -Infinity, max: 0.34, color: "#9C9C9C" },
-        ];
-
-        let newAd = Number(ad);
-        if (newAd === null) {
-            return "transparent";
-        }
-
-        let colorRange = colorRanges.find(
-            (range) => range.min <= newAd && newAd <= range.max
-        );
-        return colorRange ? colorRange.color : "transparent";
-    }
-
-    const toggleLayer = () => {
-
-        setLayer(layer == tileStreet ? tileSattelite : tileStreet);
-
-    };
-
-    const ZoomMap = () => {
-        const { lat, lng } = position as { lat: number, lng: number };
-        setCenter([lat, lng]);
-        setZoom(8);
-    };
-
-
-
-
-    const SetQuery = async (latLng: LatLng) => {
-
-        const { lat, lng } = latLng;
-        // const url = `https://geoinfo.cnpa.embrapa.br/geoserver/wfs?srsName=EPSG%3A4326&typename=geonode%3Apluv_pe_2&outputFormat=json&version=1.0.0&service=WFS&request=GetFeature&CQL_FILTER=INTERSECTS%28the_geom%2CPOINT%28${lng}%20${lat}%29%29`;
-        const url = `https://geoportal.sgb.gov.br/server/rest/services/pronasolos/agua_disponivel/MapServer/0/query?f=json&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&geometry={"x": ${lng}, "y": ${lat}, "spatialReference": {"wkid": 4326}}&outFields=ordem,subordem,grande_gru,subgrupos,textura,horizonte,relevo,total_ad,legad,objectid_1&outSR=4326&tolerance=10`;
-        await fetchQuery(url, lat, lng);
-
-    };
-
-    const fetchQuery = async (url: string, lat: number, lng: number) => {
-        try {
-
-            let object = await fetch(url, { method: 'GET' });
-
-            await object.json().then((response) => {
-
-                setColor_geoData(changeColor(response.features[0].attributes.total_ad));
-                if (response.features[0].attributes.total_ad > 0) {
-                    setMessage({
-                        ID: response.features[0].attributes.objectid_1,
-                        Ordem: response.features[0].attributes.ordem,
-                        Subordem: response.features[0].attributes.subordem,
-                        Textura: response.features[0].attributes.textura,
-                        AD: `${response.features[0].attributes.total_ad} mm/cm`,
-                        Relevo: response.features[0].attributes.relevo,
-
-                        Latitude: Number(lat.toPrecision(5)),
-                        Longitude: Number(lng.toPrecision(5))
-                    })
-                } else {
-                    setMessage({
-                        ID: response.features[0].attributes.objectid_1,
-                        Ordem: response.features[0].attributes.ordem,
-                        Latitude: Number(lat.toPrecision(5)),
-                        Longitude: Number(lng.toPrecision(5))
-                    })
-                }
-                setGeoData(
-                    {
-                        "type": "Feature",
-                        "geometry": {
-                            "type": "MultiPolygon",
-                            "coordinates": [response.features[0].geometry.rings],
-                        },
-                        "properties": {
-                            "name": "Dinagat Islands"
-                        }
-                    }
-                );
-
-
-
-            })
-
-
-
-
-        } catch (error) {
-            setMessage('Selecione a área exata do estado');
-        } finally {
-            setInfoMapa(true);
-
-        }
-
-
-
-    }
-
-
-    const toggleModal = () => {
-        if (position) {
-
-
-            setTimeout(() => {
-                ZoomMap();
-
-                const timer = setInterval(ZoomMap, 500);
-
-
-                clearInterval(timer);
-            }, 500);
-
-
-        }
-
-        setModal(!modal);
-
-    };
-
-    const clearMarker = () => {
-        setPosition(null);
-        setUserLocation(null);
-        setZoom(4);
-        setCenter([-12.1, -46.2]);
-        setGeoData(null);
-        // setLayersAdd([]);
-
-    };
-
-
-
-    // let mapKey = position ? center.join('_') : 'default';
-    let mapKey = 'default';
-
-
+        
+    }, [context?.AD, modal]);
 
     return (
-        <>
-            <div className='min-h-screen min-w-screen grid place-self-center'>
-                <div className='z-1 relative '>
+        <div className={` flex items-center overflow-y-hidden h-screen relative bg-white`}>
+            {<NavMap />}
 
-                    <ModalAlert message={message} onClose={() => { setInfoMapa(false); setEventClick(true); }} visible={infoMapa} title={'Unidade de Mapeamento Selecionada'} />
+            <MapContainer
+                fadeAnimation={true}
+                tap={true}
+                style={{ width: '100%', height: '100%', zIndex: 0 }}
+                center={[-10.333333, -53.2]}
+                zoom={4}
+                scrollWheelZoom={false}
+            >
 
-                    <MemoizedMapContainer
-                        mapKey={mapKey}
-                        center={center}
-                        zoom={zoom}
-                        layer={layer}
-                    >
+                <ScaleControl position="bottomleft" imperial={false} />
+                <LayersMap />
+                <GeoJSONMap />
+                {!modal && <MapEvents setLoading={setModal} />}
+                <MinimapControl position={[0, 0]} zoom={2} />
+                <GetCoordinates />
+                <GetPosition />
+            </MapContainer>
 
-                        {userLocation && <Marker icon={icon2} position={userLocation}>
-                        </Marker>}
-                        {geoData &&
-
-                            <GeoJSON bubblingMouseEvents data={geoData}
-                                style={{ fillColor: color_geoData, color: "#000", weight: 2, fillOpacity: 1, }}
-                            />
-                        }
-                        <ListeningEventsMaps />
-
-                        {layersAdd.map((item, index) => {
-                            return <TileLayer key={index * Math.random() * 0.2} url={item} />
-                        })}
-
-                        {adLayer && <WMSTileLayer
-
-                            format='image/png8'
-                            transparent
-                            layers='0'
-                            url='https://geoportal.sgb.gov.br/server/services/pronasolos/agua_disponivel/MapServer/WMSServer?'
-                            version='1.1.0'
-                            crs={CRS.EPSG3857}
-                            tileSize={256}
-                            tms={true}
-                            updateInterval={2000}
-                            pane='overlayPane'
-                            updateWhenIdle={true}
-                            keepBuffer={10}
-
-                        />}
-
-
-
-
-                    </MemoizedMapContainer>
-
-
-
-
-                    {/* AreaBTN */}
-                    <div className='absolute w-auto top-20 left-1 flex flex-col max-md:flex-row rounded-xl bg-blue 
-                   max-md:top-10 max-md:left-1/2 max-md:transform max-md:-translate-x-1/2 max-md:-translate-y-1/2 z-50
-                '>
-
-                        <button className=' h-[35px] z-20 text-white p-2 m-2 ' onClick={handlePosition}>
-                            <MdOutlineGpsFixed className='hover:scale-125 hover:text-white text-xl' />
-                        </button>
-                        <button className=' h-[35px] z-20 text-white p-2 m-2' onClick={toggleLayer}>
-                            <FiLayers className='hover:scale-125 hover:text-white text-xl' />
-                        </button>
-                        <button className=' h-[35px] z-20 text-white p-2 m-2' onClick={clearMarker}>
-                            <AiOutlineClear className='hover:scale-125 hover:text-white text-xl' />
-                        </button>
-                        <button className=' h-[35px] z-20 text-white p-2 m-2' onClick={toggleModal}>
-                            <AiOutlineSearch className='hover:scale-125 hover:text-white text-xl' />
-                        </button>
-                        <button className=' h-[35px] z-20 text-white p-2 m-2' onClick={() => setAdLayer(!adLayer)}>
-                            <MdOutlineWaterDrop className='hover:scale-125 hover:text-white text-xl' />
-                        </button>
-                        <Link className=' h-[35px] z-20 text-white p-2 m-2' to={"/"}>
-                            <HiHome className='hover:scale-125 hover:text-white text-xl' />
-                        </Link>
-
-                    </div>
-
-                </div>
-
-
-
-
-                {modal &&
-                    <ModalComponente coords={position} title='Digite as coordenadas do ponto que será selecionada no mapa, as coordenadas estão na projeção 3857 Web Mercator'
-                        latLong={setPosition} onClose={toggleModal} />}
-            </div>
-        </>
+            {modal && <ModalMap message={message} onClose={setModal} visible={modal} title='Unidade de Mapeamento' />
+            }
+        </div>
 
     );
 
 }
 
 
-const MemoizedMapContainer: React.FC<{
-    mapKey: string;
-    center: [number, number];
-    zoom: number;
-    layer: string;
-    children: React.ReactNode;
-}> = React.memo(({ mapKey, center, zoom, layer, children }) => (
-    <MapContainer
-        fadeAnimation={true}
-        tap={true}
-        key={mapKey}
-        style={{ width: '100%', height: '100%', zIndex: 1 }}
-        center={center}
-        zoom={zoom}
-        scrollWheelZoom={true}
-    >
-        <TileLayer url={layer} />
-
-        {children}
-    </MapContainer>
-));
-
-
-
-export default Map;
+export default MapPage;
