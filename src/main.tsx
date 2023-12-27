@@ -12,7 +12,7 @@ import Catalog from './pages/catalogo/index.tsx';
 import Ptf from './pages/ptf/index.tsx';
 import Balance from './pages/balance/index.tsx';
 import Educacional from './pages/educacional/index.tsx';
-
+import ContextMapProvider from './contexts/index.tsx';
 
 // let _basename="/";
 
@@ -26,20 +26,20 @@ import Educacional from './pages/educacional/index.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
+    <ContextMapProvider>
+      <BrowserRouter basename={"/"}>
+        <Routes>
+          <Route path="/" element={<><Nav /><App /><Footer /></>} />
+          <Route path="/map" element={<><Map /></>} />
+          <Route path="/balance" element={<><Nav /><Balance /><Footer /></>} />
+          <Route path="/catalogo" element={<><Nav /><Catalog /><Footer /></>} />
+          <Route path="/ptf" element={<><Nav /><Ptf /><Footer /></>} />
+          <Route path="/edu" element={<><Nav /><Educacional /><Footer /></>} />
+          <Route path="*" element={<><Nav /><NotFound /><Footer /></>} />
 
-    <BrowserRouter basename={"/"}>
-      <Routes>
-        <Route path="/" element={<><Nav /><App /><Footer /></>} />
-        <Route path="/map" element={<Map />} />
-        <Route path="/balance" element={<><Nav /><Balance /><Footer /></>} />
-        <Route path="/catalogo" element={<><Nav /><Catalog /><Footer /></>} />
-        <Route path="/ptf" element={<><Nav /><Ptf /><Footer /></>} />
-        <Route path="/edu" element={<><Nav /><Educacional /><Footer /></>} />
-        <Route path="*" element={<><Nav /><NotFound /><Footer /></>} />
+        </Routes>
+      </BrowserRouter>
 
-      </Routes>
-    </BrowserRouter>
-
-
-  </React.StrictMode>
+    </ContextMapProvider>
+  </React.StrictMode >
 );
