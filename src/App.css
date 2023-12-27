@@ -1,5 +1,5 @@
 #root {
-  max-width: 1280px;
+  
   margin: 0 auto;
   text-align: center;
   
@@ -58,6 +58,14 @@ html{
   box-sizing: border-box;
   animation: animloader 1s linear infinite alternate;
 }
+
+#version{
+
+  color: #000000;
+
+}
+
+
 @keyframes animloader {
   0% {
     border-color: white rgba(255, 255, 255, 0) rgba(255, 255, 255, 0) rgba(255, 255, 255, 0);
