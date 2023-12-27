@@ -1,5 +1,5 @@
-import { extend } from "leaflet";
-import type { van_genuchtenProps } from "./data";
+import { extend, Map, LatLng } from "leaflet";
+import type { MyContextProps, van_genuchtenProps } from "./data";
 
 export interface CarrouselRegionProps {
     Array: ListaRegionsProps[];
@@ -50,7 +50,7 @@ export interface ResultadoPTFProps {
 
 interface ModalAlertProps {
     title?: string;
-    message: InfoUmProps | string;
+    message: InfoUmProps | string | MyContextProps | {};
     visible: boolean;
     onClose: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -94,10 +94,35 @@ type InfoUmProps = {
     Subordem?: string;
     Textura?: string;
     AD?: string;
+    'Água disponível'?: string;
     ID?: number;
     Relevo?: string;
     Latitude?: number;
     Longitude?: number;
-    
+
 
 }
+
+interface MapProps {
+    mapKey: string;
+    center: [number, number];
+    zoom: number;
+
+    children?: ReactNode;
+    ref?: any;
+}
+
+
+
+interface MinimapControlProps {
+    position: number[];
+    zoom: number
+
+}
+
+
+interface MinimapBoundsProps {
+    parentMap: Map
+    zoom: number
+}
+

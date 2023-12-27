@@ -41,7 +41,7 @@ export interface type_table_data {
 }
 
 export interface GeoJSON {
-  type?: string;
+  type?: "FeatureCollection" | "Feature" | string;
   name?: string;
   crs?: {
     type?: string;
@@ -50,8 +50,10 @@ export interface GeoJSON {
     };
   };
   features?: {
-    type?: string;
-    properties?: {};
+    type?: "Feature" | string;
+    properties?: {
+      name: string;
+    };
     geometry?: {
       type?: string;
       coordinates?: number[][][];
@@ -169,4 +171,21 @@ interface PtfTypeProps {
 
   author: string;
   ptf: number[] | number;
+}
+
+interface MyContextProps {
+  ID?: string | number;
+  url?: string;
+  color?: string;
+  Ordem?: string;
+  Subordem?: string;
+  Textura?: string;
+  AD?: string;
+  Relevo?: string;
+  Latitude?: number;
+  Longitude?: number;
+  geojson?: GeoJSON;
+  resposta?: number;
+  setContext?: React.Dispatch<React.SetStateAction<MyContextProps>>;
+
 }
