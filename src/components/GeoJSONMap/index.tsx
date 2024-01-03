@@ -25,7 +25,7 @@ const GeoJSONMap: React.FC = () => {
 
     async function delayedFunction() {
 
-        // Aguarda 2 segundos antes de continuar
+        
         await new Promise(resolve => setTimeout(resolve, 1000));
         setLoading(true);
 

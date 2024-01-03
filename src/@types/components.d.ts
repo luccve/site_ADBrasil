@@ -28,6 +28,7 @@ export interface PTFttypes {
     type: number | null | string;
     region?: number | null | string;
     tab: number | null | string;
+
 }
 
 export interface ResultadoPTFProps {

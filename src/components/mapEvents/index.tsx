@@ -15,32 +15,39 @@ const MapEvents: React.FC<MapEventsProps> = ({ setLoading }: MapEventsProps) => 
     const [position, setPosition] = useState<LatLngExpression | null>(null);
     const context = useContext(ContextMap);
 
+    async function delayedFunction() {
+        await new Promise(resolve => setTimeout(resolve, 10000));
+    }
+
+    async function fetchCoords(lat: number, lng: number) {
+        try {
+            const response = await Promise.race([RequestCoordsService.fetchCoords(lat, lng), delayedFunction()]);
+
+            if (context && context.setContext) {
+                if (response?.resposta === 500) {
+                    context.setContext({});
+                } else if (response?.resposta === 200) {
+                    context.setContext(response);
+                    setPosition([lat, lng]);
+                } else {
+                    context.setContext({});
+                }
+            }
+        } catch (err) {
+            alert(err);
+        } 
+    }
+
     useMapEvents({
         click(e: LeafletMouseEvent) {
-            setLoading(true);
             const { lat, lng } = e.latlng;
-            fetchCoords(lat, lng);
-
+            setLoading(true);
             setPosition([lat, lng]);
+            fetchCoords(lat, lng);
         },
     });
 
-    async function fetchCoords(lat: number, lng: number) {
-        const response = await RequestCoordsService.fetchCoords(lat, lng);
-        if (context && context.setContext) {
-            if (response?.resposta == 500) {
-
-                context.setContext({});
-            } else if (response?.resposta == 200) {
-                context.setContext(response);
-            }
-        }
-
-    }
-
-    return position === null ? null : (
-        <Marker icon={icon} position={position} />
-    );
+    return position === null ? null : <Marker icon={icon} position={position} />;
 };
 
 export default MapEvents;

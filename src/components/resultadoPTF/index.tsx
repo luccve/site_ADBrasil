@@ -30,8 +30,10 @@ const ResultadoPTF: React.FC<ResultadoPTFProps> = ({ ptf, author, cc, unidade, p
                             <div className='rounded flex flex-col space-x-3 p-3 pt-5 justify-center items-center max-md:w-3/4
                                 animate-stagger-menu'>
 
-                                <CardList ArrayTitle={['Parâmetros', 'Unidade']}
+                                <CardList ArrayTitle={['Parâmetros de Entrada', 'Unidade']}
                                     ArrayRes={[parametros, unidade]} />
+
+                                 <h1 className='text-sm text-white py-5'>Parâmetros de Saída</h1>   
                                 <CardList ArrayRes={[ptf[0].toPrecision(3), ptf[1].toPrecision(3), ptf[2].toPrecision(3), ptf[3].toPrecision(3)]}
                                     ArrayTitle={["alpha (kPa⁻¹)", "n", "theta_r (m³/m³)", "theta_s (m³/m³)"]} />
 

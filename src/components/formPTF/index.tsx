@@ -10,7 +10,7 @@ import BtnRegular from '../btn/BtnRegular';
 import InputText from '../input/inputText';
 import ptfJson from '../../database/data/ptfJson';
 import ResultadoPTF from '../resultadoPTF';
-import type {PtfTypeProps} from '../../@types/data'
+import type { PtfTypeProps } from '../../@types/data'
 
 
 
@@ -37,9 +37,40 @@ const FormPTF = ({ tab, region }: PTFttypes) => {
     const [_isFocused, setIsFocused] = useState(false);
 
 
+    const inputsMapping: inputPropsMapping = {
+        ARE: { title: "Areia (%)", stateSetter: setAreia, value: areia },
+        ARG: { title: "Argila (%)", stateSetter: setArgila, value: argila },
+        AREF: { title: "Areia Fina (%)", stateSetter: setAreiaFina, value: areiaFina },
+        AREG: { title: "Areia Grossa (%)", stateSetter: setAreiaGrossa, value: areiaGrossa },
+        SIL: { title: "Silte (%)", stateSetter: setSilte, value: silte },
+        DS: { title: "Densidade (g/cm³)", stateSetter: setDensidade, value: densidade },
+        CO: { title: "Carbono Orgânico (g/cm³)", stateSetter: setCarbonoOrganico, value: carbonoOrganico },
+        UE: { title: "Umidade Equivalente (g/g)", stateSetter: setUmidadeEquivalente, value: umidadeEquivalente },
+        CTC: { title: "CTC (cmol/kg)", stateSetter: setCtc, value: ctc },
+        PH: { title: "pH", stateSetter: setpH, value: pH },
+        MO: { title: "Materia Organica (%)", stateSetter: setMateriaOrganico, value: materiaOrganico },
+    };
+
+
+    useEffect(() => {
+        setPtfIndex(-1);
+    }, [tab, region])
+
+    interface inputPropsMapping {
+
+        [key: string]: {
+            title: string;
+            stateSetter: React.Dispatch<React.SetStateAction<string>>;
+            value: string;
+        };
+
+    }
+
     useEffect(() => {
         setResultadoView(false);
     }, [ptfSelectIndex]);
+
+
 
     const handleFocus = () => {
         setIsFocused(true);
@@ -70,6 +101,7 @@ const FormPTF = ({ tab, region }: PTFttypes) => {
         setResultadoView(false)
         setPtfIndex(-1);
     };
+
 
     const handleTeste = () => {
 
@@ -176,9 +208,7 @@ const FormPTF = ({ tab, region }: PTFttypes) => {
             }
             return false
         })
-        // console.log(areia, areiaFina, areiaGrossa, silte, argila)
 
-        // console.log(Number(areia), Number(areiaFina), Number(areiaGrossa), Number(silte), Number(argila))
 
         if (NaN.includes(true)) {
             setMessageAlert(`Existem valores não númericos`);
@@ -350,8 +380,8 @@ const FormPTF = ({ tab, region }: PTFttypes) => {
 
             <div className='flex flex-col items-center justify-center rounded-md shadow-md bg-white link2'>
 
-                <select onChange={(e) => setPtfIndex(Number(e.target.value))} 
-                className='rounded p-2 w-full my-4 max-md:text-sm text-lg text-center' >
+                <select onChange={(e) => {setPtfIndex(Number(e.target.value))}}
+                    className='rounded p-2 w-full my-4 max-md:text-sm text-lg text-center' >
                     <option value="-1">Selecione uma função de PTF</option>
                     {ptfJson.map((item, index) => {
                         if (item.region === region && item.type == tab)
@@ -368,103 +398,31 @@ const FormPTF = ({ tab, region }: PTFttypes) => {
 
 
                 {/* AREA FORMULARIO */}
-                <div className='mt-3 mb-5'>
+                <div className='mt-3 mb-5' key={'forms'}>
                     {
                         ptfSelectIndex >= 0 ?
-                            ptfJson[ptfSelectIndex].inputProps.map((item, index) => {
-                                if (item === "ARE") {
-                                    return <InputText key={index + item} Title={"Areia (%)"}
-                                        handleFocus={handleFocus} handleBlur={handleBlur}
+                            ptfJson[ptfSelectIndex].inputProps.map((item, index) => (
+                                inputsMapping[item] ? (
+                                    <InputText
+                                        key={index + item}
+                                        Title={inputsMapping[item].title}
+                                        handleFocus={handleFocus}
+                                        handleBlur={handleBlur}
                                         handleTextChange={handleTextChange}
-                                        state={setAreia}
-                                        value={areia}
+                                        state={inputsMapping[item].stateSetter}
+                                        value={inputsMapping[item].value}
                                     />
-                                }
-                                else if (item === "ARG") {
-                                    return <InputText key={index + item} Title={"Argila (%)"}
-                                        handleFocus={handleFocus} handleBlur={handleBlur}
-                                        handleTextChange={handleTextChange}
-                                        state={setArgila}
-                                        value={argila}
-                                    />
-                                }
-                                else if (item === "AREF") {
-                                    return <InputText key={index + item} Title={"Areia Fina (%)"}
-                                        handleFocus={handleFocus} handleBlur={handleBlur}
-                                        handleTextChange={handleTextChange}
-                                        state={setAreiaFina}
-                                        value={areiaFina}
-                                    />
-                                }
-                                else if (item === "AREG") {
-                                    return <InputText key={index + item} Title={"Areia Grossa (%)"}
-                                        handleFocus={handleFocus} handleBlur={handleBlur}
-                                        handleTextChange={handleTextChange}
-                                        state={setAreiaGrossa}
-                                        value={areiaGrossa}
-                                    />
-                                }
-                                else if (item === "SIL") {
-                                    return <InputText key={index + item} Title={"Silte (%)"}
-                                        handleFocus={handleFocus} handleBlur={handleBlur}
-                                        handleTextChange={handleTextChange}
-                                        state={setSilte}
-                                        value={silte}
-                                    />
-                                }
-                                else if (item === "DS") {
-                                    return <InputText key={index + item} Title={"Densidade (g/cm³)"}
-                                        handleFocus={handleFocus} handleBlur={handleBlur}
-                                        handleTextChange={handleTextChange}
-                                        state={setDensidade}
-                                        value={densidade}
-                                    />
-                                }
-                                else if (item === "CO") {
-                                    return <InputText key={index + item} Title={"Carbono Orgânico (g/cm³)"}
-                                        handleFocus={handleFocus} handleBlur={handleBlur}
-                                        handleTextChange={handleTextChange}
-                                        state={setCarbonoOrganico}
-                                        value={carbonoOrganico}
-                                    />
-                                }
-                                else if (item === "UE") {
-                                    return <InputText key={index + item} Title={"Umidade Equivalente (g/g)"}
-                                        handleFocus={handleFocus} handleBlur={handleBlur}
-                                        handleTextChange={handleTextChange}
-                                        state={setUmidadeEquivalente}
-                                        value={umidadeEquivalente}
-                                    />
-                                }
-                                else if (item === "CTC") {
-                                    return <InputText key={index + item} Title={"CTC (cmol/kg)"}
-                                        handleFocus={handleFocus} handleBlur={handleBlur}
-                                        handleTextChange={handleTextChange}
-                                        state={setCtc}
-                                        value={ctc}
-                                    />
-                                }
-                                else if (item === "PH") {
-                                    return <InputText key={index + item} Title={"pH"}
-                                        handleFocus={handleFocus} handleBlur={handleBlur}
-                                        handleTextChange={handleTextChange}
-                                        state={setpH}
-                                        value={pH}
-                                    />
-                                }
-                                else if (item === "MO") {
-                                    return <InputText key={index + item} Title={"Materia Organica (%)"}
-                                        handleFocus={handleFocus} handleBlur={handleBlur}
-                                        handleTextChange={handleTextChange}
-                                        state={setMateriaOrganico}
-                                        value={materiaOrganico}
-                                    />
-                                }
-
-                            }) : <h5 className='text-sm'>Obs.: Dependendo da região não há PTF disponível </h5>
+                                ) : (
+                                    <h5 key={index} className='text-sm'>
+                                        Obs.: Dependendo da região não há PTF disponível
+                                    </h5>
+                                )
+                            ))
+                            : null
                     }
-
                 </div>
+
+
                 {/* AREA BTN */}
                 <div className='text-sm w-auto flex flex-row justify-center items-center space-x-5 p-2 max-md:w-full'>
 

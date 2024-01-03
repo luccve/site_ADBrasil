@@ -12,14 +12,19 @@ import GetPosition from '../../components/getPosition';
 import { Map } from 'leaflet';
 import { MyContextProps } from '../../@types/data';
 import { ContextMap } from '../../contexts';
+
 const MapPage = () => {
 
     const [_map, _setMap] = useState<Map | null>(null);
     const [modal, setModal] = useState(false);
-    const [message, setMessage] = useState<MyContextProps>({});
+    const [message, setMessage] = useState<MyContextProps | string>({});
+    const [title, seTitle] = useState("Clique no Mapa!")
     const context = useContext(ContextMap)
+
+
     useEffect(() => {
-        if (context){
+
+        if (context) {
 
             setMessage({
                 ID: context.ID,
@@ -31,12 +36,13 @@ const MapPage = () => {
                 Latitude: context.Latitude,
                 Longitude: context.Longitude,
             });
+            seTitle("Unidade de mapeamento")
         }
-        
+
     }, [context?.AD, modal]);
 
     return (
-        <div className={` flex items-center overflow-y-hidden h-screen relative bg-white`}>
+        <div className={`flex items-center overflow-y-hidden h-screen relative bg-white`}>
             {<NavMap />}
 
             <MapContainer
@@ -45,7 +51,7 @@ const MapPage = () => {
                 style={{ width: '100%', height: '100%', zIndex: 0 }}
                 center={[-10.333333, -53.2]}
                 zoom={4}
-                scrollWheelZoom={false}
+                scrollWheelZoom={true}
             >
 
                 <ScaleControl position="bottomleft" imperial={false} />
@@ -57,8 +63,7 @@ const MapPage = () => {
                 <GetPosition />
             </MapContainer>
 
-            {modal && <ModalMap message={message} onClose={setModal} visible={modal} title='Unidade de Mapeamento' />
-            }
+            {modal && <ModalMap message={message} onClose={setModal} visible={modal} title={title} />}
         </div>
 
     );

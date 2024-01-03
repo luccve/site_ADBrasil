@@ -21,10 +21,12 @@ const Ptf = () => {
     ];
 
     const [region, selectRegion] = useState<number | null | string>(null);
+   
     const [tabs, selectTabs] = useState<number | null | string>(0);
     const [type, setType] = useState('SIM');
 
     const handleTabSelect = (index: number) => {
+      
         selectTabs(index);
         setType(Array[index].name);
     }

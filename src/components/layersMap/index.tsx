@@ -3,6 +3,7 @@ import {
     LayersControl,
     TileLayer,
     WMSTileLayer,
+    
 
 } from "react-leaflet"
 
@@ -50,7 +51,8 @@ export default function LayersMap() {
                 />
             </LayersControl.BaseLayer>
 
-            <LayersControl.Overlay name="Estimativa de água disponível">
+            <LayersControl.Overlay name="Estimativa de água disponível" 
+            checked>
                 <WMSTileLayer
 
                     format='image/png'
