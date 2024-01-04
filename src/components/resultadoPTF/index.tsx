@@ -2,13 +2,30 @@ import React, { useState } from 'react';
 import BtnToggleArrow from '../btn/BtnToggleArrow';
 import '../../App.css'
 import { ResultadoPTFProps } from '../../@types/components';
-// import PTF from '../../ptfFunctions';
+
 import ChartLine from '../chart/ChartLine';
 import CardList from '../card/cardList';
+import PTF from '../../ptfFunctions';
 
 const ResultadoPTF: React.FC<ResultadoPTFProps> = ({ ptf, author, cc, unidade, parametros, url, curva }) => {
 
     const [pin, setPin] = useState(true);
+
+    const handleExport = () => {
+        const data = PTF.van_genuchtenList(ptf[0], ptf[1], ptf[2], ptf[3]).curva;
+        const csvContent = "potencial,theta\n" + data.map(item => `${item.potencial},${item.theta}`).join("\n");
+
+        const blob = new Blob([csvContent], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.setAttribute('hidden', '');
+        a.setAttribute('href', url);
+        a.setAttribute('download', 'curva.csv');
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        
+    }
 
     const togglePin = () => {
         setPin(!pin);
@@ -23,7 +40,7 @@ const ResultadoPTF: React.FC<ResultadoPTFProps> = ({ ptf, author, cc, unidade, p
                     <div className='relative bg-blue rounded-xl my-3 pb-5 flex flex-col w-[80%] justify-center items-center shadow-md'>
 
 
-                        <CardList ArrayTitle={['Autor (es)', 'Tipo']} ArrayRes={[author,  curva]} />
+                        <CardList ArrayTitle={['Autor (es)', 'Tipo']} ArrayRes={[author, curva]} />
                         <a className='text-sm text-white py-5 hover:scale-105' href={url} rel="noreferrer noopener" target='_blank'>Acesse o trabalho referência do autor</a>
 
                         {pin &&
@@ -33,16 +50,19 @@ const ResultadoPTF: React.FC<ResultadoPTFProps> = ({ ptf, author, cc, unidade, p
                                 <CardList ArrayTitle={['Parâmetros de Entrada', 'Unidade']}
                                     ArrayRes={[parametros, unidade]} />
 
-                                 <h1 className='text-sm text-white py-5'>Parâmetros de Saída</h1>   
+                                <h1 className='text-sm text-white py-5'>Parâmetros de Saída</h1>
                                 <CardList ArrayRes={[ptf[0].toPrecision(3), ptf[1].toPrecision(3), ptf[2].toPrecision(3), ptf[3].toPrecision(3)]}
                                     ArrayTitle={["alpha (kPa⁻¹)", "n", "theta_r (m³/m³)", "theta_s (m³/m³)"]} />
 
 
                                 <ChartLine alpha={ptf[0]} n={ptf[1]} theta_r={ptf[2]} theta_s={ptf[3]} />
-
+                                <button onClick={handleExport} className='text-white text-sm flex flex-row hover:scale-105'>
+                                    <span>Exportar Curva</span>
+                                </button>
                             </div>}
 
                         <BtnToggleArrow pin={pin} togglePin={togglePin} />
+
 
                     </div>
 

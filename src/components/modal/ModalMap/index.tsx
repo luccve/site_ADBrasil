@@ -12,6 +12,7 @@ const ModalMap: React.FC<ModalAlertProps> = ({ message, title, onClose, visible 
 
     useEffect(() => {
         setIsLoading(true)
+
         if (message) {
 
             setTimeout(() => {

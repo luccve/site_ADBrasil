@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { FiMenu } from 'react-icons/fi';
 import { AiOutlineClose } from 'react-icons/ai';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
@@ -6,7 +6,12 @@ import ScrollToHashElement from '../ScrollToHashElement';
 import Icone from '/Icone.svg';
 import { FiArrowRightCircle, FiArrowLeftCircle } from "react-icons/fi";
 
-const NavMap = () => {
+interface NavMapProps {
+    children: ReactNode
+}
+
+
+const NavMap = ({ children }: NavMapProps) => {
     const navigate = useNavigate();
     const [close, setClose] = useState(false);
     const [subMenu, setSubMenu] = useState(false);
@@ -46,6 +51,9 @@ const NavMap = () => {
                 </li>
             ))}
 
+
+            {children}
+
         </ul>
     );
 
@@ -54,7 +62,7 @@ const NavMap = () => {
     const renderDesktopMenu = () => (
         <>
             {
-                !subMenu && <ul className='flex flex-col items-center max-sm:hidden space-y-12 '>
+                !subMenu && <ul className='flex flex-col justify-between items-center max-sm:hidden space-y-12 '>
                     <Link to="/">
                         <img src={Icone} alt="Icone do Aplicativo" className='w-24 max-lg:w-16 h-auto max-sm:m-auto cursor-pointer' />
                     </Link>
@@ -71,7 +79,11 @@ const NavMap = () => {
                             )}
                         </li>
                     ))}
+
+                    {children}
+
                     <div className='text-sm absolute top-[80%]'>
+
                         <h1>Version 0.5.1</h1>
                         <h1>Embrapa Solos UEP Recife</h1>
                     </div>
@@ -91,7 +103,7 @@ const NavMap = () => {
 
     return (
         <>
-            <div className="bg-white h-full p-4 max-md:p-2 rounded shadow-md shadow-blue_l py-12 relative">
+            <div className="bg-white h-full flex flex-col justify-between p-4 max-md:p-2 rounded shadow-md shadow-blue_l py-12 relative">
                 <ScrollToHashElement />
 
 
@@ -114,8 +126,9 @@ const NavMap = () => {
 
 
                 {close && <div className='text-sm absolute top-[80%] text-blue font-bold'>
-                    <h1>Version 0.5.1</h1>
-                    <h1>Embrapa Solos UEP Recife</h1>
+                    <h1>Version 0.5.9</h1>
+                    <h1>Embrapa Solos</h1>
+                    <h1>UEP Recife</h1>
                 </div>}
 
 

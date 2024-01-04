@@ -2,8 +2,7 @@ import Icone from '/Icone.svg';
 import { useState } from 'react';
 import { FiMenu } from 'react-icons/fi';
 import { AiOutlineClose } from 'react-icons/ai';
-import { BsFillSunFill } from 'react-icons/bs';
-import { MdDarkMode } from 'react-icons/md';
+
 import { NavLink, Link, useNavigate } from 'react-router-dom';
 import ScrollToHashElement from '../ScrollToHashElement';
 
@@ -11,7 +10,7 @@ import ScrollToHashElement from '../ScrollToHashElement';
 const nav = () => {
     const navigate = useNavigate();
     const [close, setClose] = useState(false);
-    const [modeTheme, setModeTheme] = useState(false);
+
     const menu = [
         { title: 'Projeto', link: "/#section4" },
         { title: 'AD por tipo de solo e textura', link: "/catalogo" },
@@ -33,9 +32,7 @@ const nav = () => {
         setClose(!close);
     }
 
-    const handleThemes = () => {
-        setModeTheme(!modeTheme);
-    }
+
 
     const toogleClick = (url: string) => {
         navigate(url);
@@ -74,9 +71,7 @@ const nav = () => {
 
                         {menu.map((item, index) => (
                             <li key={index} className='w-full'>
-                                {/* <a className="block border-b-blue border-b-2 hover:bg-blue p-2 rounded-md tracking-wide  hover:text-white duration-300 hover:ease-in-out transition-all" href={item.link}>
-                                    {item.title}
-                                </a> */}
+
 
                                 <Link className='"block border-b-blue border-b-2 hover:bg-blue p-2 rounded-md tracking-wide  hover:text-white duration-300 hover:ease-in-out transition-all'
                                     to={item.link} >{item.title}</Link>
@@ -88,46 +83,40 @@ const nav = () => {
                     </ul>}
 
                     {/* MENU VERSAO DESKTOP */}
-                    <ul className='flex flex-row items-center max-sm:hidden space-x-4'>
-                        <Link to="/">
-                            <img src={Icone} alt="Icone do Aplicativo" className='w-24 max-lg:w-16 h-auto max-sm:m-auto cursor-pointer' />
+                    <ul className=' flex justify-between max-sm:hidden space-x-[20px] relative w-[1000px]'>
+                        <Link to="/" className='order-first  w-24'>
+                            <img src={Icone} alt="Icone do Aplicativo" className=' max-lg:w-16 h-auto max-sm:m-auto cursor-pointer' />
                         </Link>
-                        {menuDesktop.map((item, index) => {
-                            if (index != 3) {
-                                return (
-                                    <li key={index}
-                                        className='w-36 rounded-md tracking-wide hover:scale-110 hover:bg-blue 
-                                                             hover:text-white transition-all duration-500 ease-in-out '>
-                                        {/* <a href={item.link}>
+
+                        <div className='flex flex-row items-center'>
+                            {menuDesktop.map((item, index) => {
+                                if (index != 3) {
+                                    return (
+                                        <li key={index}
+                                            className='text-lg rounded hover:scale-105 hover:bg-blue 
+                                                             hover:text-white transition-all duration-500 ease-in-out p-2'>
+
+                                            <NavLink onClick={() => toogleClick(item.link)} to={{ hash: item.link, pathname: '/' }} >
                                                 {item.title}
-                                            </a> */}
+                                            </NavLink>
+                                        </li>
+                                    )
+                                }
 
-                                        <NavLink onClick={() => toogleClick(item.link)} to={{ hash: item.link, pathname: '/' }} >
+                                else if (index === 3) {
+                                    return (<li key={index}
+                                        className='text-lg rounded tracking-wide hover:scale-105 hover:bg-blue 
+                                                         hover:text-white transition-all duration-500 ease-in-out p-2'>
+                                        <Link to={item.link}>
                                             {item.title}
-                                        </NavLink>
-                                    </li>
-                                )
-                            }
+                                        </Link>
+                                    </li>)
 
-                            else if (index === 3) {
-                                return (<li key={index}
-                                    className='w-36 rounded-md tracking-wide hover:scale-110 hover:bg-blue 
-                                                         hover:text-white transition-all duration-500 ease-in-out '>
-                                    <Link to={item.link}>
-                                        {item.title}
-                                    </Link>
-                                </li>)
+                                }
 
                             }
-
-
-
-                        }
-                        )}
-                        <button className='text-3xl active:animate-[wiggle_1s_ease-in-out_infinite] text-blue  m-auto cursor-pointer'
-                            onClick={handleThemes}>
-                            {modeTheme ? <BsFillSunFill /> : <MdDarkMode />}
-                        </button>
+                            )}
+                        </div>
                     </ul>
 
                 </nav>
