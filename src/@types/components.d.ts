@@ -1,5 +1,6 @@
 import { extend, Map, LatLng } from "leaflet";
 import type { MyContextProps, van_genuchtenProps } from "./data";
+import { Dispatch } from "react";
 
 export interface CarrouselRegionProps {
     Array: ListaRegionsProps[];
@@ -49,25 +50,25 @@ export interface ResultadoPTFProps {
 }
 
 
-interface ModalAlertProps {
+export interface ModalAlertProps {
     title?: string;
     message: InfoUmProps | string | MyContextProps | {};
     visible: boolean;
     onClose: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-interface BtnLinkProps {
+export interface BtnLinkProps {
     Title: string;
     Path: string;
 }
 
-interface BtnRegularProps {
+export interface BtnRegularProps {
     Title: string;
     Path?: string;
     handleClick: () => void;
     children?: React.ReactNode;
 }
-interface InputTextProps {
+export interface InputTextProps {
     Title: string;
     handleFocus: () => void;
     handleBlur: () => void;
@@ -76,21 +77,21 @@ interface InputTextProps {
     value: string;
 }
 
-interface CharLineProps<T> extends van_genuchtenProps {
+export interface CharLineProps<T> extends van_genuchtenProps {
     setSelectedData?: React.Dispatch<React.SetStateAction<T | null>>;
 }
 
-interface BtnToggleArrowProps {
+export interface BtnToggleArrowProps {
     pin: boolean;
     togglePin: () => void;
 }
 
-interface CardListProps {
+export interface CardListProps {
     ArrayTitle: T[];
     ArrayRes: T[];
 }
 
-type InfoUmProps = {
+export type InfoUmProps = {
     Ordem?: string;
     Subordem?: string;
     Textura?: string;
@@ -104,7 +105,7 @@ type InfoUmProps = {
 
 }
 
-interface MapProps {
+export interface MapProps {
     mapKey: string;
     center: [number, number];
     zoom: number;
@@ -127,3 +128,12 @@ interface MinimapBoundsProps {
     zoom: number
 }
 
+
+
+interface MapEventsProps {
+    setLoading: React.Dispatch<boolean>;
+}
+
+interface LayersMapProps {
+    Opacity: number
+}
