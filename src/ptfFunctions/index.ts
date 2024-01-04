@@ -200,6 +200,8 @@ class PTF {
 
     }
 
+ 
+
 
     // private static densidade(AT: number, ARG: number, CARB: number): number {
     //     const bd = 1.286 + 3.208 * 0.001 * AT - 2.013 * 0.001 * ARG;

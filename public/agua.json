@@ -1,0 +1,42 @@
+[
+    {
+        "min": 1.84,
+        "max": Infinity,
+        "color": "#8500A8"
+    },
+    {
+        "min": 1.4,
+        "max": 1.84,
+        "color": "#005CE6"
+    },
+    {
+        "min": 1.06,
+        "max": 1.4,
+        "color": "#00C4FF"
+    },
+    {
+        "min": 0.8,
+        "max": 1.06,
+        "color": "#37A800"
+    },
+    {
+        "min": 0.61,
+        "max": 0.8,
+        "color": "#4DE600"
+    },
+    {
+        "min": 0.46,
+        "max": 0.61,
+        "color": "#FFAB00"
+    },
+    {
+        "min": 0.34,
+        "max": 0.46,
+        "color": "#FFFF73"
+    },
+    {
+        "min": -Infinity,
+        "max": 0.34,
+        "color": "#9C9C9C"
+    }
+]

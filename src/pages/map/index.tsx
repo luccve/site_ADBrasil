@@ -4,22 +4,28 @@ import ModalMap from '../../components/modal/ModalMap';
 import MinimapControl from '../../components/miniMap';
 import GeoJSONMap from '../../components/GeoJSONMap';
 import GetCoordinates from '../../components/getCoordinates';
-import LayersMap from '../../components/layersMap';
+import LayersMap from '../../components/TilerLayersMapControl';
 import MapEvents from '../../components/mapEvents';
-import { MapContainer, ScaleControl, } from 'react-leaflet';
-import { useContext, useEffect, useState } from 'react';
+import { MapContainer, ScaleControl } from 'react-leaflet';
+import { useContext, useEffect, useRef, useState } from 'react';
 import GetPosition from '../../components/getPosition';
-import { Map } from 'leaflet';
 import { MyContextProps } from '../../@types/data';
 import { ContextMap } from '../../contexts';
+import HandlePositionMap from '../../components/handlePositionMap';
+import OpacitySliderMap from '../../components/opacitySliderMap';
+import WMSTileLayersControl from '../../components/WMSTileLayersControl';
+import GetLegendsMaps from '../../components/getLegendsMaps';
+
 
 const MapPage = () => {
 
-    const [_map, _setMap] = useState<Map | null>(null);
     const [modal, setModal] = useState(false);
+    // const [ability, setAbility] = useState(false);
     const [message, setMessage] = useState<MyContextProps | string>({});
     const [title, seTitle] = useState("Clique no Mapa!")
     const context = useContext(ContextMap)
+    const mapContainerRef = useRef(null);
+    const [elementOpacity, setElementOpacity] = useState<number>(1);
 
 
     useEffect(() => {
@@ -41,9 +47,24 @@ const MapPage = () => {
 
     }, [context?.AD, modal]);
 
+
+
+    useEffect(() => {
+
+        const map = mapContainerRef.current;
+
+
+        console.log(map)
+
+
+
+    }, [mapContainerRef.current]);
+
     return (
         <div className={`flex items-center overflow-y-hidden h-screen relative bg-white`}>
-            {<NavMap />}
+            {<NavMap >
+                <OpacitySliderMap setOpacity={setElementOpacity} />
+            </NavMap>}
 
             <MapContainer
                 fadeAnimation={true}
@@ -52,6 +73,7 @@ const MapPage = () => {
                 center={[-10.333333, -53.2]}
                 zoom={4}
                 scrollWheelZoom={true}
+                ref={mapContainerRef}
             >
 
                 <ScaleControl position="bottomleft" imperial={false} />
@@ -61,8 +83,10 @@ const MapPage = () => {
                 <MinimapControl position={[0, 0]} zoom={2} />
                 <GetCoordinates />
                 <GetPosition />
+                <HandlePositionMap />
+                <WMSTileLayersControl Opacity={elementOpacity} />
             </MapContainer>
-
+            <GetLegendsMaps />
             {modal && <ModalMap message={message} onClose={setModal} visible={modal} title={title} />}
         </div>
 
