@@ -13,7 +13,7 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
     return (
 
 
-        <LayersControl position="bottomright" sortLayers={true}>
+        <LayersControl position="bottomright" sortLayers={true} collapsed={false} >
 
             <LayerGroup pane="false" >
 
@@ -90,7 +90,7 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
                         pane='overlayPane'
                         updateWhenIdle={true}
                         keepBuffer={10}
-
+                        opacity={Opacity}
                     />
                 </LayersControl.Overlay>
 

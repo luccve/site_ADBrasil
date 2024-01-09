@@ -1,6 +1,13 @@
 @echo off
 setlocal enabledelayedexpansion
 
+cd .\dist\adbrasil_site\
+
+git pull
+
+cd ..
+
+cd ..
 
 call npm run build
 copy dist\adbrasil_site\index.html dist\adbrasil_site\404.html

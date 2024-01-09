@@ -3,8 +3,11 @@ import { useState } from "react";
 import { useMapEvents, Marker } from "react-leaflet";
 import icon from "../icon";
 
+interface handlePositionProps {
+    close: boolean;
+}
 
-const HandlePositionMap: React.FC = () => {
+const HandlePositionMap: React.FC<handlePositionProps> = ({ close }: handlePositionProps) => {
 
     const [position, setPosition] = useState<LatLngExpression | null>(null);
 
@@ -14,13 +17,13 @@ const HandlePositionMap: React.FC = () => {
             click(e: LeafletMouseEvent) {
 
                 const { lat, lng } = e.latlng;
-
-                setPosition([lat, lng]);
+                close ?
+                    setPosition(null) : setPosition([lat, lng])
             },
         });
 
 
-    return position ? <Marker position={position} icon={icon} /> : null;
+    return position && close ? <Marker position={position} icon={icon} /> : null;
 };
 
 export default HandlePositionMap;

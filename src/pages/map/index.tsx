@@ -76,6 +76,7 @@ const MapPage = () => {
                 ref={mapContainerRef}
             >
 
+                <HandlePositionMap close={modal} />
                 <ScaleControl position="bottomleft" imperial={false} />
                 <LayersMap />
                 <GeoJSONMap />
@@ -83,7 +84,6 @@ const MapPage = () => {
                 <MinimapControl position={[0, 0]} zoom={2} />
                 <GetCoordinates />
                 <GetPosition />
-                <HandlePositionMap />
                 <WMSTileLayersControl Opacity={elementOpacity} />
             </MapContainer>
             <GetLegendsMaps />
