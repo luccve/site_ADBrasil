@@ -27,7 +27,7 @@ import ContextMapProvider from './contexts/index.tsx';
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ContextMapProvider>
-      <BrowserRouter basename={"/"}>
+      <BrowserRouter basename={"/adbrasil_site"}>
         <Routes>
           <Route path="/" element={<><Nav /><App /><Footer /></>} />
           <Route path="/map" element={<><Map /></>} />
