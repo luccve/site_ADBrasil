@@ -25,7 +25,7 @@ export default function TilerLayersMapControl() {
 
 
 
-                <LayersControl.BaseLayer name="Nat Geo World Map">
+                <LayersControl.BaseLayer name="Nat Geo Relevo">
                     <TileLayer
                         attribution="Nat Geo World Map"
                         url="https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}"

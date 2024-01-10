@@ -34,10 +34,10 @@ class RequestCoordsService {
             const response_sgb = await fetch(url_sgb);
             const data_sgb = await response_sgb.json();
             const x = this.url_ibge_pedo(lat, lng);
-
+            console.log(x);
             // const response_ibge = await fetch(x);
             // const data_ibge = await response_ibge.json();
-            console.log(x);
+            console.log(data_sgb);
 
             return {
                 ID: data_sgb.features[0].attributes.objectid_1,

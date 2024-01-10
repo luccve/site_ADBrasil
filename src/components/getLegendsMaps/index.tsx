@@ -64,7 +64,7 @@ const GetLegendsMaps = () => {
     }, [dragging]);
 
 
-    return <div className='flex justify-around p-5 flex-col absolute top-1/5 right-4 bg-white max-w-[300px] max-h-[350px] rounded-md shadow border border-gray'
+    return <div className='flex justify-around p-5 flex-col absolute top-1/5 right-4 bg-white max-w-[300px] max-h-[370px] rounded-md shadow border border-gray'
         style={{ transform: `translate(${position.x}px, ${position.y}px)`, cursor: dragging ? 'grabbing' : 'grab' }}
         onMouseDown={handleMouseDown}>
 
@@ -72,7 +72,7 @@ const GetLegendsMaps = () => {
             {icon ? <MdMenuBook className={'text-blue text-[22px]'} /> : <BiSolidFoodMenu className={'text-blue text-[22px]'} />}
         </button>
 
-        <div className='leading-tight text-blue' style={{ display: icon ? 'none' : 'initial' }}>
+        <div className='leading-tight text-blue pb-[20px]' style={{ display: icon ? 'none' : 'initial' }}>
             <h1 className='font-bold text-lg max-md:text-md'>Legenda</h1>
             <h3 className='text-md max-md:text-sm'>Água disponível no solo</h3>
             <h5 className='text-md max-md:text-sm'>(mm/cm)</h5>

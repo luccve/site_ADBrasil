@@ -17,7 +17,7 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
 
             <LayerGroup pane="false" >
 
-                <LayersControl.Overlay name="Estimativa de água disponível"
+                {/* <LayersControl.Overlay name="Estimativa de água disponível"
                     checked>
                     <WMSTileLayer
 
@@ -36,7 +36,33 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
                         opacity={Opacity}
 
                     />
+                </LayersControl.Overlay> */}
+
+                <LayersControl.Overlay name="Estimativa de água disponível"
+                    checked>
+                    <WMSTileLayer
+
+                        format='image/png'
+                        transparent
+                        layers='geonode:adbrasil'
+                        url='https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true&_v_=1704910155253&access_token=rtksQsv5HmyKQ1WuT3mJgpjb1mAWe3'
+                        version='1.3.0'
+                        crs={CRS.EPSG3857}
+                        styles="geonode:adbrasil"
+                        tileSize={256}
+                        
+                        tms={true}
+                        updateInterval={2000}
+                        pane='overlayPane'
+                        updateWhenIdle={true}
+                        keepBuffer={10}
+                        opacity={Opacity}
+                        // accessToken="rtksQsv5HmyKQ1WuT3mJgpjb1mAWe3"
+
+                    />
                 </LayersControl.Overlay>
+
+                
 
                 <LayersControl.Overlay name="Mapa de solos do Brasil">
                     <WMSTileLayer
