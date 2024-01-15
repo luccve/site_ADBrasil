@@ -2,17 +2,15 @@ import { LeafletMouseEvent } from "leaflet";
 import { useContext } from "react";
 import { ContextMap } from "../../contexts";
 
-import { useMapEvents } from "react-leaflet";
+import {useMapEvents } from "react-leaflet";
 import type { MapEventsProps } from "../../@types/components";
 
 import RequestCoordsService from "../../services";
 
 
 
-const MapEvents: React.FC<MapEventsProps> = ({ setLoading }: MapEventsProps) => {
+const MapEvents: React.FC<MapEventsProps> = ({ setLoading, setLayer }: MapEventsProps) => {
     const context = useContext(ContextMap);
-
-
 
     async function fetchCoords(lat: number, lng: number) {
         try {
@@ -41,6 +39,13 @@ const MapEvents: React.FC<MapEventsProps> = ({ setLoading }: MapEventsProps) => 
                 fetchCoords(lat, lng);
 
             },
+            overlayadd(e) {
+                setLayer(e.name)
+
+            }
+
+
+
         });
 
     return null;
