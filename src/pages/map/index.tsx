@@ -26,7 +26,7 @@ const MapPage = () => {
     const context = useContext(ContextMap)
     const mapContainerRef = useRef(null);
     const [elementOpacity, setElementOpacity] = useState<number>(1);
-
+    const [layer, setLayer] = useState("Estimativa de água disponível");
 
     useEffect(() => {
 
@@ -80,13 +80,13 @@ const MapPage = () => {
                 <ScaleControl position="bottomleft" imperial={false} />
                 <LayersMap />
                 <GeoJSONMap />
-                {!modal && <MapEvents setLoading={setModal} />}
+                {!modal && <MapEvents setLayer={setLayer} setLoading={setModal} />}
                 <MinimapControl position={[0, 0]} zoom={2} />
                 <GetCoordinates />
                 <GetPosition />
                 <WMSTileLayersControl Opacity={elementOpacity} />
             </MapContainer>
-            <GetLegendsMaps />
+            <GetLegendsMaps layer={layer} />
             {modal && <ModalMap message={message} onClose={setModal} visible={modal} title={title} />}
         </div>
 
