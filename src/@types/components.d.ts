@@ -132,8 +132,14 @@ interface MinimapBoundsProps {
 
 interface MapEventsProps {
     setLoading: React.Dispatch<boolean>;
+    setLayer: React.Dispatch<string>;
 }
 
 interface LayersMapProps {
-    Opacity: number
+    Opacity: number,
+    
+}
+
+interface GetLegendsMapsProps {
+    layer: string;
 }
