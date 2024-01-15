@@ -10,15 +10,16 @@ import type { LayersMapProps } from "../../@types/components"
 
 export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
 
+    
     return (
 
 
-        <LayersControl position="bottomright" sortLayers={true} collapsed={false} >
+        <LayersControl position="bottomright" sortLayers={true} collapsed={false}  >
 
-            <LayerGroup pane="false" >
+            <LayerGroup>
 
-                {/* <LayersControl.Overlay name="Estimativa de água disponível"
-                    checked>
+                <LayersControl.Overlay name="Estimativa de água disponível (SGB - 1 Aproximação)"
+                >
                     <WMSTileLayer
 
                         format='image/png'
@@ -36,33 +37,53 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
                         opacity={Opacity}
 
                     />
-                </LayersControl.Overlay> */}
+                </LayersControl.Overlay>
 
-                <LayersControl.Overlay name="Estimativa de água disponível"
-                    checked>
+                <LayersControl.Overlay name="Potencial de terras para irrigação"
+                >
                     <WMSTileLayer
 
                         format='image/png'
                         transparent
-                        layers='geonode:adbrasil'
-                        url='https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true&_v_=1704910155253&access_token=rtksQsv5HmyKQ1WuT3mJgpjb1mAWe3'
+                        layers='geonode:pti_28f79bcfe1f418a6219d5af23e8c1c45'
+                        url='https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true&_v_=1705321465820&access_token=9rp9Z9zMsPFZCDalo3AQcGt7SqlcKF'
                         version='1.3.0'
                         crs={CRS.EPSG3857}
-                        styles="geonode:adbrasil"
                         tileSize={256}
-                        
                         tms={true}
                         updateInterval={2000}
                         pane='overlayPane'
                         updateWhenIdle={true}
                         keepBuffer={10}
                         opacity={Opacity}
-                        // accessToken="rtksQsv5HmyKQ1WuT3mJgpjb1mAWe3"
+                    />
+                </LayersControl.Overlay>
+
+                <LayersControl.Overlay name="Estimativa de água disponível (EMBRAPA - 2 Aproximação)"
+                    checked>
+                    <WMSTileLayer
+
+                        format='image/png'
+                        transparent
+                        layers='geonode:adbrasil'
+                        url='https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true&_v_=1705323185244&acess_token=9rp9Z9zMsPFZCDalo3AQcGt7SqlcKF'
+                        version='1.3.0'
+                        crs={CRS.EPSG3857}
+                        styles="geonode:adbrasil"
+                        tileSize={256}
+                        keepBuffer={10}
+                        tms={true}
+                        updateInterval={2000}
+                        pane='overlayPane'
+                        updateWhenIdle={true}
+
+                        opacity={Opacity}
+
 
                     />
                 </LayersControl.Overlay>
 
-                
+
 
                 <LayersControl.Overlay name="Mapa de solos do Brasil">
                     <WMSTileLayer
@@ -101,7 +122,7 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
                         opacity={Opacity}
                     />
                 </LayersControl.Overlay>
-                <LayersControl.Overlay name="Vegetação Brasil">
+                {/* <LayersControl.Overlay name="Vegetação Brasil">
                     <WMSTileLayer
 
                         format='image/png8'
@@ -118,9 +139,9 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
                         keepBuffer={10}
                         opacity={Opacity}
                     />
-                </LayersControl.Overlay>
+                </LayersControl.Overlay> */}
 
-                <LayersControl.Overlay name="Potencialidades agrícolas">
+                {/* <LayersControl.Overlay name="Potencialidades agrícolas">
                     <WMSTileLayer
 
                         format='image/png'
@@ -137,7 +158,7 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
                         keepBuffer={10}
                         opacity={Opacity}
                     />
-                </LayersControl.Overlay>
+                </LayersControl.Overlay> */}
             </LayerGroup>
 
 
