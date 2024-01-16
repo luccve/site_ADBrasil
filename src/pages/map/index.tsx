@@ -9,7 +9,6 @@ import MapEvents from '../../components/mapEvents';
 import { MapContainer, ScaleControl } from 'react-leaflet';
 import { useContext, useEffect, useRef, useState } from 'react';
 import GetPosition from '../../components/getPosition';
-import { MyContextProps } from '../../@types/data';
 import { ContextMap } from '../../contexts';
 import HandlePositionMap from '../../components/handlePositionMap';
 import OpacitySliderMap from '../../components/opacitySliderMap';
@@ -21,7 +20,7 @@ const MapPage = () => {
 
     const [modal, setModal] = useState(false);
     // const [ability, setAbility] = useState(false);
-    const [message, setMessage] = useState<MyContextProps | string>({});
+    const [message, setMessage] = useState({});
     const [title, seTitle] = useState("Clique no Mapa!")
     const context = useContext(ContextMap)
     const mapContainerRef = useRef(null);
@@ -33,19 +32,23 @@ const MapPage = () => {
         if (context) {
 
             setMessage({
-                ID: context.ID,
-                AD: context.AD,
-                Ordem: context.Ordem,
-                Subordem: context.Subordem,
-                Relevo: context.Relevo,
-                Textura: context.Textura,
+
+                AD: `${context.ad_um} mm/cm`,
+                Ordem: context.c1_class,
+                Relevo: context.c1_relevo,
+                Textura: context.textura_c1,
                 Latitude: context.Latitude,
                 Longitude: context.Longitude,
+                Componente_1: ` ${context.solo_c1} _Textura: ${context.textura_c1} _Relevo: ${context.c1_relevo}\n _Valor de AD: ${context.ad_c1}`,
+                Componente_2: ` ${context.solo_c2} _Textura: ${context.textura_c2} _Relevo: ${context.c2_relevo}\n _Valor de AD: ${context.ad_c2}`,
+                Componente_3: ` ${context.solo_c3} _Textura: ${context.textura_c3} _Relevo: ${context.c3_relevo}\n _Valor de AD: ${context.ad_c3}`,
+                Componente_4: ` ${context.solo_c4} _Textura: ${context.textura_c4} _Relevo: ${context.c4_relevo}\n _Valor de AD: ${context.ad_c4}`,
+                Componente_5: ` ${context.solo_c5} _Textura: ${context.textura_c5} _Relevo: ${context.c5_relevo}\n _Valor de AD: ${context.ad_c5}`,
             });
             seTitle("Unidade de mapeamento")
         }
 
-    }, [context?.AD, modal]);
+    }, [context?.ad_um, modal]);
 
     return (
         <div className={`flex items-center overflow-y-hidden h-screen relative bg-white`}>
