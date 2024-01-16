@@ -175,17 +175,55 @@ interface PtfTypeProps {
 
 interface MyContextProps {
   ID?: string | number;
-  url?: string;
-  color?: string;
-  Ordem?: string;
-  Subordem?: string;
-  Textura?: string;
-  AD?: string;
-  Relevo?: string;
-  Latitude?: number;
-  Longitude?: number;
-  geojson?: GeoJSON;
-  resposta?: number;
-  setContext?: React.Dispatch<React.SetStateAction<MyContextProps>>;
+  url?: string | null;
+  color?: string | null;
+  Ordem?: string | null;
+  Subordem?: string | null;
+  Textura?: string | null;
+  AD?: string | null;
+  Relevo?: string | null;
+  Latitude?: number | null;
+  Longitude?: number | null;
+  geojson?: GeoJSON | null;
+  resposta?: number | null;
+}
 
+interface GeoInfoData extends MyContextProps {
+  objectid?: number | null;
+  cod?: string | null;
+  c1_simb?: string | null;
+  c1_class?: string | null;
+  c1_ord?: string | null;
+  c1_relevo?: string | null;
+  c2_relevo?: string | null;
+  c3_relevo?: string | null;
+  c4_relevo?: string | null;
+  c5_relevo?: string | null;
+  ad_um?: number | null;
+  textura_c1?: string | null;
+  textura_c2?: string | null;
+  textura_c3?: string | null;
+  textura_c4?: string | null;
+  textura_c5?: string | null;
+  ad_c1?: number | null;
+  ad_c2?: number | null;
+  ad_c3?: number | null;
+  ad_c4?: number | null;
+  ad_c5?: number | null;
+  solo_c1?: string | null;
+  solo_c2?: string | null;
+  solo_c3?: string | null;
+  solo_c4?: string | null;
+  solo_c5?: string | null;
+  pedregosid?: string | null;
+  pedregos_1?: string | null;
+  pedregos_2?: string | null;
+  pedregos_3?: string | null;
+  pedregos_4?: string | null;
+  rochosidad?: string | null;
+  rochosid_1?: string | null;
+  rochosid_2?: string | null;
+  rochosid_3?: string | null;
+  rochosid_4?: string | null;
+  setContext?: React.Dispatch<React.SetStateAction<GeoInfoData | null>>;
 }
