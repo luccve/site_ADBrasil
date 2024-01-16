@@ -12,26 +12,25 @@ const ModalMap: React.FC<ModalAlertProps> = ({ message, title, onClose, visible 
 
     useEffect(() => {
         setIsLoading(true)
-
         if (message) {
-
+            
             setTimeout(() => {
                 setIsLoading(false);
-            }, 1000);
+            }, 1300);
         }
     }, [message]);
 
     const renderMessage = () => {
 
 
-        if (Object.values(message)[0] == undefined) {
+        if (Object.values(message)[0] == 'undefined mm/cm') {
             return <p>Não foi encontrado informações de Água Disponível</p>
         } else if (typeof message === 'string') {
             return <p>{message}</p>;
         } else if (typeof message === 'object') {
             return (
                 <div className='py-2 space-y-[15px] text-start'>
-                    {Object.keys(message).map((key) => (
+                    {Object.keys(Object.fromEntries(Object.entries(message).slice(0, 6))).map((key) => (
                         <p className='text-sm max-md:text-[11px] font-semibold text-blue' key={key}>{key === "AD" ? "Água Disponível" : key}: {(message as Record<string, string>)[key]}</p>
                     ))}
                 </div>
@@ -65,7 +64,19 @@ const ModalMap: React.FC<ModalAlertProps> = ({ message, title, onClose, visible 
                     </div> :
                         <div className='p-2 relative w-full h-full'>
                             <h1 className='text-lg max-md:text-sm leading-snug -tracking-tighter font-semibold text-blue border-b-2 py-2'>Componentes da Unidade</h1>
-                            <h1>TESTE</h1>
+                            <div className='py-2 space-y-[15px] text-start'>
+                                {Object.keys(Object.fromEntries(Object.entries(message).slice(6, 11))).map((key) => (
+                                    <p className='text-sm max-md:text-[11px] font-semibold text-blue' key={key}>
+                                        {key.includes('_') ? key.replace('_', " ") : key}:
+                                        <span
+                                            dangerouslySetInnerHTML={{
+                                                __html: (message as Record<string, string>)[key].replace(/_/g, '<br />'),
+                                            }}
+                                        />
+                                    </p>
+                                ))}
+                            </div>
+
 
                             <button className='absolute p-1 m-3 top-[1px] left-[330px] max-md:left-[150px] ' onClick={() => onClose(false)}>
 
