@@ -46,7 +46,7 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
                         format='image/png'
                         transparent
                         layers='geonode:pti_28f79bcfe1f418a6219d5af23e8c1c45'
-                        url='https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true&_v_=1705321465820&access_token=9rp9Z9zMsPFZCDalo3AQcGt7SqlcKF'
+                        url='https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true'
                         version='1.3.0'
                         crs={CRS.EPSG3857}
                         tileSize={256}
@@ -56,6 +56,7 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
                         updateWhenIdle={true}
                         keepBuffer={10}
                         opacity={Opacity}
+                     
                     />
                 </LayersControl.Overlay>
 
@@ -66,7 +67,7 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
                         format='image/png'
                         transparent
                         layers='geonode:adbrasil'
-                        url='https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true&_v_=1705323185244&acess_token=9rp9Z9zMsPFZCDalo3AQcGt7SqlcKF'
+                        url='https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true&titulo=&'
                         version='1.3.0'
                         crs={CRS.EPSG3857}
                         styles="geonode:adbrasil"
@@ -76,8 +77,8 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
                         updateInterval={2000}
                         pane='overlayPane'
                         updateWhenIdle={true}
-
                         opacity={Opacity}
+                        
 
 
                     />
@@ -128,7 +129,7 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
                         format='image/png8'
                         transparent
                         layers='CREN:vegetacao_radambrasil'
-                        url='https://geoservicos.ibge.gov.br/geoserver/CREN/wms?'
+                        url='https://geoservicos.ibge.gov.br/geoserver/CREN/wms?&tiled=true&titulo=&'
                         version='1.0.0'
                         crs={CRS.EPSG3857}
                         tileSize={256}

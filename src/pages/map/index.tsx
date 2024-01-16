@@ -47,19 +47,6 @@ const MapPage = () => {
 
     }, [context?.AD, modal]);
 
-
-
-    useEffect(() => {
-
-        const map = mapContainerRef.current;
-
-
-        console.log(map)
-
-
-
-    }, [mapContainerRef.current]);
-
     return (
         <div className={`flex items-center overflow-y-hidden h-screen relative bg-white`}>
             {<NavMap >

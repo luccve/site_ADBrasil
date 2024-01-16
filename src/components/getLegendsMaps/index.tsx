@@ -23,6 +23,7 @@ const GetLegendsMaps = ({ layer }: GetLegendsMapsProps) => {
             setShowSolos(true);
             setLegendChange(false);
         } else {
+            setShowSolos(false);
             setLegendChange(false);
             const url = legendsURL.find(item => item.name === layer)?.link;
             legendWMS(url ? url : "https://sitechecker.pro/wp-content/uploads/2023/06/404-status-code.png");
