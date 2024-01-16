@@ -1,4 +1,4 @@
-import { MyContextProps } from '../@types/data';
+import { GeoInfoData } from '../@types/data';
 
 
 
@@ -26,18 +26,11 @@ class RequestCoordsService {
         return colorRange ? colorRange.color : "transparent";
     }
 
-    public static async fetchCoords(lat: number, lng: number): Promise<MyContextProps | null> {
-        const url_sgb = this.url_sgb(lat, lng);
-
-
+    private static async fetch_data_SGB(lat: number, lng: number): Promise<GeoInfoData | null> {
         try {
+            const url_sgb = this.url_sgb(lat, lng);
             const response_sgb = await fetch(url_sgb);
             const data_sgb = await response_sgb.json();
-            const x = this.url_ibge_pedo(lat, lng);
-            console.log(x);
-            // const response_ibge = await fetch(x);
-            // const data_ibge = await response_ibge.json();
-            console.log(data_sgb);
 
             return {
                 ID: data_sgb.features[0].attributes.objectid_1,
@@ -67,24 +60,81 @@ class RequestCoordsService {
                 }
             }
 
-
         } catch (error) {
-            console.error("Erro na solicitação:", error);
+            console.error('Error na segunda solicitação', error);
+            return { resposta: 500 };
+        }
+
+    }
+
+    public static async fetchCoords(lat: number, lng: number): Promise<GeoInfoData | null> {
+        try {
+            const url_geinfo_adbrasil_wfs = this.url_geinfo_adbrasil_wfs(lat, lng);
+            const response_geinfo_adbrasil_wfs = await fetch(url_geinfo_adbrasil_wfs);
+
+
+            if (!response_geinfo_adbrasil_wfs.ok) {
+                console.error('Erro na solicitação WFS:', response_geinfo_adbrasil_wfs.statusText);
+                console.error('Tentando com o SGB');
+                return this.fetch_data_SGB(lat, lng);
+            }
+
+            const contentType = response_geinfo_adbrasil_wfs.headers.get('content-type');
+            if (contentType && contentType.includes('application/json')) {
+                const data_geinfo_adbrasil_wfs = await response_geinfo_adbrasil_wfs.json();
+                console.log(data_geinfo_adbrasil_wfs.features[0].geometry.coordinates);
+                return {
+                    resposta: 200, Latitude: lat.toPrecision(5), Longitude: lng.toPrecision(5), ...data_geinfo_adbrasil_wfs.features[0].properties
+                };
+            } else {
+                console.error('Resposta não contém dados JSON.', response_geinfo_adbrasil_wfs.url);
+                return { resposta: 500 };;
+            }
+        } catch (error) {
+            console.error('Erro na primeira solicitação', error);
+            // Adicione aqui tratamentos adicionais conforme necessário
             return { resposta: 500 };
         }
     }
 
+    // geojson:
+    // {
+    //     name: `Estimativa de AD: ${data_geinfo_adbrasil_wfs.features[0].properties.ogc_fid}`,
+
+    //     features: [{
+
+    //         type: 'Feature',
+    //         properties: {
+    //             name: data_geinfo_adbrasil_wfs.features[0].properties.geometry.type
+    //         },
+    //         geometry: {
+    //             type: 'MultiPolygon',
+    //             coordinates: [data_geinfo_adbrasil_wfs.features[0].geometry.coordinates],
+    //         },
+    //     }]
+    // },
 
 
     private static url_sgb(lat: number, lng: number) {
         return `https://geoportal.sgb.gov.br/server/rest/services/pronasolos/agua_disponivel/MapServer/0/query?f=json&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&geometry={"x": ${lng}, "y": ${lat}, "spatialReference": {"wkid": 4326}}&outFields=ordem,subordem,grande_gru,subgrupos,textura,horizonte,relevo,total_ad,legad,objectid_1&outSR=4326&tolerance=10`;
     }
 
-    private static url_ibge_pedo(lat: number, lng: number) {
 
-        return `https://bdiaweb.ibge.gov.br/proxy/prod/bdiaweb/api/featureinfo/?request=GetFeatureInfo&service=WMS&srs=EPSG:4326&styles=&transparent=true&version=1.1.1&format=image/png&bbox=-180.0,-90.0,180.0,90.0&height=837&width=1097&layers=BDIA:v_pd_area_geo_limite&query_layers=BDIA:v_pd_area_geo_limite&info_format=text/plain&latlng=LatLng(${lat}, ${lng})&x=572&y=274`;
+    private static url_geinfo_adbrasil_wfs(lat: number, lng: number) {
+        const cqlFilter = `INTERSECTS(geometry,POINT(${lng} ${lat}))`;
+        const baseUrl = 'https://geoinfo.dados.embrapa.br/geoserver/geonode/wfs?&version=1.0.0&request=GetFeature&typeNames=geonode:adbrasil&outputFormat=application%2Fjson';
+        const srsName = 'EPSG:3857';
 
+
+        const encodedCqlFilter = encodeURIComponent(cqlFilter);
+
+        const encodedSrsName = encodeURIComponent(srsName);
+
+        return `${baseUrl}&cql_filter=${encodedCqlFilter}&srsName=${encodedSrsName}`;
     }
+
+
+
 }
 
 export default RequestCoordsService;

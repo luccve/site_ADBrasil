@@ -1,26 +1,15 @@
 import { createContext, useState } from 'react';
 
-import type { MyContextProps } from '../@types/data';
+import type { GeoInfoData } from '../@types/data';
 
 
-export const ContextMap = createContext<MyContextProps | null>({
-  ID: undefined,
-  url: undefined,
-  color: undefined,
-  Ordem: undefined,
-  Subordem: undefined,
-  Textura: undefined,
-  AD: undefined,
-  Relevo: undefined,
-  Latitude: undefined,
-  Longitude: undefined,
-});
+export const ContextMap = createContext<GeoInfoData | null>(null);
 
 
 
 
 function ContextMapProvider({ children }: { children: React.ReactNode }) {
-  const [context, setContext] = useState<MyContextProps>({});
+  const [context, setContext] = useState<GeoInfoData | null>(null);
 
 
   return (
