@@ -18,7 +18,7 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
 
             <LayerGroup>
 
-                <LayersControl.Overlay name="Estimativa de água disponível (SGB - 1 Aproximação)"
+                {/* <LayersControl.Overlay name="Estimativa de água disponível (SGB - 1 Aproximação)"
                 >
                     <WMSTileLayer
 
@@ -37,7 +37,7 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
                         opacity={Opacity}
 
                     />
-                </LayersControl.Overlay>
+                </LayersControl.Overlay> */}
 
                 <LayersControl.Overlay name="Potencial de terras para irrigação"
                 >
