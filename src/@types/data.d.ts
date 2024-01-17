@@ -215,15 +215,23 @@ interface GeoInfoData extends MyContextProps {
   solo_c3?: string | null;
   solo_c4?: string | null;
   solo_c5?: string | null;
-  pedregosid?: string | null;
   pedregos_1?: string | null;
   pedregos_2?: string | null;
   pedregos_3?: string | null;
   pedregos_4?: string | null;
-  rochosidad?: string | null;
+  pedregos_5?: string | null;
   rochosid_1?: string | null;
   rochosid_2?: string | null;
   rochosid_3?: string | null;
   rochosid_4?: string | null;
+  rochosid_5?: string | null;
+  area?: string | null;
+  classe_terra?: string | null;
+  ct_c1?: string | null;
+  ct_c2?: string | null;
+  ct_c3?: string | null;
+  ct_c4?: string | null;
+  ct_c5?: string | null;
   setContext?: React.Dispatch<React.SetStateAction<GeoInfoData | null>>;
+  [key: string]: string | number | null | undefined | GeoJSON;
 }
