@@ -233,5 +233,9 @@ interface GeoInfoData extends MyContextProps {
   ct_c4?: string | null;
   ct_c5?: string | null;
   setContext?: React.Dispatch<React.SetStateAction<GeoInfoData | null>>;
+}
+
+
+interface GeoInfoDataAny extends GeoInfoData {
   [key: string]: string | number | null | undefined | GeoJSON;
 }
