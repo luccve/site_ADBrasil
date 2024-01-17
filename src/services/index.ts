@@ -33,12 +33,11 @@ class RequestCoordsService {
             const data_sgb = await response_sgb.json();
 
             return {
+                ad_um: data_sgb.features[0].attributes.total_ad,
+                c1_class: `${data_sgb.features[0].attributes.ordem} ${data_sgb.features[0].attributes.subordem}`,
+                c1_relevo: data_sgb.features[0].attributes.relevo,
+                textura_c1: data_sgb.features[0].attributes.textura,
                 ID: data_sgb.features[0].attributes.objectid_1,
-                Ordem: data_sgb.features[0].attributes.ordem,
-                Subordem: data_sgb.features[0].attributes.subordem,
-                Textura: data_sgb.features[0].attributes.textura,
-                AD: `${data_sgb.features[0].attributes.total_ad} mm/cm`,
-                Relevo: data_sgb.features[0].attributes.relevo,
                 Latitude: Number(lat.toPrecision(5)),
                 Longitude: Number(lng.toPrecision(5)),
                 color: this.changeColor(data_sgb.features[0]?.attributes?.total_ad),
@@ -72,6 +71,10 @@ class RequestCoordsService {
             const url_geinfo_adbrasil_wfs = this.url_geinfo_adbrasil_wfs(lat, lng);
             const response_geinfo_adbrasil_wfs = await fetch(url_geinfo_adbrasil_wfs);
 
+            const url_geoinfo_pti_wfs = this.url_geinfo_pti_wfs(lat, lng);
+            const response_geoinfo_pti_wfs = await fetch(url_geoinfo_pti_wfs);
+            const dados = await response_geoinfo_pti_wfs.json();
+           
 
             if (!response_geinfo_adbrasil_wfs.ok) {
                 console.error('Erro na solicitação WFS:', response_geinfo_adbrasil_wfs.statusText);
@@ -82,9 +85,66 @@ class RequestCoordsService {
             const contentType = response_geinfo_adbrasil_wfs.headers.get('content-type');
             if (contentType && contentType.includes('application/json')) {
                 const data_geinfo_adbrasil_wfs = await response_geinfo_adbrasil_wfs.json();
-                console.log(data_geinfo_adbrasil_wfs.features[0].geometry.coordinates);
+
                 return {
-                    resposta: 200, Latitude: lat.toPrecision(5), Longitude: lng.toPrecision(5), ...data_geinfo_adbrasil_wfs.features[0].properties
+                    resposta: 200, Latitude: Number(lat.toPrecision(5)), Longitude: Number(lng.toPrecision(5)),
+                    ID: data_geinfo_adbrasil_wfs.features[0].properties.fid,
+                    color: this.changeColor(data_geinfo_adbrasil_wfs.features[0].properties.ad_um),
+                    geojson:
+                    {
+                        name: `Estimativa de AD: ${data_geinfo_adbrasil_wfs.features[0].properties.ogc_fid}`,
+
+                        features: [{
+
+                            type: 'Feature',
+                            properties: {
+                                name: data_geinfo_adbrasil_wfs.features[0].geometry.type
+                            },
+                            geometry: {
+                                type: 'MultiPolygon',
+                                coordinates: data_geinfo_adbrasil_wfs.features[0].geometry.coordinates,
+                            },
+                        }]
+                    },
+                    rochosid_1: data_geinfo_adbrasil_wfs.features[0].properties.rochosidad,
+                    rochosid_2: data_geinfo_adbrasil_wfs.features[0].properties.rochosid_1,
+                    rochosid_3: data_geinfo_adbrasil_wfs.features[0].properties.rochosid_2,
+                    rochosid_4: data_geinfo_adbrasil_wfs.features[0].properties.rochosid_3,
+                    rochosid_5: data_geinfo_adbrasil_wfs.features[0].properties.rochosid_4,
+                    solo_c1: data_geinfo_adbrasil_wfs.features[0].properties.solo_c1,
+                    solo_c2: data_geinfo_adbrasil_wfs.features[0].properties.solo_c2,
+                    solo_c3: data_geinfo_adbrasil_wfs.features[0].properties.solo_c3,
+                    solo_c4: data_geinfo_adbrasil_wfs.features[0].properties.solo_c4,
+                    solo_c5: data_geinfo_adbrasil_wfs.features[0].properties.solo_c5,
+                    textura_c1: data_geinfo_adbrasil_wfs.features[0].properties.textura_c1,
+                    textura_c2: data_geinfo_adbrasil_wfs.features[0].properties.textura_c2,
+                    textura_c3: data_geinfo_adbrasil_wfs.features[0].properties.textura_c3,
+                    textura_c4: data_geinfo_adbrasil_wfs.features[0].properties.textura_c4,
+                    textura_c5: data_geinfo_adbrasil_wfs.features[0].properties.textura_c5,
+                    pedregos_1: data_geinfo_adbrasil_wfs.features[0].properties.pedregosid,
+                    pedregos_2: data_geinfo_adbrasil_wfs.features[0].properties.pedregos_1,
+                    pedregos_3: data_geinfo_adbrasil_wfs.features[0].properties.pedregos_2,
+                    pedregos_4: data_geinfo_adbrasil_wfs.features[0].properties.pedregos_3,
+                    pedregos_5: data_geinfo_adbrasil_wfs.features[0].properties.pedregos_4,
+                    c1_relevo: data_geinfo_adbrasil_wfs.features[0].properties.c1_relevo,
+                    c2_relevo: data_geinfo_adbrasil_wfs.features[0].properties.c2_relevo,
+                    c3_relevo: data_geinfo_adbrasil_wfs.features[0].properties.c3_relevo,
+                    c4_relevo: data_geinfo_adbrasil_wfs.features[0].properties.c4_relevo,
+                    c5_relevo: data_geinfo_adbrasil_wfs.features[0].properties.c5_relevo,
+                    ad_c1: data_geinfo_adbrasil_wfs.features[0].properties.ad_c1,
+                    ad_c2: data_geinfo_adbrasil_wfs.features[0].properties.ad_c12,
+                    ad_c3: data_geinfo_adbrasil_wfs.features[0].properties.ad_c3,
+                    ad_c4: data_geinfo_adbrasil_wfs.features[0].properties.ad_c4,
+                    ad_c5: data_geinfo_adbrasil_wfs.features[0].properties.ad_c5,
+                    c1_class: data_geinfo_adbrasil_wfs.features[0].properties.c1_class,
+                    area: data_geinfo_adbrasil_wfs.features[0].properties.area_km2,
+                    classe_terra: dados.features[0].properties.pti_um,
+                    ct_c1: dados.features[0].properties.ct_c1,
+                    ct_c2: dados.features[0].properties.ct_c2,
+                    ct_c3: dados.features[0].properties.ct_c3,
+                    ct_c4: dados.features[0].properties.ct_c4,
+                    ct_c5: dados.features[0].properties.ct_c5,
+                    ad_um:data_geinfo_adbrasil_wfs.features[0].properties.ad_um
                 };
             } else {
                 console.error('Resposta não contém dados JSON.', response_geinfo_adbrasil_wfs.url);
@@ -92,27 +152,12 @@ class RequestCoordsService {
             }
         } catch (error) {
             console.error('Erro na primeira solicitação', error);
-            // Adicione aqui tratamentos adicionais conforme necessário
-            return { resposta: 500 };
+
+            return { resposta: 404 };
         }
     }
 
-    // geojson:
-    // {
-    //     name: `Estimativa de AD: ${data_geinfo_adbrasil_wfs.features[0].properties.ogc_fid}`,
 
-    //     features: [{
-
-    //         type: 'Feature',
-    //         properties: {
-    //             name: data_geinfo_adbrasil_wfs.features[0].properties.geometry.type
-    //         },
-    //         geometry: {
-    //             type: 'MultiPolygon',
-    //             coordinates: [data_geinfo_adbrasil_wfs.features[0].geometry.coordinates],
-    //         },
-    //     }]
-    // },
 
 
     private static url_sgb(lat: number, lng: number) {
@@ -123,14 +168,26 @@ class RequestCoordsService {
     private static url_geinfo_adbrasil_wfs(lat: number, lng: number) {
         const cqlFilter = `INTERSECTS(geometry,POINT(${lng} ${lat}))`;
         const baseUrl = 'https://geoinfo.dados.embrapa.br/geoserver/geonode/wfs?&version=1.0.0&request=GetFeature&typeNames=geonode:adbrasil&outputFormat=application%2Fjson';
-        const srsName = 'EPSG:3857';
+
 
 
         const encodedCqlFilter = encodeURIComponent(cqlFilter);
 
-        const encodedSrsName = encodeURIComponent(srsName);
 
-        return `${baseUrl}&cql_filter=${encodedCqlFilter}&srsName=${encodedSrsName}`;
+
+        return `${baseUrl}&cql_filter=${encodedCqlFilter}`;
+    }
+    private static url_geinfo_pti_wfs(lat: number, lng: number) {
+        const cqlFilter = `INTERSECTS(geometry,POINT(${lng} ${lat}))`;
+        const baseUrl = 'https://geoinfo.dados.embrapa.br/geoserver/geonode/wfs?&version=1.0.0&request=GetFeature&typeNames=geonode:pti_28f79bcfe1f418a6219d5af23e8c1c45&outputFormat=application%2Fjson';
+
+
+
+        const encodedCqlFilter = encodeURIComponent(cqlFilter);
+
+
+
+        return `${baseUrl}&cql_filter=${encodedCqlFilter}`;
     }
 
 
