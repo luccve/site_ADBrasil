@@ -132,7 +132,7 @@ class RequestCoordsService {
                     c4_relevo: data_geinfo_adbrasil_wfs.features[0].properties.c4_relevo,
                     c5_relevo: data_geinfo_adbrasil_wfs.features[0].properties.c5_relevo,
                     ad_c1: data_geinfo_adbrasil_wfs.features[0].properties.ad_c1,
-                    ad_c2: data_geinfo_adbrasil_wfs.features[0].properties.ad_c12,
+                    ad_c2: data_geinfo_adbrasil_wfs.features[0].properties.ad_c2,
                     ad_c3: data_geinfo_adbrasil_wfs.features[0].properties.ad_c3,
                     ad_c4: data_geinfo_adbrasil_wfs.features[0].properties.ad_c4,
                     ad_c5: data_geinfo_adbrasil_wfs.features[0].properties.ad_c5,
