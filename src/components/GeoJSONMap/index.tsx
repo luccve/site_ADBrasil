@@ -25,8 +25,8 @@ const GeoJSONMap: React.FC = () => {
 
     async function delayedFunction() {
 
-        
-        await new Promise(resolve => setTimeout(resolve, 1000));
+
+        await new Promise(resolve => setTimeout(resolve, 1300));
         setLoading(true);
 
     }
@@ -37,6 +37,7 @@ const GeoJSONMap: React.FC = () => {
         setLoading(false);
         setData(geojsonFeature);
         if (context && context.geojson && context.color) {
+          
             setData(context.geojson);
             setColor(context.color);
         } else {
