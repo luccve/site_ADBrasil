@@ -51,6 +51,7 @@ export interface ResultadoPTFProps {
 
 
 export interface ModalAlertProps {
+    message?: string | Object;
     title?: string;
     visible: boolean;
     onClose: React.Dispatch<React.SetStateAction<boolean>>;
@@ -136,7 +137,7 @@ interface MapEventsProps {
 
 interface LayersMapProps {
     Opacity: number,
-    
+
 }
 
 interface GetLegendsMapsProps {
