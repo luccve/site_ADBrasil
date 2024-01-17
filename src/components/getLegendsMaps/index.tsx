@@ -32,9 +32,9 @@ const GetLegendsMaps = ({ layer }: GetLegendsMapsProps) => {
 
 
     const legendsURL = [
-        { name: 'Potencial de terras para irrigação', link: 'https://geoinfo.dados.embrapa.br/geoserver/ows?service=WMS&request=GetLegendGraphic&format=image%2Fpng&height=14&width=14&layer=geonode%3Apti_28f79bcfe1f418a6219d5af23e8c1c45&style=geonode%3Apti_28f79bcfe1f418a6219d5af23e8c1c45&version=1.3.0&SLD_VERSION=1.1.0&LEGEND_OPTIONS=forceLabels;labelMargin:10;fontAntiAliasing:true;fontName:sans-serif;fontSize:16;fontBold%3Aon&_v_=1705322428760&access_token=9rp9Z9zMsPFZCDalo3AQcGt7SqlcKF' },
-        { name: 'Biomas do Brasil', link: 'https://geoservicos.ibge.gov.br/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=14&HEIGHT=14&LAYER=CREN:lm_bioma_250&legend_options=forceLabels;labelMargin:10;fontAntiAliasing:true;fontName:sans-serif;fontSize:16;fontBold:true' },
-        { name: 'Mapa de solos do Brasil', link: '' },
+        { name: 'Potencial de terras para irrigação (IBGE)', link: 'https://geoinfo.dados.embrapa.br/geoserver/ows?service=WMS&request=GetLegendGraphic&format=image%2Fpng&height=14&width=14&layer=geonode%3Apti_28f79bcfe1f418a6219d5af23e8c1c45&style=geonode%3Apti_28f79bcfe1f418a6219d5af23e8c1c45&version=1.3.0&SLD_VERSION=1.1.0&LEGEND_OPTIONS=forceLabels;labelMargin:10;fontAntiAliasing:true;fontName:sans-serif;fontSize:16;fontBold%3Aon&_v_=1705322428760&access_token=9rp9Z9zMsPFZCDalo3AQcGt7SqlcKF' },
+        { name: 'Biomas do Brasil (IBGE)', link: 'https://geoservicos.ibge.gov.br/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=14&HEIGHT=14&LAYER=CREN:lm_bioma_250&legend_options=forceLabels;labelMargin:10;fontAntiAliasing:true;fontName:sans-serif;fontSize:16;fontBold:true' },
+        { name: 'Mapa de solos do Brasil (IBGE/EMBRAPA)', link: '' },
         { name: 'Vegetação Brasil', link: 'https://geoservicos.ibge.gov.br/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=14&HEIGHT=14&LAYER=CREN:vegetacao_radambrasil&legend_options=labelMargin:10;fontAntiAliasing:true;fontName:sans-serif;fontSize:16' },
         { name: 'Potencialidade Agricolas', link: 'https://geoservicos.ibge.gov.br/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=14&HEIGHT=14&LAYER=CREN:potencialidade_agricola&legend_options=forceLabels;labelMargin:10;fontAntiAliasing:true;fontName:sans-serif;fontSize:16' },
     ]
@@ -50,14 +50,14 @@ const GetLegendsMaps = ({ layer }: GetLegendsMapsProps) => {
 
 
     const colorRanges = [
-        { min: 1.84, max: null, color: "#8500A8", text: "faixa do valor máximo" },
-        { min: 1.4, max: 1.84, color: "#005CE6", text: "a menor que" },
-        { min: 1.06, max: 1.4, color: "#00C4FF", text: "a menor que" },
-        { min: 0.8, max: 1.06, color: "#37A800", text: "a menor que" },
-        { min: 0.61, max: 0.8, color: "#4DE600", text: "a menor que" },
-        { min: 0.46, max: 0.61, color: "#FFAB00", text: "a menor que" },
-        { min: 0.34, max: 0.46, color: "#FFFF73", text: "a menor que" },
-        { min: 0, max: 0.34, color: "#9C9C9C", text: "a menor que" },
+        { min: 1.84, max: 2.3, color: "#8500A8", text: "até" },
+        { min: 1.4, max: 1.84, color: "#005CE6", text: "até" },
+        { min: 1.06, max: 1.4, color: "#00C4FF", text: "até" },
+        { min: 0.8, max: 1.06, color: "#37A800", text: "até" },
+        { min: 0.61, max: 0.8, color: "#4DE600", text: "até" },
+        { min: 0.46, max: 0.61, color: "#FFAB00", text: "até" },
+        { min: 0.34, max: 0.46, color: "#FFFF73", text: "até" },
+        { min: 0, max: 0.34, color: "#9C9C9C", text: "até" },
     ];
 
 
@@ -133,7 +133,7 @@ const GetLegendsMaps = ({ layer }: GetLegendsMapsProps) => {
                 </button>
 
 
-                <div className='leading-tight text-blue pb-[20px]' style={{ display: icon ? 'none' : 'initial' }}>
+                <div className='leading-tight text-blue  pb-[20px]' style={{ display: icon ? 'none' : 'initial' }}>
                     <h1 className='font-bold text-lg max-md:text-md'>Legenda</h1>
                     <h3 className='text-md max-md:text-sm'>Solos do Brasil</h3>
                 </div>
@@ -154,7 +154,7 @@ const GetLegendsMaps = ({ layer }: GetLegendsMapsProps) => {
 
     const legendaADBrasil = (): JSX.Element => {
         return (
-            <div className='flex justify-around p-5 flex-col absolute top-1/5 right-4 bg-white max-w-[300px] max-h-[370px] rounded-md shadow border border-gray'
+            <div className='flex justify-around p-5 flex-col absolute top-1/5 right-4 bg-white max-w-[300px] h-auto rounded-md shadow border border-gray'
                 style={{ transform: `translate(${position.x}px, ${position.y}px)`, cursor: dragging ? 'grabbing' : 'grab' }}
                 onMouseDown={handleMouseDown}>
                 <button onClick={handleChangeIcon} className='absolute hover:scale-110 top-0 right-0 p-2'>
@@ -163,22 +163,20 @@ const GetLegendsMaps = ({ layer }: GetLegendsMapsProps) => {
 
                 {legendChange ? <div>
 
-                    <div className='leading-tight text-blue pb-[20px]' style={{ display: icon ? 'none' : 'initial' }}>
+                    <div className='leading-tight text-blue' style={{ display: icon ? 'none' : 'initial' }}>
                         <h1 className='font-bold text-lg max-md:text-md'>Legenda</h1>
-                        <h3 className='text-md max-md:text-sm'>Água disponível no solo</h3>
-                        <h5 className='text-md max-md:text-sm'>(mm/cm)</h5>
-
+                        <h3 className='text-md max-md:text-sm pb-5'>Água disponível no solo (mm/cm)</h3>
                     </div>
 
                     <div className='self-center flex flex-col justify-between h-auto text-sm space-y-2' style={{ display: icon ? 'none' : 'initial' }}>
                         {colorRanges.map((item, index) => {
-                            return <div key={`${index}-${item.min + item.color}`} className='flex flex-row justify-between items-center space-x-2 '>
-                                <span style={{ background: item.color, width: "25px", height: "25px" }} />
-                                <span>{item.min}</span>
-                                <h5> {item.text}</h5 >
-                                <span>{item.max}</span>
+                            return <ul key={`${index}-${item.min + item.color}`} className='flex flex-row justify-between items-center space-x-2 '>
+                                <li style={{ background: item.color, width: "25px", height: "25px" }} />
+                                <li>{item.min}</li>
+                                <li> {item.text}</li >
+                                <li>{item.max}</li>
 
-                            </div >
+                            </ul >
 
                         })}
                     </div>
