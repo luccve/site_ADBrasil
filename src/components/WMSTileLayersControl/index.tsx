@@ -39,7 +39,7 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
                     />
                 </LayersControl.Overlay> */}
 
-                <LayersControl.Overlay name="Potencial de terras para irrigação"
+                <LayersControl.Overlay name="Potencial de terras para irrigação (IBGE)"
                 >
                     <WMSTileLayer
 
@@ -60,7 +60,7 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
                     />
                 </LayersControl.Overlay>
 
-                <LayersControl.Overlay name="Estimativa de água disponível (EMBRAPA - 2 Aproximação)"
+                <LayersControl.Overlay name="Estimativa de água disponível (EMBRAPA)"
                     checked>
                     <WMSTileLayer
 
@@ -86,7 +86,7 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
 
 
 
-                <LayersControl.Overlay name="Mapa de solos do Brasil">
+                <LayersControl.Overlay name="Mapa de solos do Brasil (IBGE/EMBRAPA)">
                     <WMSTileLayer
 
                         format='image/png'
@@ -105,7 +105,7 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
                     />
                 </LayersControl.Overlay>
 
-                <LayersControl.Overlay name="Biomas do Brasil">
+                <LayersControl.Overlay name="Biomas do Brasil (IBGE)">
                     <WMSTileLayer
 
                         format='image/png'
