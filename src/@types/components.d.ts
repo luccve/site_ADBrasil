@@ -52,7 +52,6 @@ export interface ResultadoPTFProps {
 
 export interface ModalAlertProps {
     title?: string;
-    message: InfoUmProps | string | MyContextProps | {};
     visible: boolean;
     onClose: React.Dispatch<React.SetStateAction<boolean>>;
 }
