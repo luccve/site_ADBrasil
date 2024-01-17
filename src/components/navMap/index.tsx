@@ -84,7 +84,7 @@ const NavMap = ({ children }: NavMapProps) => {
 
                     <div className='text-sm absolute top-[80%]'>
 
-                        <h1>Version 0.5.1</h1>
+                        <h1>Version 0.6.1</h1>
                         <h1>Embrapa Solos UEP Recife</h1>
                     </div>
                 </ul>
@@ -126,7 +126,7 @@ const NavMap = ({ children }: NavMapProps) => {
 
 
                 {close && <div className='text-sm absolute top-[80%] text-blue font-bold'>
-                    <h1>Version 0.5.9</h1>
+                    <h1>Version 0.6.1</h1>
                     <h1>Embrapa Solos</h1>
                     <h1>UEP Recife</h1>
                 </div>}
