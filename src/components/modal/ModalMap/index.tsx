@@ -207,7 +207,7 @@ const ModalMap: React.FC<ModalAlertProps> = ({ onClose, visible }: ModalAlertPro
 
                     </button>
 
-                    <button className='absolute p-1 m-3 top-[1px] left-[3px] max-md:left-[120px] ' onClick={() => setCloseOrOpenBox(!closeOrOpenBox)}>
+                    <button className='absolute p-1 m-3 top-[1px] left-[3px]' onClick={() => setCloseOrOpenBox(!closeOrOpenBox)}>
 
                         {closeOrOpenBox ? <FaMaximize className={'text-xl hover:opacity-70'} /> : <FaMinimize className={'text-xl hover:opacity-70'} />}
                     </button>
