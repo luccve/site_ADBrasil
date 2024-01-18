@@ -10,7 +10,7 @@ import type { LayersMapProps } from "../../@types/components"
 
 export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
 
-    
+
     return (
 
 
@@ -56,7 +56,49 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
                         updateWhenIdle={true}
                         keepBuffer={10}
                         opacity={Opacity}
-                     
+
+                    />
+                </LayersControl.Overlay>
+
+                <LayersControl.Overlay name="ZAAL 1:100.000 (Embrapa)"
+                >
+                    <WMSTileLayer
+
+                        format='image/png'
+                        transparent
+                        layers='geonode:zaalad'
+                        url='https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true&_v_=1705609110818'
+                        version='1.3.0'
+                        crs={CRS.EPSG3857}
+                        tileSize={256}
+                        tms={true}
+                        updateInterval={2000}
+                        pane='overlayPane'
+                        updateWhenIdle={true}
+                        keepBuffer={10}
+                        opacity={Opacity}
+
+                    />
+                </LayersControl.Overlay>
+
+                <LayersControl.Overlay name="ZONPB 1:100.000 (Embrapa)"
+                >
+                    <WMSTileLayer
+
+                        format='image/png'
+                        transparent
+                        layers='geonode:zonpb_ad'
+                        url='https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true'
+                        version='1.3.0'
+                        crs={CRS.EPSG3857}
+                        tileSize={256}
+                        tms={true}
+                        updateInterval={2000}
+                        pane='overlayPane'
+                        updateWhenIdle={true}
+                        keepBuffer={10}
+                        opacity={Opacity}
+
                     />
                 </LayersControl.Overlay>
 
@@ -78,7 +120,7 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
                         pane='overlayPane'
                         updateWhenIdle={true}
                         opacity={Opacity}
-                        
+
 
 
                     />
@@ -86,7 +128,7 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
 
 
 
-                <LayersControl.Overlay name="Mapa de solos do Brasil (IBGE/EMBRAPA)">
+                <LayersControl.Overlay name="Mapa de solos do Brasil (IBGE/Embrapa)">
                     <WMSTileLayer
 
                         format='image/png'
