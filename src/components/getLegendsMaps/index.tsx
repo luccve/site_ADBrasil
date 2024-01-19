@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { BiSolidFoodMenu } from "react-icons/bi";
 import { MdMenuBook } from "react-icons/md";
 import type { GetLegendsMapsProps } from '../../@types/components';
+import LoadingPage from '../loading';
 
 
 const GetLegendsMaps = ({ layer }: GetLegendsMapsProps) => {
@@ -32,20 +33,47 @@ const GetLegendsMaps = ({ layer }: GetLegendsMapsProps) => {
 
 
     const legendsURL = [
-        { name: 'Potencial de terras para irrigação (IBGE)', link: 'https://geoinfo.dados.embrapa.br/geoserver/ows?service=WMS&request=GetLegendGraphic&format=image%2Fpng&height=14&width=14&layer=geonode%3Apti_28f79bcfe1f418a6219d5af23e8c1c45&style=geonode%3Apti_28f79bcfe1f418a6219d5af23e8c1c45&version=1.3.0&SLD_VERSION=1.1.0&LEGEND_OPTIONS=forceLabels;labelMargin:10;fontAntiAliasing:true;fontName:sans-serif;fontSize:16;fontBold%3Aon&_v_=1705322428760&access_token=9rp9Z9zMsPFZCDalo3AQcGt7SqlcKF' },
-        { name: 'Biomas do Brasil (IBGE)', link: 'https://geoservicos.ibge.gov.br/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=14&HEIGHT=14&LAYER=CREN:lm_bioma_250&legend_options=forceLabels;labelMargin:10;fontAntiAliasing:true;fontName:sans-serif;fontSize:16;fontBold:true' },
-        { name: 'Mapa de solos do Brasil (IBGE/EMBRAPA)', link: '' },
-        { name: 'ZONPB 1:100.000 (Embrapa)', link: 'https://geoinfo.dados.embrapa.br/geoserver/ows?service=WMS&request=GetLegendGraphic&format=image%2Fpng&height=12&width=12&layer=geonode%3Azonpb_ad&style=geonode%3Azonpb_ad&version=1.3.0&SLD_VERSION=1.1.0&LEGEND_OPTIONS=forceLabels%3Aon&_v_=1705617220186&access_token=lfnlYSGeZ1HLFVKDYYr79hNYQoN9TQ' },
-        { name: 'ZAAL 1:100.000 (Embrapa)', link: 'https://geoinfo.dados.embrapa.br/geoserver/ows?service=WMS&request=GetLegendGraphic&format=image%2Fpng&height=12&width=12&layer=geonode%3Azonpb_ad&style=geonode%3Azonpb_ad&version=1.3.0&SLD_VERSION=1.1.0&LEGEND_OPTIONS=forceLabels%3Aon&_v_=1705617220186&access_token=lfnlYSGeZ1HLFVKDYYr79hNYQoN9TQ' },
-        { name: 'Vegetação Brasil', link: 'https://geoservicos.ibge.gov.br/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=14&HEIGHT=14&LAYER=CREN:vegetacao_radambrasil&legend_options=labelMargin:10;fontAntiAliasing:true;fontName:sans-serif;fontSize:16' },
-        { name: 'Potencialidade Agricolas', link: 'https://geoservicos.ibge.gov.br/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=14&HEIGHT=14&LAYER=CREN:potencialidade_agricola&legend_options=forceLabels;labelMargin:10;fontAntiAliasing:true;fontName:sans-serif;fontSize:16' },
+        {
+            name: 'Potencial de terras para irrigação (IBGE)',
+            link: 'https://geoinfo.dados.embrapa.br/geoserver/ows?service=WMS&request=GetLegendGraphic&format=image%2Fpng&height=14&width=14&layer=geonode%3Apti_28f79bcfe1f418a6219d5af23e8c1c45&style=geonode%3Apti_28f79bcfe1f418a6219d5af23e8c1c45&version=1.3.0&SLD_VERSION=1.1.0&LEGEND_OPTIONS=forceLabels;labelMargin:10;fontAntiAliasing:true;fontName:sans-serif;fontSize:16;fontBold%3Aon&_v_=1705322428760&access_token=9rp9Z9zMsPFZCDalo3AQcGt7SqlcKF',
+            escala: "Escala 1:250.000"
+        },
+        {
+            name: 'Biomas do Brasil (IBGE)',
+            link: 'https://geoservicos.ibge.gov.br/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=14&HEIGHT=14&LAYER=CREN:lm_bioma_250&legend_options=forceLabels;labelMargin:10;fontAntiAliasing:true;fontName:sans-serif;fontSize:16;fontBold:true',
+            escala: "Escala 1:1.000.000"
+        },
+        {
+            name: 'Mapa de solos do Brasil (IBGE/EMBRAPA)', link: '',
+            escala: "Escala 1:250.000"
+        },
+        {
+            name: 'ZONPB (Embrapa)',
+            escala: "Escala 1:100.000",
+            link: 'https://geoinfo.dados.embrapa.br/geoserver/ows?service=WMS&request=GetLegendGraphic&format=image%2Fpng&height=12&width=12&layer=geonode%3Azonpb_ad&style=geonode%3Azonpb_ad&version=1.3.0&SLD_VERSION=1.1.0&LEGEND_OPTIONS=forceLabels%3Aon&_v_=1705617220186&access_token=lfnlYSGeZ1HLFVKDYYr79hNYQoN9TQ&legend_options=forceLabels;labelMargin:10;fontAntiAliasing:true;fontName:sans-serif;fontSize:16'
+        },
+        {
+            name: 'ZAAL (Embrapa)',
+            escala: "Escala 1:100.000",
+            link: 'https://geoinfo.dados.embrapa.br/geoserver/ows?service=WMS&request=GetLegendGraphic&format=image%2Fpng&height=12&width=12&layer=geonode%3Azonpb_ad&style=geonode%3Azonpb_ad&version=1.3.0&SLD_VERSION=1.1.0&LEGEND_OPTIONS=forceLabels%3Aon&_v_=1705617220186&access_token=lfnlYSGeZ1HLFVKDYYr79hNYQoN9TQ&legend_options=forceLabels;labelMargin:10;fontAntiAliasing:true;fontName:sans-serif;fontSize:16'
+        },
+        {
+            name: 'Vegetação Brasil',
+            escala: "Escala 1:250.000",
+            link: 'https://geoservicos.ibge.gov.br/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=14&HEIGHT=14&LAYER=CREN:vegetacao_radambrasil&legend_options=labelMargin:10;fontAntiAliasing:true;fontName:sans-serif;fontSize:16'
+        },
+        {
+            name: 'Potencialidade Agricolas',
+            escala: "Escala 1:250.000",
+            link: 'https://geoservicos.ibge.gov.br/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=14&HEIGHT=14&LAYER=CREN:potencialidade_agricola&legend_options=forceLabels;labelMargin:10;fontAntiAliasing:true;fontName:sans-serif;fontSize:16'
+        },
     ]
 
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const [dragging, setDragging] = useState(false);
     const [icon, setIcon] = useState(false);
     const [startPosition, setStartPosition] = useState({ x: 0, y: 0 });
-    const [img, setImg] = useState<string>("https://sitechecker.pro/wp-content/uploads/2023/06/404-status-code.png");
+    const [img, setImg] = useState<string | null>(null);
     const [legendChange, setLegendChange] = useState(true);
     const [showSolos, setShowSolos] = useState(false);
 
@@ -184,7 +212,7 @@ const GetLegendsMaps = ({ layer }: GetLegendsMapsProps) => {
                     </div>
                 </div> :
                     <div style={{ display: icon ? 'none' : 'initial' }}>
-                        <img src={img && img} alt="Legend" />
+                        {img ? <> <h4 className='font-bold text-blue'>Legenda</h4> <br /><img src={img} alt="Legend" /> </> : <LoadingPage />}
                     </div>}
 
             </div >)
