@@ -35,7 +35,8 @@ const NavMap = ({ children }: NavMapProps) => {
 
 
     const renderMobileMenu = () => (
-        <ul className='flex flex-col items-center sm:hidden space-x-3 max-sm:flex-col max-sm:space-y-[30px] max-sm:space-x-0 duration-1000 ease-in-out transition-all animate-stagger
+        <ul className='flex flex-col items-center sm:hidden space-x-3 max-sm:flex-col max-sm:space-y-[30px] max-sm:space-x-0  
+        ease-in-out transition-all animate-stagger duration-1000
         '>
             {menu.map((item, index) => (
                 <li key={index} className='w-full'>
@@ -84,7 +85,7 @@ const NavMap = ({ children }: NavMapProps) => {
 
                     <div className='text-sm absolute top-[80%]'>
 
-                        <h1>Version 0.6.1</h1>
+                        <h1>Version 0.6.3</h1>
                         <h1>Embrapa Solos UEP Recife</h1>
                     </div>
                 </ul>
@@ -126,7 +127,7 @@ const NavMap = ({ children }: NavMapProps) => {
 
 
                 {close && <div className='text-sm absolute top-[80%] text-blue font-bold'>
-                    <h1>Version 0.6.1</h1>
+                    <h1>Version 0.6.3</h1>
                     <h1>Embrapa Solos</h1>
                     <h1>UEP Recife</h1>
                 </div>}
