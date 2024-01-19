@@ -6,7 +6,7 @@ import CardList from "../../components/card/cardList";
 import type { perfis, perfisSubOrdem, textura, adProps, ValueMapProps } from "../../@types/data";
 import Catalog2 from '../../database/data/catalog2.json'
 import SelectText from "../../components/input/selectText"
-
+import Catalogo from '/public/catalogo_pub-min.jpg'
 
 
 
@@ -46,7 +46,7 @@ const Catalog = () => {
             }
 
         })
-        
+
         setSubOrdem(subordem);
     };
 
@@ -54,7 +54,8 @@ const Catalog = () => {
         { label: 'Ordem' },
         { label: 'Subordem' },
         { label: 'Textura do perfil' },
-        { label: 'Subordem e textura do perfil' }
+        { label: 'Subordem e textura do perfil' },
+        { label: 'Catálogo' }
 
     ];
 
@@ -148,6 +149,11 @@ const Catalog = () => {
                             </>}
 
                     </div>}
+
+                {region == 4 && <div className="">
+
+                    <img onDoubleClick={() => window.open('https://ainfo.cnptia.embrapa.br/digital/bitstream/item/243230/1/CNPS-BPD-282-2022.pdf', '_blank')} src={Catalogo} alt="Catálogo Boletim" />
+                </div>}
 
             </div >
         </>
