@@ -380,21 +380,51 @@ const FormPTF = ({ tab, region }: PTFttypes) => {
 
             <div className='flex flex-col items-center justify-center rounded-md shadow-md bg-white link2'>
 
-                <select onChange={(e) => {setPtfIndex(Number(e.target.value))}}
-                    className='rounded p-2 w-full my-4 max-md:text-sm text-lg text-center' >
-                    <option value="-1">Selecione uma função de PTF</option>
+                {/* <select
+                    onChange={(e) => {console.log(e.target.value);
+                        setPtfIndex(Number(e.target.value));
+                    }}
+                    className='rounded p-2 w-full my-4 max-md:text-sm text-lg text-center'
+                >
                     {ptfJson.map((item, index) => {
-                        if (item.region === region && item.type == tab)
-                            return <>
+                        if (item.region === region && item.type === tab) {
 
-                                <option key={index} value={index}>{item.author}
-
+                            return (
+                                <option key={index} value={index}>
+                                    {item.author}
                                 </option>
-
-                            </>
-
+                            );
+                        } else {
+                            return null;
+                        }
                     })}
-                </select>
+                </select> */}
+
+
+
+                {ptfJson.map((item, index) => {
+                    if (item.region === region && item.type === tab) {
+                        return (
+                            <div className={`text-[18px] p-2 ${ptfSelectIndex === index ? 'text-black' : ''}`} key={index}>
+                                <input
+                                    className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 
+                                    dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600
+                                    hidden'
+                                    type="radio"
+                                    id={`radio_${index}`}
+                                    name="contact"
+                                    value={index}
+                                    onChange={() => setPtfIndex(index)}
+                                />
+                                <label className='pl-2 cursor-pointer' htmlFor={`radio_${index}`}>{item.author}</label>
+                            </div>
+                        );
+                    } else {
+                        return null;
+                    }
+                })}
+
+
 
 
                 {/* AREA FORMULARIO */}
@@ -418,7 +448,9 @@ const FormPTF = ({ tab, region }: PTFttypes) => {
                                     </h5>
                                 )
                             ))
-                            : null
+                            : <h5 className='text-sm'>
+                                Obs.: Dependendo da região/tipo não há PTF disponível
+                            </h5>
                     }
                 </div>
 
@@ -441,10 +473,10 @@ const FormPTF = ({ tab, region }: PTFttypes) => {
 
             <div className='grid place-items-center'>
 
-                {resultadoView && resultadoPTF.map((item, index) => {
+                {resultadoView && ptfSelectIndex >= 0 && resultadoPTF.map((item, index) => {
 
                     if (ptfJson[ptfSelectIndex].region === region && ptfJson[ptfSelectIndex].type === tab && ptfJson[ptfSelectIndex].author === item.author) {
-                        return <ResultadoPTF key={index} inputProps={ptfJson[ptfSelectIndex].inputProps} curva={ptfJson[ptfSelectIndex].curva}
+                        return <ResultadoPTF key={index + item.author + item.ptf} inputProps={ptfJson[ptfSelectIndex].inputProps} curva={ptfJson[ptfSelectIndex].curva}
                             autoria={ptfJson[ptfSelectIndex].autoria} parametros={ptfJson[ptfSelectIndex].parametros} url={ptfJson[ptfSelectIndex].url}
                             titulo={ptfJson[ptfSelectIndex].titulo} ptf={item.ptf} author={item.author} region={ptfJson[ptfSelectIndex].region}
                             type={ptfJson[ptfSelectIndex].type} cc={ptfJson[ptfSelectIndex].cc} unidade={ptfJson[ptfSelectIndex].unidade} />
