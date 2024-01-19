@@ -6,15 +6,38 @@ import {
 } from "react-leaflet"
 
 import type { LayersMapProps } from "../../@types/components"
+import { useEffect, useState } from "react"
 
 
 export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
+    
+    const [collapsedMobile, setCollapsedMobile] = useState(false);
+    useEffect(() => {
+        const handleWindowResize = () => {
+            const windowWidth = window.innerWidth;
+            if (windowWidth < 400) {
+                setCollapsedMobile(true);
+            } else {
+                setCollapsedMobile(false);
+            }
+        };
 
+        // Adiciona o ouvinte de evento de redimensionamento
+        window.addEventListener('resize', handleWindowResize);
+
+        // Chama a função de manipulação do redimensionamento para definir o estado inicial
+        handleWindowResize();
+
+        // Remove o ouvinte de evento de redimensionamento quando o componente é desmontado
+        return () => {
+            window.removeEventListener('resize', handleWindowResize);
+        };
+    }, []);
 
     return (
 
 
-        <LayersControl position="bottomright" sortLayers={true} collapsed={false}  >
+        <LayersControl position="bottomright" sortLayers={true} collapsed={collapsedMobile}  >
 
             <LayerGroup>
 
@@ -56,6 +79,27 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
                         updateWhenIdle={true}
                         keepBuffer={10}
                         opacity={Opacity}
+
+                    />
+                </LayersControl.Overlay>
+                <LayersControl.Overlay name="Teste (Embrapa)"
+                >
+                    <WMSTileLayer
+
+                        format='image/png'
+                        transparent
+                        layers='geonode:adbrasil_b0f18f25e5eac580ec58488ae35e3918'
+                        url="https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true&access_token=1M2RzHPj2f6WCNqPmNv2xTvCM713ax&cql_filter=sigla_uf LIKE 'RJ'"
+                        version='1.3.0'
+                        crs={CRS.EPSG3857}
+                        tileSize={256}
+                        tms={true}
+                        updateInterval={2000}
+                        pane='overlayPane'
+                        updateWhenIdle={true}
+                        keepBuffer={10}
+                        opacity={Opacity}
+                        
 
                     />
                 </LayersControl.Overlay>
