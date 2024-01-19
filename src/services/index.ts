@@ -66,6 +66,15 @@ class RequestCoordsService {
 
     }
 
+
+    static async fetchClipADBrasil(lat: number, lng: number) {
+        const url = this.url_geinfo_ad_clip_wfs(lat, lng);
+        const response = await fetch(url);
+        const data = await response.json();
+        return data;
+    }
+
+
     public static async fetchCoords(lat: number, lng: number): Promise<GeoInfoData | null> {
         try {
             const url_geinfo_adbrasil_wfs = this.url_geinfo_adbrasil_wfs(lat, lng);
@@ -74,7 +83,9 @@ class RequestCoordsService {
             const url_geoinfo_pti_wfs = this.url_geinfo_pti_wfs(lat, lng);
             const response_geoinfo_pti_wfs = await fetch(url_geoinfo_pti_wfs);
             const dados = await response_geoinfo_pti_wfs.json();
-           
+
+            const state = await this.fetchClipADBrasil(lat, lng);
+            console.log(state.features[0].properties.nm_mun+", "+ state.features[0].properties.sigla_uf+", "+ state.features[0].properties.cd_mun);
 
             if (!response_geinfo_adbrasil_wfs.ok) {
                 console.error('Erro na solicitação WFS:', response_geinfo_adbrasil_wfs.statusText);
@@ -144,7 +155,7 @@ class RequestCoordsService {
                     ct_c3: dados.features[0].properties.ct_c3,
                     ct_c4: dados.features[0].properties.ct_c4,
                     ct_c5: dados.features[0].properties.ct_c5,
-                    ad_um:data_geinfo_adbrasil_wfs.features[0].properties.ad_um
+                    ad_um: data_geinfo_adbrasil_wfs.features[0].properties.ad_um
                 };
             } else {
                 console.error('Resposta não contém dados JSON.', response_geinfo_adbrasil_wfs.url);
@@ -177,9 +188,24 @@ class RequestCoordsService {
 
         return `${baseUrl}&cql_filter=${encodedCqlFilter}`;
     }
+
     private static url_geinfo_pti_wfs(lat: number, lng: number) {
         const cqlFilter = `INTERSECTS(geometry,POINT(${lng} ${lat}))`;
         const baseUrl = 'https://geoinfo.dados.embrapa.br/geoserver/geonode/wfs?&version=1.0.0&request=GetFeature&typeNames=geonode:pti_28f79bcfe1f418a6219d5af23e8c1c45&outputFormat=application%2Fjson';
+
+
+
+        const encodedCqlFilter = encodeURIComponent(cqlFilter);
+
+
+
+        return `${baseUrl}&cql_filter=${encodedCqlFilter}`;
+    }
+
+    private static url_geinfo_ad_clip_wfs(lat: number, lng: number) {
+        const cqlFilter = `INTERSECTS(geom,POINT(${lng} ${lat}))`;
+        const name = encodeURIComponent("geonode:adbrasil_b0f18f25e5eac580ec58488ae35e3918")
+        const baseUrl = `https://geoinfo.dados.embrapa.br/geoserver/geonode/wfs?&version=1.0.0&request=GetFeature&typeNames=${name}&outputFormat=application%2Fjson&access_token=1M2RzHPj2f6WCNqPmNv2xTvCM713ax`;
 
 
 
