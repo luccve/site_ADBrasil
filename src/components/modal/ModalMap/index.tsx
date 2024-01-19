@@ -48,7 +48,7 @@ const ModalMap: React.FC<ModalAlertProps> = ({ onClose, visible }: ModalAlertPro
                         "Rochosidade": `${context.rochosid_1 ? context.rochosid_1 : 'Não informado'}`,
                         "Pedregosidade": `${context.pedregos_1 ? context.pedregos_1 : 'Não informado'}`,
                         "Valor de AD (mm/cm)": `${context.ad_c1 ? context.ad_c1 : 'Não informado'}`,
-                        "Classe de terra": `${context.ct_c1 ? context.ct_c1 : 'Não informado'}`,
+                        "Classe de terra": `${context.ct_c1 ? context.ct_c1 : 'Não informado'}<br/><br/>`,
                     };
 
 
@@ -75,7 +75,7 @@ const ModalMap: React.FC<ModalAlertProps> = ({ onClose, visible }: ModalAlertPro
                             [`Componente ${index}`]: `${value} <br/>Relevo: ${context.c2_relevo ? context.c2_relevo : "Não informado"} <br/>Textura: ${context.textura_c2 ?
                                 context.textura_c2 : "Não informado"}
                             <br/>Rochosidade: ${context.rochosid_2 ? context.rochosid_2 : "Não informado"} <br/>Pedregosidade: ${context.pedregos_2 ? context.pedregos_2 : "Não informado"} 
-                            <br/>Valor de AD (mm/cm): ${context.ad_c2 ? context.ad_c2 : "Não informado"} <br/>Classe de terra: ${context.ct_c2 ? context.ct_c2 : "Não informado"} <br/>`,
+                            <br/>Valor de AD (mm/cm): ${context.ad_c2 ? context.ad_c2 : "Não informado"} <br/>Classe de terra: ${context.ct_c2 ? context.ct_c2 : "Não informado"} <br/><br/>`,
 
                         }
                         index++;
@@ -86,7 +86,7 @@ const ModalMap: React.FC<ModalAlertProps> = ({ onClose, visible }: ModalAlertPro
                             [`Componente ${index}`]: `${value} <br/>Relevo: ${context.c3_relevo ? context.c3_relevo : "Não informado"} <br/>Textura: ${context.textura_c3 ?
                                 context.textura_c3 : "Não informado"}
                             <br/>Rochosidade: ${context.rochosid_3 ? context.rochosid_3 : "Não informado"} <br/>Pedregosidade: ${context.pedregos_3 ? context.pedregos_3 : "Não informado"} 
-                            <br/>Valor de AD (mm/cm): ${context.ad_c3 ? context.ad_c3 : "Não informado"} <br/>Classe de terra: ${context.ct_c3 ? context.ct_c3 : "Não informado"} <br/>`,
+                            <br/>Valor de AD (mm/cm): ${context.ad_c3 ? context.ad_c3 : "Não informado"} <br/>Classe de terra: ${context.ct_c3 ? context.ct_c3 : "Não informado"} <br/><br/>`,
 
                         }
                         index++;
@@ -97,7 +97,7 @@ const ModalMap: React.FC<ModalAlertProps> = ({ onClose, visible }: ModalAlertPro
                             [`Componente ${index}`]: `${value} <br/>Relevo: ${context.c4_relevo ? context.c4_relevo : "Não informado"} <br/>Textura: ${context.textura_c4 ?
                                 context.textura_c4 : "Não informado"}
                             <br/>Rochosidade: ${context.rochosid_4 ? context.rochosid_4 : "Não informado"} <br/>Pedregosidade: ${context.pedregos_4 ? context.pedregos_4 : "Não informado"} 
-                            <br/>Valor de AD (mm/cm): ${context.ad_c4 ? context.ad_c4 : "Não informado"} <br/>Classe de terra: ${context.ct_c4 ? context.ct_c4 : "Não informado"} <br/>`,
+                            <br/>Valor de AD (mm/cm): ${context.ad_c4 ? context.ad_c4 : "Não informado"} <br/>Classe de terra: ${context.ct_c4 ? context.ct_c4 : "Não informado"} <br/><br/>`,
 
                         }
                         index++;
@@ -182,8 +182,10 @@ const ModalMap: React.FC<ModalAlertProps> = ({ onClose, visible }: ModalAlertPro
             {visible && (
                 <div className='absolute min-h-[50px] w-[400px] max-md:w-[200px] border border-blue_l
                 bg-white rounded-lg shadow-md flex items-center justify-center animate-fade-menu
-                    top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 p-2 flex-col'>
-                    {active ? <div style={{ display: !closeOrOpenBox ? "none" : "block" }} className='p-2 relative w-full h-full'>
+                    top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 p-2 flex-col
+                    '>
+                    {active ? <div style={{ display: !closeOrOpenBox ? "none" : "block" }} className='p-2 relative w-full h-full
+                    '>
                         {!isLoading && <h1 className='text-lg max-md:text-sm leading-snug -tracking-tighter font-semibold text-blue border-b-2 py-2'>{title ? title : "Erro!"}</h1>}
                         {isLoading ? (
                             <LoadingPage /> // Mostra o spinner de carregamento
@@ -195,21 +197,21 @@ const ModalMap: React.FC<ModalAlertProps> = ({ onClose, visible }: ModalAlertPro
                     </div> :
                         <div style={{ display: !closeOrOpenBox ? "none" : "block" }} className='p-2 relative w-full h-full'>
                             <h1 className='text-lg max-md:text-sm leading-snug -tracking-tighter font-semibold text-blue border-b-2 py-2'>Componentes da Unidade</h1>
-                            <div className='py-2 space-y-[15px] text-start'>
+                            <div className='py-2 space-y-[15px] text-start ease-linear transition-all animate-fade-menu duration-1000'>
                                 {renderMessageComponente()}
                             </div>
 
 
                         </div>}
-                    <button className='absolute p-1 m-3 top-[1px] left-[330px] max-md:left-[150px] ' onClick={() => onClose(false)}>
+                    <button className='absolute text-blue p-1 m-3 top-[1px] left-[330px] max-md:left-[150px] ' onClick={() => onClose(false)}>
 
-                        <IoMdCloseCircle className={'text-2xl hover:opacity-70'} />
+                        <IoMdCloseCircle className={'text-xl hover:opacity-70 max-md-text-sm'} />
 
                     </button>
 
-                    <button className='absolute p-1 m-3 top-[1px] left-[3px]' onClick={() => setCloseOrOpenBox(!closeOrOpenBox)}>
+                    <button className='absolute p-1 m-3 top-[1px] left-[3px] text-blue' onClick={() => setCloseOrOpenBox(!closeOrOpenBox)}>
 
-                        {closeOrOpenBox ? <FaMaximize className={'text-xl hover:opacity-70'} /> : <FaMinimize className={'text-xl hover:opacity-70'} />}
+                        {closeOrOpenBox ? <FaMinimize className={'text-md max-md-text-sm hover:opacity-70'} /> : <FaMaximize className={'text-md max-md-text-sm hover:opacity-70'} />}
                     </button>
 
                     {!isLoading && <div style={{ display: !closeOrOpenBox ? "none" : "flex" }} className='text-md max-md:text-sm bg-white rounded border border-blue w-full flex flex-row text-center items-center'>
