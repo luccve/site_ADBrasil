@@ -14,6 +14,9 @@ import HandlePositionMap from '../../components/handlePositionMap';
 import OpacitySliderMap from '../../components/opacitySliderMap';
 import WMSTileLayersControl from '../../components/WMSTileLayersControl';
 import GetLegendsMaps from '../../components/getLegendsMaps';
+import SearchClip from '../../components/SearchClip';
+import ModalSearch from '../../components/modal/modalSearch';
+
 
 
 const MapPage = () => {
@@ -22,7 +25,9 @@ const MapPage = () => {
     const mapContainerRef = useRef(null);
     const [elementOpacity, setElementOpacity] = useState<number>(1);
     const [layer, setLayer] = useState("Estimativa de água disponível");
-
+    const [valueWMSMap, setValue] = useState<string | null>(null);
+   
+    const [close, onClose] = useState(false);
 
     return (
         <div className={`flex items-center overflow-y-hidden h-screen relative bg-white`}>
@@ -44,13 +49,16 @@ const MapPage = () => {
                 <ScaleControl position="bottomleft" imperial={false} />
                 <LayersMap />
                 <GeoJSONMap />
+                <SearchClip opacity={elementOpacity} valueWMSMap={valueWMSMap} search={onClose} />
                 {!modal && <MapEvents setLayer={setLayer} setLoading={setModal} />}
                 <MinimapControl position={[0, 0]} zoom={2} />
                 <GetCoordinates />
                 <GetPosition />
+
                 <WMSTileLayersControl Opacity={elementOpacity} />
             </MapContainer>
             <GetLegendsMaps layer={layer} />
+            <ModalSearch onValue={setValue} close={close} onClose={onClose} />
             {modal && <ModalMap onClose={setModal} visible={modal} />}
         </div>
 
