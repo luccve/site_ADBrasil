@@ -82,29 +82,9 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
 
                     />
                 </LayersControl.Overlay>
-                <LayersControl.Overlay name="Teste (Embrapa)"
-                >
-                    <WMSTileLayer
+                
 
-                        format='image/png'
-                        transparent
-                        layers='geonode:adbrasil_b0f18f25e5eac580ec58488ae35e3918'
-                        url="https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true&access_token=1M2RzHPj2f6WCNqPmNv2xTvCM713ax&cql_filter=sigla_uf LIKE 'RJ'"
-                        version='1.3.0'
-                        crs={CRS.EPSG3857}
-                        tileSize={256}
-                        tms={true}
-                        updateInterval={2000}
-                        pane='overlayPane'
-                        updateWhenIdle={true}
-                        keepBuffer={10}
-                        opacity={Opacity}
-                        
-
-                    />
-                </LayersControl.Overlay>
-
-                <LayersControl.Overlay name="ZAAL 1:100.000 (Embrapa)"
+                <LayersControl.Overlay name="ZAAL (Embrapa)"
                 >
                     <WMSTileLayer
 
@@ -125,7 +105,7 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
                     />
                 </LayersControl.Overlay>
 
-                <LayersControl.Overlay name="ZONPB 1:100.000 (Embrapa)"
+                <LayersControl.Overlay name="ZONPB (Embrapa)"
                 >
                     <WMSTileLayer
 
@@ -191,7 +171,7 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
                     />
                 </LayersControl.Overlay>
 
-                <LayersControl.Overlay name="Biomas do Brasil (IBGE)">
+                {/* <LayersControl.Overlay name="Biomas do Brasil (IBGE)">
                     <WMSTileLayer
 
                         format='image/png'
@@ -208,7 +188,7 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
                         keepBuffer={10}
                         opacity={Opacity}
                     />
-                </LayersControl.Overlay>
+                </LayersControl.Overlay> */}
                 {/* <LayersControl.Overlay name="Vegetação Brasil">
                     <WMSTileLayer
 
