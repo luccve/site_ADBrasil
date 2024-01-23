@@ -91,7 +91,7 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
                         format='image/png'
                         transparent
                         layers='geonode:zaalad'
-                        url='https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true&_v_=1705609110818'
+                        url='https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true'
                         version='1.3.0'
                         crs={CRS.EPSG3857}
                         tileSize={256}
@@ -101,6 +101,7 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
                         updateWhenIdle={true}
                         keepBuffer={10}
                         opacity={Opacity}
+                        accessToken="vInDUq9Gt1zuamdmxVbp7VdHymKEY2"
 
                     />
                 </LayersControl.Overlay>
@@ -122,6 +123,7 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
                         updateWhenIdle={true}
                         keepBuffer={10}
                         opacity={Opacity}
+                        accessToken="vInDUq9Gt1zuamdmxVbp7VdHymKEY2"
 
                     />
                 </LayersControl.Overlay>
