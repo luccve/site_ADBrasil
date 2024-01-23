@@ -83,9 +83,9 @@ class RequestCoordsService {
             const url_geoinfo_pti_wfs = this.url_geinfo_pti_wfs(lat, lng);
             const response_geoinfo_pti_wfs = await fetch(url_geoinfo_pti_wfs);
             const dados = await response_geoinfo_pti_wfs.json();
+            // const state = await this.fetchClipADBrasil(lat, lng);
 
-            const state = await this.fetchClipADBrasil(lat, lng);
-            console.log(state.features[0].properties.nm_mun+", "+ state.features[0].properties.sigla_uf+", "+ state.features[0].properties.cd_mun);
+            // console.log(state.features[0].properties.nm_mun + ", " + state.features[0].properties.sigla_uf + ", " + state.features[0].properties.cd_mun);
 
             if (!response_geinfo_adbrasil_wfs.ok) {
                 console.error('Erro na solicitação WFS:', response_geinfo_adbrasil_wfs.statusText);
@@ -155,7 +155,8 @@ class RequestCoordsService {
                     ct_c3: dados.features[0].properties.ct_c3,
                     ct_c4: dados.features[0].properties.ct_c4,
                     ct_c5: dados.features[0].properties.ct_c5,
-                    ad_um: data_geinfo_adbrasil_wfs.features[0].properties.ad_um
+                    ad_um: data_geinfo_adbrasil_wfs.features[0].properties.ad_um,
+
                 };
             } else {
                 console.error('Resposta não contém dados JSON.', response_geinfo_adbrasil_wfs.url);

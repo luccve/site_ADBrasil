@@ -18,7 +18,6 @@ import SearchClip from '../../components/SearchClip';
 import ModalSearch from '../../components/modal/modalSearch';
 
 
-
 const MapPage = () => {
 
     const [modal, setModal] = useState(false);
@@ -49,7 +48,7 @@ const MapPage = () => {
                 <ScaleControl position="bottomleft" imperial={false} />
                 <LayersMap />
                 <GeoJSONMap />
-                <SearchClip opacity={elementOpacity} valueWMSMap={valueWMSMap} search={onClose} />
+                <SearchClip opacity={elementOpacity} valueWMSMap={valueWMSMap} onClose={onClose} />
                 {!modal && <MapEvents setLayer={setLayer} setLoading={setModal} />}
                 <MinimapControl position={[0, 0]} zoom={2} />
                 <GetCoordinates />

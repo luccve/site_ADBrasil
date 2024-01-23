@@ -6,7 +6,7 @@ import CardList from "../../components/card/cardList";
 import type { perfis, perfisSubOrdem, textura, adProps, ValueMapProps } from "../../@types/data";
 import Catalog2 from '../../database/data/catalog2.json'
 import SelectText from "../../components/input/selectText"
-import Catalogo from '/public/catalogo_pub-min.jpg'
+import Catalogo from '/catalogo_pub-min.jpg'
 
 
 
