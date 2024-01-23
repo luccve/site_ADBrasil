@@ -1,5 +1,7 @@
 //id_solo INTEGER PRIMARY KEY AUTOINCREMENT, sigla_p VARCHAR(2), solo_subordem VARCHAR(100), id_p VARCHAR(2), textura VARCHAR(140), n_camadas VARCHAR(10), media VARCHAR(5), dp VARCHAR(5), cv VARCHAR(5), mediana VARCHAR(5), inter_interq VARCHAR(5), min VARCHAR(5), max VARCHAR(5)
 
+import { LatLng } from "leaflet";
+
 export interface ResultadoPTF {
   type?: number;
   Author: string;
@@ -232,6 +234,9 @@ interface GeoInfoData extends MyContextProps {
   ct_c3?: string | null;
   ct_c4?: string | null;
   ct_c5?: string | null;
+  filter?: string | null;
+  municipio?: string | null;
+  centroides?: LatLng;
   setContext?: React.Dispatch<React.SetStateAction<GeoInfoData | null>>;
 }
 
@@ -239,3 +244,24 @@ interface GeoInfoData extends MyContextProps {
 interface GeoInfoDataAny extends GeoInfoData {
   [key: string]: string | number | null | undefined | GeoJSON;
 }
+
+
+export interface DadosUF {
+  [key: string]: { centroides: LatLng; cod: string; nome: string };
+}
+
+export interface dados_um_props {
+  [key: string]: {
+    [key: string]: {
+      centroides: LatLng;
+      cod_mun: string;
+    };
+  }[];
+}
+
+interface MunicipioProps {
+  nome: string;
+  cod_mun: string;
+  centroides: LatLng;
+}
+
