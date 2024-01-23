@@ -1,21 +1,31 @@
 import L, { CRS } from "leaflet";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { TbZoomInAreaFilled } from "react-icons/tb";
 import { createRoot } from "react-dom/client";
 import { WMSTileLayer, useMap } from "react-leaflet";
 
 interface SearchClip {
-  search: React.Dispatch<boolean>;
+  onClose: React.Dispatch<boolean>;
   valueWMSMap: string | null;
   opacity: number;
 }
 
-const SearchClip = ({ search, valueWMSMap, opacity }: SearchClip) => {
+const SearchClip = ({ onClose, valueWMSMap, opacity }: SearchClip) => {
   const map = useMap();
   const infoRef = useRef<HTMLDivElement | null>(null);
   const rootRef = useRef<any | null>(null);
+  const [mapRender, setmapRender] = useState(false);
+  const [url, setUrl] = useState("");
 
+  useEffect(() => {
+    console.log(valueWMSMap)
+    if (valueWMSMap && valueWMSMap?.length > 2) {
+      setUrl(`https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true&access_token=1M2RzHPj2f6WCNqPmNv2xTvCM713ax&cql_filter=cd_mun == ${valueWMSMap}`)
+    } else {
+      setUrl(`https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true&access_token=1M2RzHPj2f6WCNqPmNv2xTvCM713ax&cql_filter=sigla_uf LIKE '${valueWMSMap}'`)
+    }
+  }, [valueWMSMap])
 
   const IconComponent = ({ handleClick }: any) => (
     <button onClick={handleClick}>
@@ -23,6 +33,13 @@ const SearchClip = ({ search, valueWMSMap, opacity }: SearchClip) => {
     </button>
   );
 
+
+  useEffect(() => {
+    setmapRender(false);
+    setTimeout(() => { setmapRender(true) }, 1000);
+
+  },
+    [valueWMSMap]);
 
 
   useEffect(() => {
@@ -51,7 +68,7 @@ const SearchClip = ({ search, valueWMSMap, opacity }: SearchClip) => {
 
 
     const handleClick = () => {
-      search(true);
+      onClose(true);
 
     };
 
@@ -63,6 +80,7 @@ const SearchClip = ({ search, valueWMSMap, opacity }: SearchClip) => {
         rootRef.current.render(<IconComponent handleClick={handleClick} />);
       }
     });
+
 
 
 
@@ -79,24 +97,29 @@ const SearchClip = ({ search, valueWMSMap, opacity }: SearchClip) => {
 
   }, [map]);
 
-  return (
-    valueWMSMap ? <WMSTileLayer
 
-      format='image/png'
-      transparent
-      layers='geonode:adbrasil_b0f18f25e5eac580ec58488ae35e3918'
-      url={`https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true&access_token=1M2RzHPj2f6WCNqPmNv2xTvCM713ax&cql_filter=sigla_uf LIKE '${valueWMSMap}'`}
-      version='1.3.0'
-      crs={CRS.EPSG3857}
-      tileSize={256}
-      tms={true}
-      updateInterval={2000}
-      pane='overlayPane'
-      updateWhenIdle={true}
-      keepBuffer={10}
-      opacity={opacity}
-    />
-      : null)
+
+
+
+  return mapRender ? <WMSTileLayer
+
+    format='image/png'
+    transparent
+    layers='geonode:adbrasil_b0f18f25e5eac580ec58488ae35e3918'
+    url={url}
+    version='1.3.0'
+    crs={CRS.EPSG3857}
+    tileSize={256}
+    tms={true}
+    updateInterval={2000}
+    pane='overlayPane'
+    updateWhenIdle={true}
+    keepBuffer={10}
+    opacity={opacity}
+
+
+  /> : null
+
 };
 
 export default SearchClip;
