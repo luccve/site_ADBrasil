@@ -1,6 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { IoMdCloseCircle } from "react-icons/io";
 import { TbZoomInAreaFilled } from "react-icons/tb";
+import { ContextMap } from "../../../contexts";
+import dados_uf from '../../../assets/dados_uf.json';
+import dados_um from '../../../assets/dados_municipios.json';
+import type { DadosUF, dados_um_props, MunicipioProps } from "../../../@types/data";
+
 
 interface modalSearchType {
     close: boolean;
@@ -10,41 +15,74 @@ interface modalSearchType {
 
 const ModalSearch = ({ close, onClose, onValue }: modalSearchType) => {
 
-    const [state, setState] = useState("")
+    const [state, setState] = useState("");
+    const [openFilterMunicipio, setOpenFilterMunicipio] = useState<boolean>(false);
+    const [objMunicipioSelect, setObjMunicipioSelect] = useState<null | MunicipioProps>(null);
+    const [recorte, setRecorte] = useState<number | null>(null);
+    const context = useContext(ContextMap);
+    const dados_uf_types: DadosUF | any = dados_uf;
+    const dados_um_types: dados_um_props | any = dados_um;
 
-    const states = [
-        { sigla_uf: 'AC', nome: 'Acre' },
-        { sigla_uf: 'AL', nome: 'Alagoas' },
-        { sigla_uf: 'AP', nome: 'Amapá' },
-        { sigla_uf: 'AM', nome: 'Amazonas' },
-        { sigla_uf: 'BA', nome: 'Bahia' },
-        { sigla_uf: 'CE', nome: 'Ceará' },
-        { sigla_uf: 'DF', nome: 'Distrito Federal' },
-        { sigla_uf: 'ES', nome: 'Espírito Santo' },
-        { sigla_uf: 'GO', nome: 'Goiás' },
-        { sigla_uf: 'MA', nome: 'Maranhão' },
-        { sigla_uf: 'MT', nome: 'Mato Grosso' },
-        { sigla_uf: 'MS', nome: 'Mato Grosso do Sul' },
-        { sigla_uf: 'MG', nome: 'Minas Gerais' },
-        { sigla_uf: 'PA', nome: 'Pará' },
-        { sigla_uf: 'PB', nome: 'Paraíba' },
-        { sigla_uf: 'PR', nome: 'Paraná' },
-        { sigla_uf: 'PE', nome: 'Pernambuco' },
-        { sigla_uf: 'PI', nome: 'Piauí' },
-        { sigla_uf: 'RJ', nome: 'Rio de Janeiro' },
-        { sigla_uf: 'RN', nome: 'Rio Grande do Norte' },
-        { sigla_uf: 'RS', nome: 'Rio Grande do Sul' },
-        { sigla_uf: 'RO', nome: 'Rondônia' },
-        { sigla_uf: 'RR', nome: 'Roraima' },
-        { sigla_uf: 'SC', nome: 'Santa Catarina' },
-        { sigla_uf: 'SP', nome: 'São Paulo' },
-        { sigla_uf: 'SE', nome: 'Sergipe' },
-        { sigla_uf: 'TO', nome: 'Tocantins' }
-    ];
+
 
     const handleWMSCHange = () => {
-        onValue(state);
+
+
+        if (context?.setContext && !openFilterMunicipio) {
+            onValue(state);
+            context.setContext({ filter: state, centroides: dados_uf_types[state].centroides });
+        } else if (context?.setContext && openFilterMunicipio) {
+            if (objMunicipioSelect && objMunicipioSelect.cod_mun) {
+                onValue(objMunicipioSelect.cod_mun);
+                context.setContext({ filter: objMunicipioSelect.cod_mun, centroides: objMunicipioSelect.centroides });
+            }
+
+        }
+        setOpenFilterMunicipio(false);
+        setState("");
+        onClose(false);
     }
+
+
+    function selectDinamically() {
+
+        if (recorte == 0) {
+            return (<>
+                <select
+                    onChange={(e) => setState(e.currentTarget.value)}
+                    className="bg-white border rounded p-2 text-sm focus:scale-125">
+                    <option value={""}>---</option>;
+                    {Object.keys(dados_uf_types).map((key, index) => {
+                        const item = dados_uf_types[key];
+                        return <option key={key + index} value={key}>{item.nome}</option>;
+                    })}
+                </select>
+            </>)
+        } else if (recorte == 1) {
+            return (<div className={'flex flex-row justify-around'}>
+                <select
+                    onChange={(e) => { setState(e.currentTarget.value); setOpenFilterMunicipio(true); }}
+                    className="bg-white border rounded p-2 text-sm ">
+                    <option value={""}>---</option>;
+                    {Object.keys(dados_uf_types).map((key, index) => {
+                        return <option key={key + index} value={key}>{key}</option>;
+                    })}
+                </select>
+                {openFilterMunicipio && <select
+                    onChange={(e) => { setObjMunicipioSelect(JSON.parse(e.currentTarget.value)) }}
+                    className="bg-white border rounded p-2 text-sm ">
+                    <option value={""}>---</option>;
+                    {dados_um_types[state].map((key: MunicipioProps, index: number) => {
+                        return <option key={index + key.nome} value={JSON.stringify(key)}>{key.nome}</option>
+                    })}
+                </select>}
+            </div>)
+        }
+
+    }
+
+
+
 
     return close ?
 
@@ -52,12 +90,16 @@ const ModalSearch = ({ close, onClose, onValue }: modalSearchType) => {
     absolute top-1/2  left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-100`}>
             <div className="space-y-5">
                 <div className="space-y-5 text-blue">
-                    <h1 className="font-bold">Selecione o estado:</h1>
                     <select
-                        onChange={(e) => setState(e.currentTarget.value)}
+                        onChange={(e) => setRecorte(Number(e.currentTarget.value))}
                         className="bg-white border rounded p-2 text-sm focus:scale-125">
-                        {states.map((state, index) => <option key={index + state.sigla_uf} value={state.sigla_uf}>{state.nome}</option>)}
+                        <option value={-1}>Selecione um recorte</option>
+                        <option value={0}>Limite Federativo</option>
+                        <option value={1}>Limite Municipal</option>
+
                     </select>
+
+                    {selectDinamically()}
                 </div>
 
                 <div>
@@ -72,7 +114,7 @@ const ModalSearch = ({ close, onClose, onValue }: modalSearchType) => {
                     </button>
                 </div>
             </div>
-        </div> : null;
+        </div > : null;
 
 
 }
