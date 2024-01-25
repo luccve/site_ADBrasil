@@ -19,17 +19,27 @@ const GetLegendsMaps = ({ layer }: GetLegendsMapsProps) => {
     const handleChangeLegends = () => {
         if (layer.includes("Estimativa de água disponível")) {
             setLegendChange(true);
+            setEscala("Escala: 1:250.000");
             setShowSolos(false);
         } else if (layer.includes("Mapa de solos")) {
             setShowSolos(true);
+            setEscala("Escala: 1:250.000");
             setLegendChange(false);
         } else {
             setShowSolos(false);
             setLegendChange(false);
-            const url = legendsURL.find(item => item.name === layer)?.link;
-            legendWMS(url ? url : "https://sitechecker.pro/wp-content/uploads/2023/06/404-status-code.png");
+
+            const item = legendsURL.find(item => item.name === layer);
+            if (item) {
+                const { link, escala } = item;
+                legendWMS(link);
+                setEscala(escala);
+            }
+
+
         }
     }
+
 
 
     const legendsURL = [
@@ -49,7 +59,7 @@ const GetLegendsMaps = ({ layer }: GetLegendsMapsProps) => {
         },
         {
             name: 'ZONPB (Embrapa)',
-            escala: "Escala 1:100.000",
+            escala: "Escala 1:50.000",
             link: 'https://geoinfo.dados.embrapa.br/geoserver/ows?service=WMS&request=GetLegendGraphic&format=image%2Fpng&height=12&width=12&layer=geonode%3Azonpb_ad&style=geonode%3Azonpb_ad&version=1.3.0&SLD_VERSION=1.1.0&LEGEND_OPTIONS=forceLabels%3Aon&_v_=1705617220186&access_token=lfnlYSGeZ1HLFVKDYYr79hNYQoN9TQ&legend_options=forceLabels;labelMargin:10;fontAntiAliasing:true;fontName:sans-serif;fontSize:16'
         },
         {
@@ -71,6 +81,7 @@ const GetLegendsMaps = ({ layer }: GetLegendsMapsProps) => {
 
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const [dragging, setDragging] = useState(false);
+    const [escala, setEscala] = useState("1:250:000");
     const [icon, setIcon] = useState(false);
     const [startPosition, setStartPosition] = useState({ x: 0, y: 0 });
     const [img, setImg] = useState<string | null>(null);
@@ -166,6 +177,7 @@ const GetLegendsMaps = ({ layer }: GetLegendsMapsProps) => {
                 <div className='leading-tight text-blue  pb-[20px]' style={{ display: icon ? 'none' : 'initial' }}>
                     <h1 className='font-bold text-lg max-md:text-md'>Legenda</h1>
                     <h3 className='text-md max-md:text-sm'>Solos do Brasil</h3>
+                    <h5 className='text-md text-black max-md:text-sm'>{escala}</h5>
                 </div>
 
                 <div className='self-center flex flex-col justify-between h-auto text-sm space-y-2' style={{ display: icon ? 'none' : 'initial' }}>
@@ -195,7 +207,8 @@ const GetLegendsMaps = ({ layer }: GetLegendsMapsProps) => {
 
                     <div className='leading-tight text-blue' style={{ display: icon ? 'none' : 'initial' }}>
                         <h1 className='font-bold text-lg max-md:text-md'>Legenda</h1>
-                        <h3 className='text-md max-md:text-sm pb-5'>Água disponível no solo (mm/cm)</h3>
+                        <h3 className='text-md max-md:text-sm '>Água disponível no solo (mm/cm)</h3>
+                        <h5 className='text-md text-black max-md:text-sm pb-5'>{escala}</h5>
                     </div>
 
                     <div className='self-center flex flex-col justify-between h-auto text-sm space-y-2' style={{ display: icon ? 'none' : 'initial' }}>
@@ -212,7 +225,7 @@ const GetLegendsMaps = ({ layer }: GetLegendsMapsProps) => {
                     </div>
                 </div> :
                     <div style={{ display: icon ? 'none' : 'initial' }}>
-                        {img ? <> <h4 className='font-bold text-blue'>Legenda</h4> <br /><img src={img} alt="Legend" /> </> : <LoadingPage />}
+                        {img ? <> <h4 className='font-bold text-blue'>Legenda</h4> <h4>{escala}</h4> <br /><img src={img} alt="Legend" /> </> : <LoadingPage />}
                     </div>}
 
             </div >)
