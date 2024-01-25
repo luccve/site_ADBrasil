@@ -52,17 +52,20 @@ const MapEvents: React.FC<MapEventsProps> = ({ setLoading, setLayer }: MapEvents
             layeradd(e) {
 
                 if (context?.centroides && e.layer.options.layers) {
-                    const {lat, lng} = context.centroides;
+                    const { lat, lng } = context.centroides;
+                    const cod = context.filter;
                     const verify = layers.includes(e.layer.options.layers)
                     if (verify) {
                         map.eachLayer((layer) => {
-                            
+
                             if (layer.options.layers == "geonode:adbrasil" || layer.options.layers == "BDIA:gpc_pedo"
                                 || layer.options.layers == "geonode:pti_28f79bcfe1f418a6219d5af23e8c1c45") {
                                 map.removeLayer(layer)
                             }
                         });
-                        map.flyTo([lat, lng], 6);
+
+                        const z = Number(cod) ? 10 : 6
+                        map.flyTo([lat, lng], z);
                     }
                 }
             }
