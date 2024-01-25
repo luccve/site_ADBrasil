@@ -7,11 +7,14 @@ import type { perfis, perfisSubOrdem, textura, adProps, ValueMapProps } from "..
 import Catalog2 from '../../database/data/catalog2.json'
 import SelectText from "../../components/input/selectText"
 import Catalogo from '/catalogo_pub-min.jpg'
+import ModalAlert from "../../components/modal/modalAlert";
 
 
 
 const Catalog = () => {
 
+
+    const [modal, setModal] = useState(true);
 
     const searchQuery = (value: number | null | string) => {
 
@@ -118,7 +121,7 @@ const Catalog = () => {
                 {region != 3 ? <div className="flex flex-col justify-center items-center">
                     {data && <Select onClick={toggleView} onSelect={selectName} onValue={selectValue} array={data} inputTitle={arrayRegions[Number(region)].label} />}
 
-                    {view && <CardList ArrayRes={[`${value} mm/cm`]} ArrayTitle={[`AD`]} />}
+                    {view && <CardList ArrayRes={[`${value}`]} ArrayTitle={[`AD (mm/cm)`]} />}
 
                 </div> :
                     <div className="flex flex-col justify-center items-center">
@@ -132,7 +135,7 @@ const Catalog = () => {
                                 <div className="flex flex-col text-lg  text-white rounded bg-blue my-2  w-[90%] p-2">
                                     <div className="flex flex-row my-1">
                                         <h1 className="w-[50%] text-start">Textura</h1>
-                                        <h1 className="w-[50%] text-end">AD</h1>
+                                        <h1 className="w-[50%] text-end">AD (mm/cm)</h1>
                                     </div>
                                 </div>
                                 <div className="flex flex-col text-sm  rounded bg-white w-[90%] p-2 shadow">
@@ -151,8 +154,8 @@ const Catalog = () => {
                     </div>}
 
                 {region == 4 && <div className="">
-
-                    <img onDoubleClick={() => window.open('https://ainfo.cnptia.embrapa.br/digital/bitstream/item/243230/1/CNPS-BPD-282-2022.pdf', '_blank')} src={Catalogo} alt="Catálogo Boletim" />
+                    <ModalAlert onClose={setModal} visible={modal} title="Catálogo" message={"O catálogo estará disponível após carregar a imagem. \n\nPara acessar o boletim técnico dê double click"} />
+                    <img title="Dê double click para acessar o boletim" className="cursor-pointer" onDoubleClick={() => window.open('https://ainfo.cnptia.embrapa.br/digital/bitstream/item/243230/1/CNPS-BPD-282-2022.pdf', '_blank')} src={Catalogo} alt="Catálogo Boletim" />
                 </div>}
 
             </div >
