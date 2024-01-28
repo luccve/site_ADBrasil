@@ -120,13 +120,13 @@ const Home = () => {
                     <div className='flex flex-col items-center '>
                         {/* <img className=' w-28 max-lg:w-16' src={Ptf} alt="Icone da aba de educação" /> */}
                         <SiGooglescholar className='text-white w-16 h-28 max-lg:w-16 max-lg:h-28' />
-                        <BtnLink Title='Educação' Path={"/ptf"} />
+                        <BtnLink Title='Educação' Path={"/edu"} />
                     </div>
 
                     <div className='flex flex-col items-center '>
                         {/* <img className=' w-28 max-lg:w-16' src={Ptf} alt="Icone da ferramenta de IA" /> */}
                         <SiSmartthings className='text-white w-16 h-28 max-lg:w-16 max-lg:h-28' />
-                        <BtnLink Title='IA' Path={"/ptf"} />
+                        <BtnLink Title='IA' Path={"/balance"} />
                     </div>
 
 
