@@ -16,15 +16,15 @@ const nav = () => {
         { title: 'AD por tipo de solo e textura', link: "/catalogo" },
         { title: 'AD Funções para cálculo (PTF)', link: "/ptf" },
         { title: 'AD no mapa', link: "/map" },
-        { title: 'Educacional', link: "/#section2" },
+        { title: 'Educacional', link: "edu" },
         { title: 'AI Soil', link: "/balance" },
     ]
 
     const menuDesktop = [
         { title: 'Projeto', link: "#section4" },
         { title: 'Funcionalidades', link: "#section1" },
-        { title: 'Educacional', link: "#section2" },
-        { title: 'AI Soil', link: "balance" },
+        { title: 'Educacional', link: "/edu" },
+        { title: 'AI Soil', link: "/balance" },
     ]
 
     const handleMenu = () => {
@@ -90,7 +90,7 @@ const nav = () => {
 
                         <div className='flex flex-row items-center'>
                             {menuDesktop.map((item, index) => {
-                                if (index != 3) {
+                                if (index != 2 && index != 3) {
                                     return (
                                         <li key={index}
                                             className='text-lg rounded hover:scale-105 hover:bg-blue 
@@ -103,7 +103,7 @@ const nav = () => {
                                     )
                                 }
 
-                                else if (index === 3) {
+                                else if (index === 3 || index === 2) {
                                     return (<li key={index}
                                         className='text-lg rounded tracking-wide hover:scale-105 hover:bg-blue 
                                                          hover:text-white transition-all duration-500 ease-in-out p-2'>

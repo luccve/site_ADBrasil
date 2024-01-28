@@ -20,8 +20,8 @@ const NavMap = ({ children }: NavMapProps) => {
     const menu = [
         { title: 'Projeto', link: "#section4" },
         { title: 'Funcionalidades', link: "#section1" },
-        { title: 'Educacional', link: "#section2" },
-        { title: 'AI Soil', link: "balance" },
+        { title: 'Educacional', link: "/edu" },
+        { title: 'AI Soil', link: "/balance" },
     ];
 
     const handleMenu = () => {
@@ -40,7 +40,7 @@ const NavMap = ({ children }: NavMapProps) => {
         '>
             {menu.map((item, index) => (
                 <li key={index} className='w-full'>
-                    {index !== 3 ? (
+                    {index !== 2 && index !== 3 ? (
                         <NavLink onClick={() => toogleClick(item.link)} to={{ hash: item.link, pathname: '/' }}>
                             {item.title}
                         </NavLink>
@@ -69,7 +69,7 @@ const NavMap = ({ children }: NavMapProps) => {
                     </Link>
                     {menu.map((item, index) => (
                         <li key={index} className='w-36 rounded-md tracking-wide hover:scale-110 hover:bg-blue hover:text-white transition-all duration-500 ease-in-out'>
-                            {index !== 3 ? (
+                            {index !== 2 && index !== 3? (
                                 <NavLink onClick={() => toogleClick(item.link)} to={{ hash: item.link, pathname: '/' }}>
                                     {item.title}
                                 </NavLink>
