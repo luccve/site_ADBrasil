@@ -16,17 +16,23 @@ import WMSTileLayersControl from '../../components/WMSTileLayersControl';
 import GetLegendsMaps from '../../components/getLegendsMaps';
 import SearchClip from '../../components/SearchClip';
 import ModalSearch from '../../components/modal/modalSearch';
+import ModalAlert from '../../components/modal/modalAlert';
 
 
 const MapPage = () => {
-
+    const [alert, setAlert] = useState(true);
     const [modal, setModal] = useState(false);
     const mapContainerRef = useRef(null);
     const [elementOpacity, setElementOpacity] = useState<number>(1);
     const [layer, setLayer] = useState("Estimativa de água disponível");
     const [valueWMSMap, setValue] = useState<string | null>(null);
-   
+    const instrucoes = {
+        "Camadas": "Os mapas no seu canto inferior direito contém escalas e bases cartograficas diferentes, observe na legenda a escala do mesmo. Por padrão a camada da Estimativa de água disponível do Brasil inicia habilitada.",
+        "Funcionalidades": "Este serviço conta com diversas funcionalidades, que estão espalhadas no canto superior esquerdo e na barra de menus na sua direita.",
+        "Eventos": "O usuário poderá clicar no mapa que retornará informações da Unidade de Mapeamento do solo, e sobretudo, informações de água disponível e potencial para irrigação de cada componente."
+    }
     const [close, onClose] = useState(false);
+
 
     return (
         <div className={`flex items-center overflow-y-hidden h-screen relative bg-white`}>
@@ -43,7 +49,6 @@ const MapPage = () => {
                 scrollWheelZoom={true}
                 ref={mapContainerRef}
             >
-
                 <HandlePositionMap close={modal} />
                 <ScaleControl position="bottomleft" imperial={false} />
                 <LayersMap />
@@ -53,11 +58,11 @@ const MapPage = () => {
                 <MinimapControl position={[0, 0]} zoom={2} />
                 <GetCoordinates />
                 <GetPosition />
-
                 <WMSTileLayersControl Opacity={elementOpacity} />
             </MapContainer>
             <GetLegendsMaps layer={layer} />
             <ModalSearch onValue={setValue} close={close} onClose={onClose} />
+            <ModalAlert onClose={setAlert} message={instrucoes} title='Intruções de uso' visible={alert} />
             {modal && <ModalMap onClose={setModal} visible={modal} />}
         </div>
 
