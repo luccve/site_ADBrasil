@@ -154,8 +154,8 @@ const Catalog = () => {
                     </div>}
 
                 {region == 4 && <div className="">
-                    <ModalAlert onClose={setModal} visible={modal} title="Catálogo" message={"O catálogo estará disponível após carregar a imagem. \n\nPara acessar o boletim técnico dê double click"} />
                     <img title="Dê double click para acessar o boletim" className="cursor-pointer" onDoubleClick={() => window.open('https://ainfo.cnptia.embrapa.br/digital/bitstream/item/243230/1/CNPS-BPD-282-2022.pdf', '_blank')} src={Catalogo} alt="Catálogo Boletim" />
+                    <ModalAlert onClose={setModal} visible={modal} title="Catálogo" message={"O catálogo estará disponível após carregar a imagem. \n\nPara acessar o boletim técnico click duas vezes na imagem."} />
                 </div>}
 
             </div >
