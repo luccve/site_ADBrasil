@@ -44,7 +44,7 @@ const GetLegendsMaps = ({ layer }: GetLegendsMapsProps) => {
 
     const legendsURL = [
         {
-            name: 'Potencial de terras para irrigação (IBGE)',
+            name: 'Potencial de terras para irrigação (EMBRAPA)',
             link: 'https://geoinfo.dados.embrapa.br/geoserver/ows?service=WMS&request=GetLegendGraphic&format=image%2Fpng&height=14&width=14&layer=geonode%3Apti_28f79bcfe1f418a6219d5af23e8c1c45&style=geonode%3Apti_28f79bcfe1f418a6219d5af23e8c1c45&version=1.3.0&SLD_VERSION=1.1.0&LEGEND_OPTIONS=forceLabels;labelMargin:10;fontAntiAliasing:true;fontName:sans-serif;fontSize:16;fontBold%3Aon&_v_=1705322428760&access_token=9rp9Z9zMsPFZCDalo3AQcGt7SqlcKF',
             escala: "Escala 1:250.000"
         },
@@ -58,14 +58,19 @@ const GetLegendsMaps = ({ layer }: GetLegendsMapsProps) => {
             escala: "Escala 1:250.000"
         },
         {
-            name: 'ZONPB (Embrapa)',
+            name: 'ZONPB AD (EMBRAPA)',
             escala: "Escala 1:50.000",
-            link: 'https://geoinfo.dados.embrapa.br/geoserver/ows?service=WMS&request=GetLegendGraphic&format=image%2Fpng&height=12&width=12&layer=geonode%3Azonpb_ad&style=geonode%3Azonpb_ad&version=1.3.0&SLD_VERSION=1.1.0&LEGEND_OPTIONS=forceLabels%3Aon&_v_=1705617220186&access_token=lfnlYSGeZ1HLFVKDYYr79hNYQoN9TQ&legend_options=forceLabels;labelMargin:10;fontAntiAliasing:true;fontName:sans-serif;fontSize:16'
+            link: 'https://geoinfo.dados.embrapa.br/geoserver/ows?service=WMS&request=GetLegendGraphic&format=image%2Fpng&height=12&width=12&layer=geonode:paraiba_ad&style=geonode:paraiba_ad&version=1.3.0&SLD_VERSION=1.1.0&LEGEND_OPTIONS=forceLabels%3Aon&_v_=1705617220186&access_token=lfnlYSGeZ1HLFVKDYYr79hNYQoN9TQ&legend_options=forceLabels;labelMargin:10;fontAntiAliasing:true;fontName:sans-serif;fontSize:16'
         },
         {
-            name: 'ZAAL (Embrapa)',
+            name: 'São Paulo AD (EMBRAPA)',
             escala: "Escala 1:100.000",
-            link: 'https://geoinfo.dados.embrapa.br/geoserver/ows?service=WMS&request=GetLegendGraphic&format=image%2Fpng&height=12&width=12&layer=geonode%3Azonpb_ad&style=geonode%3Azonpb_ad&version=1.3.0&SLD_VERSION=1.1.0&LEGEND_OPTIONS=forceLabels%3Aon&_v_=1705617220186&access_token=lfnlYSGeZ1HLFVKDYYr79hNYQoN9TQ&legend_options=forceLabels;labelMargin:10;fontAntiAliasing:true;fontName:sans-serif;fontSize:16'
+            link: 'https://geoinfo.dados.embrapa.br/geoserver/ows?service=WMS&request=GetLegendGraphic&format=image%2Fpng&height=12&width=12&layer=geonode:paraiba_ad&style=geonode:paraiba_ad&version=1.3.0&SLD_VERSION=1.1.0&LEGEND_OPTIONS=forceLabels%3Aon&_v_=1705617220186&access_token=lfnlYSGeZ1HLFVKDYYr79hNYQoN9TQ&legend_options=forceLabels;labelMargin:10;fontAntiAliasing:true;fontName:sans-serif;fontSize:16'
+        },
+        {
+            name: 'Alagoas AD (EMBRAPA)',
+            escala: "Escala 1:100.000",
+            link: 'https://geoinfo.dados.embrapa.br/geoserver/ows?service=WMS&request=GetLegendGraphic&format=image%2Fpng&height=12&width=12&layer=geonode:paraiba_ad&style=geonode:paraiba_ad&version=1.3.0&SLD_VERSION=1.1.0&LEGEND_OPTIONS=forceLabels%3Aon&_v_=1705617220186&access_token=lfnlYSGeZ1HLFVKDYYr79hNYQoN9TQ&legend_options=forceLabels;labelMargin:10;fontAntiAliasing:true;fontName:sans-serif;fontSize:16'
         },
         {
             name: 'Vegetação Brasil',
