@@ -62,7 +62,7 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
                     />
                 </LayersControl.Overlay> */}
 
-                <LayersControl.Overlay name="Potencial de terras para irrigação (IBGE)"
+                <LayersControl.Overlay name="Potencial de terras para irrigação (EMBRAPA)"
                 >
                     <WMSTileLayer
 
@@ -82,15 +82,37 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
 
                     />
                 </LayersControl.Overlay>
-                
 
-                <LayersControl.Overlay name="ZAAL (Embrapa)"
+                <LayersControl.Overlay name="São Paulo AD (EMBRAPA)"
                 >
                     <WMSTileLayer
 
                         format='image/png'
                         transparent
-                        layers='geonode:zaalad'
+                        layers='geonode:saopaulo_ad_4109459bd64ccdddc10e3dfa510cc90b'
+                        url='https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true'
+                        version='1.3.0'
+                        crs={CRS.EPSG3857}
+                        tileSize={256}
+                        tms={true}
+                        updateInterval={2000}
+                        pane='overlayPane'
+                        updateWhenIdle={true}
+                        keepBuffer={10}
+                        opacity={Opacity}
+
+                    />
+                </LayersControl.Overlay>
+
+               
+
+                <LayersControl.Overlay name="Alagoas AD (EMBRAPA)"
+                >
+                    <WMSTileLayer
+
+                        format='image/png'
+                        transparent
+                        layers='geonode:alagoas_ad'
                         url='https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true'
                         version='1.3.0'
                         crs={CRS.EPSG3857}
@@ -106,13 +128,13 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
                     />
                 </LayersControl.Overlay>
 
-                <LayersControl.Overlay name="ZONPB (Embrapa)"
+                <LayersControl.Overlay name="ZONPB AD (EMBRAPA)"
                 >
                     <WMSTileLayer
 
                         format='image/png'
                         transparent
-                        layers='geonode:zonpb_ad'
+                        layers='geonode:paraiba_ad'
                         url='https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true'
                         version='1.3.0'
                         crs={CRS.EPSG3857}
@@ -154,7 +176,7 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
 
 
 
-                <LayersControl.Overlay name="Mapa de solos do Brasil (IBGE/Embrapa)">
+                <LayersControl.Overlay name="Mapa de solos do Brasil (IBGE/EMBRAPA)">
                     <WMSTileLayer
 
                         format='image/png'
