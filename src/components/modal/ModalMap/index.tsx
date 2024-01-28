@@ -31,10 +31,10 @@ const ModalMap: React.FC<ModalAlertProps> = ({ onClose, visible }: ModalAlertPro
                 if (context.ad_c1) {
 
                     setMessageUnidade({
-                        ID: context.ID,
+
                         "Água Disponível": `${context.ad_um} mm/cm`,
                         Ordem: context.c1_class,
-                        Relevo: context.c1_relevo,
+                        Relevo: context.relevo_c1,
                         "Potencia para irrigação": context.classe_terra,
                         Textura: context.textura_c1,
                         Latitude: context.Latitude,
@@ -43,10 +43,10 @@ const ModalMap: React.FC<ModalAlertProps> = ({ onClose, visible }: ModalAlertPro
 
                     message = {
                         "Componente 1": `${context.solo_c1 ? context.solo_c1 : 'Não informado'}`,
-                        "Relevo": `${context.c1_relevo ? context.c1_relevo : 'Não informado'}`,
+                        "Relevo": `${context.relevo_c1 ? context.relevo_c1 : 'Não informado'}`,
                         "Textura": `${context.textura_c1 ? context.textura_c1 : 'Não informado'}`,
-                        "Rochosidade": `${context.rochosid_1 ? context.rochosid_1 : 'Não informado'}`,
-                        "Pedregosidade": `${context.pedregos_1 ? context.pedregos_1 : 'Não informado'}`,
+                        "Rochosidade": `${context.rocho_c1 ? context.rocho_c1 : 'Não informado'}`,
+                        "Pedregosidade": `${context.pedrego_c1 ? context.pedrego_c1 : 'Não informado'}`,
                         "Valor de AD (mm/cm)": `${context.ad_c1 ? context.ad_c1 : 'Não informado'}`,
                         "Classe de terra": `${context.ct_c1 ? context.ct_c1 : 'Não informado'}<br/><br/>`,
                     };
@@ -72,9 +72,9 @@ const ModalMap: React.FC<ModalAlertProps> = ({ onClose, visible }: ModalAlertPro
                     if (value && index == 2) {
                         message = {
                             ...message,
-                            [`Componente ${index}`]: `${value} <br/>Relevo: ${context.c2_relevo ? context.c2_relevo : "Não informado"} <br/>Textura: ${context.textura_c2 ?
+                            [`Componente ${index}`]: `${value} <br/>Relevo: ${context.relevo_c2 ? context.relevo_c2 : "Não informado"} <br/>Textura: ${context.textura_c2 ?
                                 context.textura_c2 : "Não informado"}
-                            <br/>Rochosidade: ${context.rochosid_2 ? context.rochosid_2 : "Não informado"} <br/>Pedregosidade: ${context.pedregos_2 ? context.pedregos_2 : "Não informado"} 
+                            <br/>Rochosidade: ${context.rocho_c2 ? context.rocho_c2 : "Não informado"} <br/>Pedregosidade: ${context.pedrego_c2 ? context.pedrego_c2 : "Não informado"} 
                             <br/>Valor de AD (mm/cm): ${context.ad_c2 ? context.ad_c2 : "Não informado"} <br/>Classe de terra: ${context.ct_c2 ? context.ct_c2 : "Não informado"} <br/><br/>`,
 
                         }
@@ -83,9 +83,9 @@ const ModalMap: React.FC<ModalAlertProps> = ({ onClose, visible }: ModalAlertPro
                     } else if (value && index == 3) {
                         message = {
                             ...message,
-                            [`Componente ${index}`]: `${value} <br/>Relevo: ${context.c3_relevo ? context.c3_relevo : "Não informado"} <br/>Textura: ${context.textura_c3 ?
+                            [`Componente ${index}`]: `${value} <br/>Relevo: ${context.relevo_c3 ? context.relevo_c3 : "Não informado"} <br/>Textura: ${context.textura_c3 ?
                                 context.textura_c3 : "Não informado"}
-                            <br/>Rochosidade: ${context.rochosid_3 ? context.rochosid_3 : "Não informado"} <br/>Pedregosidade: ${context.pedregos_3 ? context.pedregos_3 : "Não informado"} 
+                            <br/>Rochosidade: ${context.rocho_c3 ? context.rocho_c3 : "Não informado"} <br/>Pedregosidade: ${context.pedrego_c3 ? context.pedrego_c3 : "Não informado"} 
                             <br/>Valor de AD (mm/cm): ${context.ad_c3 ? context.ad_c3 : "Não informado"} <br/>Classe de terra: ${context.ct_c3 ? context.ct_c3 : "Não informado"} <br/><br/>`,
 
                         }
@@ -94,9 +94,9 @@ const ModalMap: React.FC<ModalAlertProps> = ({ onClose, visible }: ModalAlertPro
                     } else if (value && index == 4) {
                         message = {
                             ...message,
-                            [`Componente ${index}`]: `${value} <br/>Relevo: ${context.c4_relevo ? context.c4_relevo : "Não informado"} <br/>Textura: ${context.textura_c4 ?
+                            [`Componente ${index}`]: `${value} <br/>Relevo: ${context.relevo_c4 ? context.relevo_c4 : "Não informado"} <br/>Textura: ${context.textura_c4 ?
                                 context.textura_c4 : "Não informado"}
-                            <br/>Rochosidade: ${context.rochosid_4 ? context.rochosid_4 : "Não informado"} <br/>Pedregosidade: ${context.pedregos_4 ? context.pedregos_4 : "Não informado"} 
+                            <br/>Rochosidade: ${context.rocho_c4 ? context.rocho_c4 : "Não informado"} <br/>Pedregosidade: ${context.pedrego_c4 ? context.pedrego_c4 : "Não informado"} 
                             <br/>Valor de AD (mm/cm): ${context.ad_c4 ? context.ad_c4 : "Não informado"} <br/>Classe de terra: ${context.ct_c4 ? context.ct_c4 : "Não informado"} <br/><br/>`,
 
                         }
@@ -106,9 +106,9 @@ const ModalMap: React.FC<ModalAlertProps> = ({ onClose, visible }: ModalAlertPro
                     else if (value && index == 5) {
                         message = {
                             ...message,
-                            [`Componente ${index}`]: `${value} <br/>Relevo: ${context.c5_relevo ? context.c5_relevo : "Não informado"} <br/>Textura: ${context.textura_c5 ?
+                            [`Componente ${index}`]: `${value} <br/>Relevo: ${context.relevo_c5 ? context.relevo_c5 : "Não informado"} <br/>Textura: ${context.textura_c5 ?
                                 context.textura_c5 : "Não informado"}
-                            <br/>Rochosidade: ${context.rochosid_5 ? context.rochosid_5 : "Não informado"} <br/>Pedregosidade: ${context.pedregos_5 ? context.pedregos_5 : "Não informado"} 
+                            <br/>Rochosidade: ${context.rocho_c5 ? context.rocho_c5 : "Não informado"} <br/>Pedregosidade: ${context.pedrego_c5 ? context.pedrego_c5 : "Não informado"} 
                             <br/>Valor de AD (mm/cm): ${context.ad_c5 ? context.ad_c5 : "Não informado"} <br/>Classe de terra: ${context.ct_c5 ? context.ct_c5 : "Não informado"} <br/>`,
 
                         }
