@@ -55,6 +55,7 @@ export interface ModalAlertProps {
     title?: string;
     visible: boolean;
     onClose: React.Dispatch<React.SetStateAction<boolean>>;
+    localStorage?: ()=>void;
 }
 
 export interface BtnLinkProps {
