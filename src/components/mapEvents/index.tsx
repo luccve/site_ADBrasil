@@ -1,4 +1,4 @@
-import L, { CRS, LeafletMouseEvent } from "leaflet";
+import { LeafletMouseEvent } from "leaflet";
 import { useContext } from "react";
 import { ContextMap } from "../../contexts";
 
@@ -23,88 +23,88 @@ const MapEvents: React.FC<MapEventsProps> = ({ setLoading, setLayer }: MapEvents
                     context.setContext({});
                 } else if (response?.resposta === 200) {
                     context.setContext(response);
+                    setLayer("Estimativa de água disponível (EMBRAPA)")
                     if (response.region == "AL") {
                         map.eachLayer((layer) => {
-                           
+                            setLayer("Alagoas AD (EMBRAPA)")
                             if (layer.options.layers == "geonode:adbrasil" || layer.options.layers == "BDIA:gpc_pedo"
                                 || layer.options.layers == "geonode:pti_28f79bcfe1f418a6219d5af23e8c1c45") {
                                 map.removeLayer(layer)
                             }
                         });
-                        const wmsLayer = L.tileLayer.wms('https://geoinfo.dados.embrapa.br/geoserver/ows', {
-                            layers: 'geonode:alagoas_ad',
-                            format: 'image/png',
-                            transparent: true,
-                            version: '1.3.0',
-                            crs: CRS.EPSG3857,
-                            tileSize: 256,
-                            tms: true,
-                            updateInterval: 2000,
-                            pane: 'overlayPane',
-                            updateWhenIdle: true,
-                            keepBuffer: 10,
-                            accessToken: 'vInDUq9Gt1zuamdmxVbp7VdHymKEY2'
+
+                    } else if (response.region == "PB") {
+                        map.eachLayer((layer) => {
+                            setLayer("ZONPB AD (EMBRAPA)")
+                            if (layer.options.layers == "geonode:adbrasil" || layer.options.layers == "BDIA:gpc_pedo"
+                                || layer.options.layers == "geonode:pti_28f79bcfe1f418a6219d5af23e8c1c45") {
+                                map.removeLayer(layer)
+                            }
                         });
-
-
-                        wmsLayer.addTo(map);
-                       
+                    } else if (response.region == "SP") {
+                        map.eachLayer((layer) => {
+                            setLayer("São Paulo AD (EMBRAPA)")
+                            if (layer.options.layers == "geonode:adbrasil" || layer.options.layers == "BDIA:gpc_pedo"
+                                || layer.options.layers == "geonode:pti_28f79bcfe1f418a6219d5af23e8c1c45") {
+                                map.removeLayer(layer)
+                            }
+                        });
                     }
 
-                
-
-            } else {
-                context.setContext({});
-            }
-        }
-        } catch (err) {
-        alert(err);
-    }
-}
 
 
-
-
-
-useMapEvents(
-    {
-        click(e: LeafletMouseEvent) {
-            setLoading(true);
-            const { lat, lng } = e.latlng;
-            fetchCoords(lat, lng);
-
-
-
-        },
-        overlayadd(e) {
-            setLayer(e.name);
-
-
-
-        },
-        layeradd(e) {
-
-            if (context?.centroides && e.layer.options.layers) {
-                const { lat, lng } = context.centroides;
-                const cod = context.filter;
-                const verify = layers.includes(e.layer.options.layers)
-                if (verify) {
-                    map.eachLayer((layer) => {
-
-                        if (layer.options.layers == "geonode:adbrasil" || layer.options.layers == "BDIA:gpc_pedo"
-                            || layer.options.layers == "geonode:pti_28f79bcfe1f418a6219d5af23e8c1c45") {
-                            map.removeLayer(layer)
-                        }
-                    });
-
-                    const z = Number(cod) ? 10 : 6
-                    map.flyTo([lat, lng], z);
+                } else {
+                    context.setContext({});
                 }
             }
+        } catch (err) {
+            alert(err);
         }
-    });
+    }
 
-return null;
+
+
+
+
+    useMapEvents(
+        {
+            click(e: LeafletMouseEvent) {
+                setLoading(true);
+                const { lat, lng } = e.latlng;
+                fetchCoords(lat, lng);
+
+
+
+            },
+            overlayadd(e) {
+                setLayer(e.name);
+
+
+
+            },
+            layeradd(e) {
+
+                if (context?.centroides && e.layer.options.layers) {
+                    const { lat, lng } = context.centroides;
+                    const cod = context.filter;
+                    const verify = layers.includes(e.layer.options.layers)
+                    if (verify) {
+                        map.eachLayer((layer) => {
+
+                            if (layer.options.layers == "geonode:adbrasil" || layer.options.layers == "BDIA:gpc_pedo"
+                                || layer.options.layers == "geonode:pti_28f79bcfe1f418a6219d5af23e8c1c45") {
+                                map.removeLayer(layer)
+                            }
+                        });
+
+                        const z = Number(cod) ? 10 : 6
+                        map.flyTo([lat, lng], z);
+                    }
+                }
+            }
+        });
+
+    return null;
 };
 
 export default MapEvents;

@@ -6,11 +6,12 @@ import LoadingPage from '../loading';
 
 
 const GetLegendsMaps = ({ layer }: GetLegendsMapsProps) => {
+ 
 
     useEffect(() => {
 
         handleChangeLegends();
-
+       
     }, [layer])
 
     const nameSolos =
