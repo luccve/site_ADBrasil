@@ -60,7 +60,6 @@ const ModalMap: React.FC<ModalAlertProps> = ({ onClose, visible }: ModalAlertPro
                     setMessageUnidade({
                         ID: context.ID,
                         "Tipo de terreno": context.c1_class,
-
                         Latitude: context.Latitude,
                         Longitude: context.Longitude,
                     });
@@ -141,7 +140,7 @@ const ModalMap: React.FC<ModalAlertProps> = ({ onClose, visible }: ModalAlertPro
             return <p>{messageUnidade.toString()}</p>;
         } else if (typeof messageUnidade === 'object') {
             return (
-                <div className='py-2 space-y-[15px] text-start'>
+                <div className='py-2 space-y-[5px] text-start'>
                     {Object.keys(messageUnidade).map((key) => (
                         <p className='text-sm max-md:text-[11px] font-semibold text-blue' key={key}>{key === "AD" ? "Água Disponível" : key}: {(messageUnidade as Record<string, string>)[key]}</p>
                     ))}
