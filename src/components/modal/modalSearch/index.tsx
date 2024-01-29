@@ -28,11 +28,14 @@ const ModalSearch = ({ close, onClose, onValue }: modalSearchType) => {
     const handleWMSCHange = () => {
 
 
-        if (context?.setContext && !openFilterMunicipio) {
+        if (context?.setContext && !openFilterMunicipio && state !== "") {
+
             onValue(state);
             context.setContext({ filter: state, centroides: dados_uf_types[state].centroides });
+
+
         } else if (context?.setContext && openFilterMunicipio) {
-            if (objMunicipioSelect && objMunicipioSelect.cod_mun) {
+            if (objMunicipioSelect && objMunicipioSelect.cod_mun && objMunicipioSelect.cod_mun !== "") {
                 onValue(objMunicipioSelect.cod_mun);
                 context.setContext({ filter: objMunicipioSelect.cod_mun, centroides: objMunicipioSelect.centroides });
             }
@@ -41,6 +44,7 @@ const ModalSearch = ({ close, onClose, onValue }: modalSearchType) => {
         setOpenFilterMunicipio(false);
         setState("");
         onClose(false);
+        setRecorte(null);
     }
 
 
