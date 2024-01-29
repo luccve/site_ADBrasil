@@ -6,12 +6,15 @@ import {
 } from "react-leaflet"
 
 import type { LayersMapProps } from "../../@types/components"
-import { useEffect, useState } from "react"
-
+import { useContext, useEffect, useState } from "react"
+import { ContextMap } from "../../contexts"
 
 export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
-    
+    const context = useContext(ContextMap);
     const [collapsedMobile, setCollapsedMobile] = useState(false);
+    const [alagoas, setAlagoas] = useState(false);
+    const [paraiba, setParaiba] = useState(false);
+    const [saopaulo, setSaoPaulo] = useState(false);
     useEffect(() => {
         const handleWindowResize = () => {
             const windowWidth = window.innerWidth;
@@ -33,6 +36,22 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
             window.removeEventListener('resize', handleWindowResize);
         };
     }, []);
+
+    useEffect(() => {
+        if (context?.region === "AL") {
+            setAlagoas(true);
+            setParaiba(false);
+            setSaoPaulo(false);
+        } else if (context?.region === "PB") {
+            setAlagoas(false);
+            setParaiba(true);
+            setSaoPaulo(false);
+        } else if (context?.region === "SP") {
+            setAlagoas(false);
+            setParaiba(false);
+            setSaoPaulo(true);
+        }
+    }, [context?.region])
 
     return (
 
@@ -84,7 +103,7 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
                 </LayersControl.Overlay>
 
                 <LayersControl.Overlay name="São Paulo AD (EMBRAPA)"
-                >
+                    checked={saopaulo}>
                     <WMSTileLayer
 
                         format='image/png'
@@ -104,9 +123,9 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
                     />
                 </LayersControl.Overlay>
 
-               
 
-                <LayersControl.Overlay name="Alagoas AD (EMBRAPA)"
+
+                <LayersControl.Overlay checked={alagoas} name="Alagoas AD (EMBRAPA)"
                 >
                     <WMSTileLayer
 
@@ -129,7 +148,7 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
                 </LayersControl.Overlay>
 
                 <LayersControl.Overlay name="ZONPB AD (EMBRAPA)"
-                >
+                    checked={paraiba}>
                     <WMSTileLayer
 
                         format='image/png'
