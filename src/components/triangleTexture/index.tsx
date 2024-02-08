@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { VictoryChart, VictoryLine, VictoryContainer, VictoryScatter, VictoryLabel } from 'victory';
+import { VictoryChart, VictoryLine, VictoryContainer, VictoryScatter } from 'victory';
 
 const TriangleTexture: React.FC = () => {
     const [clickedPoint, setClickedPoint] = useState({ x: 0, y: 0 });
