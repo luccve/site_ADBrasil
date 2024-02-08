@@ -1,11 +1,75 @@
 {
-  "SC": {
+  "AC": {
     "centroides": {
-      "lat": -27.24739775346079,
-      "lng": -50.47470588471849
+      "lat": -9.213270608079556,
+      "lng": -70.47293000363888
     },
-    "cod": "42",
-    "nome": "Santa Catarina"
+    "cod": "12",
+    "nome": "Acre"
+  },
+  "AL": {
+    "centroides": {
+      "lat": -9.513673923803267,
+      "lng": -36.62484895426519
+    },
+    "cod": "27",
+    "nome": "Alagoas"
+  },
+  "AM": {
+    "centroides": {
+      "lat": -4.154111014459887,
+      "lng": -64.6534501786546
+    },
+    "cod": "13",
+    "nome": "Amazonas"
+  },
+  "AP": {
+    "centroides": {
+      "lat": 1.447461794062981,
+      "lng": -51.96202065968497
+    },
+    "cod": "16",
+    "nome": "Amapá"
+  },
+  "BA": {
+    "centroides": {
+      "lat": -12.4753296595445,
+      "lng": -41.72115566970295
+    },
+    "cod": "29",
+    "nome": "Bahia"
+  },
+  "CE": {
+    "centroides": {
+      "lat": -5.093221008903533,
+      "lng": -39.61578882812193
+    },
+    "cod": "23",
+    "nome": "Ceará"
+  },
+  "DF": {
+    "centroides": {
+      "lat": -15.78116621821312,
+      "lng": -47.79685086583529
+    },
+    "cod": "53",
+    "nome": "Distrito Federal"
+  },
+  "ES": {
+    "centroides": {
+      "lat": -19.57517751381503,
+      "lng": -40.66850902571225
+    },
+    "cod": "32",
+    "nome": "Espírito Santo"
+  },
+  "GO": {
+    "centroides": {
+      "lat": -16.04119227576581,
+      "lng": -49.62250824437881
+    },
+    "cod": "52",
+    "nome": "Goiás"
   },
   "MA": {
     "centroides": {
@@ -23,157 +87,14 @@
     "cod": "31",
     "nome": "Minas Gerais"
   },
-  "PA": {
+ 
+  "MS": {
     "centroides": {
-      "lat": -3.980420482473079,
-      "lng": -53.07148781991682
+      "lat": -20.32732506678154,
+      "lng": -54.84555523837131
     },
-    "cod": "15",
-    "nome": "Pará"
-  },
-  "RN": {
-    "centroides": {
-      "lat": -5.839801491466234,
-      "lng": -36.67326847682024
-    },
-    "cod": "24",
-    "nome": "Rio Grande do Norte"
-  },
-  "RS": {
-    "centroides": {
-      "lat": -29.78646463924772,
-      "lng": -53.24515082265511
-    },
-    "cod": "43",
-    "nome": "Rio Grande do Sul"
-  },
-  "GO": {
-    "centroides": {
-      "lat": -16.04119227576581,
-      "lng": -49.62250824437881
-    },
-    "cod": "52",
-    "nome": "Goiás"
-  },
-  "DF": {
-    "centroides": {
-      "lat": -15.78116621821312,
-      "lng": -47.79685086583529
-    },
-    "cod": "53",
-    "nome": "Distrito Federal"
-  },
-  "SP": {
-    "centroides": {
-      "lat": -22.26584143593348,
-      "lng": -48.72896442583669
-    },
-    "cod": "35",
-    "nome": "São Paulo"
-  },
-  "AL": {
-    "centroides": {
-      "lat": -9.513673923803267,
-      "lng": -36.62484895426519
-    },
-    "cod": "27",
-    "nome": "Alagoas"
-  },
-  "CE": {
-    "centroides": {
-      "lat": -5.093221008903533,
-      "lng": -39.61578882812193
-    },
-    "cod": "23",
-    "nome": "Ceará"
-  },
-  "SE": {
-    "centroides": {
-      "lat": -10.58376343336745,
-      "lng": -37.44378946994041
-    },
-    "cod": "28",
-    "nome": "Sergipe"
-  },
-  "BA": {
-    "centroides": {
-      "lat": -12.4753296595445,
-      "lng": -41.72115566970295
-    },
-    "cod": "29",
-    "nome": "Bahia"
-  },
-  "PI": {
-    "centroides": {
-      "lat": -7.389303621613007,
-      "lng": -42.97045049884069
-    },
-    "cod": "22",
-    "nome": "Piauí"
-  },
-  "AP": {
-    "centroides": {
-      "lat": 1.447461794062981,
-      "lng": -51.96202065968497
-    },
-    "cod": "16",
-    "nome": "Amapá"
-  },
-  "AM": {
-    "centroides": {
-      "lat": -4.154111014459887,
-      "lng": -64.6534501786546
-    },
-    "cod": "13",
-    "nome": "Amazonas"
-  },
-  "RJ": {
-    "centroides": {
-      "lat": -22.19571546397043,
-      "lng": -42.66278453484114
-    },
-    "cod": "33",
-    "nome": "Rio de Janeiro"
-  },
-  "PB": {
-    "centroides": {
-      "lat": -7.121040193168836,
-      "lng": -36.83245796844523
-    },
-    "cod": "25",
-    "nome": "Paraíba"
-  },
-  "PR": {
-    "centroides": {
-      "lat": -24.63588275369761,
-      "lng": -51.61663755816744
-    },
-    "cod": "41",
-    "nome": "Paraná"
-  },
-  "AC": {
-    "centroides": {
-      "lat": -9.213270608079556,
-      "lng": -70.47293000363888
-    },
-    "cod": "12",
-    "nome": "Acre"
-  },
-  "TO": {
-    "centroides": {
-      "lat": -10.14807634055782,
-      "lng": -48.33129894908186
-    },
-    "cod": "17",
-    "nome": "Tocantins"
-  },
-  "ES": {
-    "centroides": {
-      "lat": -19.57517751381503,
-      "lng": -40.66850902571225
-    },
-    "cod": "32",
-    "nome": "Espírito Santo"
+    "cod": "50",
+    "nome": "Mato Grosso do Sul"
   },
   "MT": {
     "centroides": {
@@ -183,13 +104,21 @@
     "cod": "51",
     "nome": "Mato Grosso"
   },
-  "RR": {
+  "PA": {
     "centroides": {
-      "lat": 2.082710552784441,
-      "lng": -61.39190621548656
+      "lat": -3.980420482473079,
+      "lng": -53.07148781991682
     },
-    "cod": "14",
-    "nome": "Roraima"
+    "cod": "15",
+    "nome": "Pará"
+  },
+  "PB": {
+    "centroides": {
+      "lat": -7.121040193168836,
+      "lng": -36.83245796844523
+    },
+    "cod": "25",
+    "nome": "Paraíba"
   },
   "PE": {
     "centroides": {
@@ -199,6 +128,30 @@
     "cod": "26",
     "nome": "Pernambuco"
   },
+  "PI": {
+    "centroides": {
+      "lat": -7.389303621613007,
+      "lng": -42.97045049884069
+    },
+    "cod": "22",
+    "nome": "Piauí"
+  },
+  "PR": {
+    "centroides": {
+      "lat": -24.63588275369761,
+      "lng": -51.61663755816744
+    },
+    "cod": "41",
+    "nome": "Paraná"
+  },
+  "RJ": {
+    "centroides": {
+      "lat": -22.19571546397043,
+      "lng": -42.66278453484114
+    },
+    "cod": "33",
+    "nome": "Rio de Janeiro"
+  },
   "RO": {
     "centroides": {
       "lat": -10.9131354602816,
@@ -207,12 +160,60 @@
     "cod": "11",
     "nome": "Rondônia"
   },
-  "MS": {
+  "RN": {
     "centroides": {
-      "lat": -20.32732506678154,
-      "lng": -54.84555523837131
+      "lat": -5.839801491466234,
+      "lng": -36.67326847682024
     },
-    "cod": "50",
-    "nome": "Mato Grosso do Sul"
+    "cod": "24",
+    "nome": "Rio Grande do Norte"
+  },
+  "RR": {
+    "centroides": {
+      "lat": 2.082710552784441,
+      "lng": -61.39190621548656
+    },
+    "cod": "14",
+    "nome": "Roraima"
+  },
+  "RS": {
+    "centroides": {
+      "lat": -29.78646463924772,
+      "lng": -53.24515082265511
+    },
+    "cod": "43",
+    "nome": "Rio Grande do Sul"
+  },
+  "SC": {
+    "centroides": {
+      "lat": -27.24739775346079,
+      "lng": -50.47470588471849
+    },
+    "cod": "42",
+    "nome": "Santa Catarina"
+  },
+  "SE": {
+    "centroides": {
+      "lat": -10.58376343336745,
+      "lng": -37.44378946994041
+    },
+    "cod": "28",
+    "nome": "Sergipe"
+  },
+  "SP": {
+    "centroides": {
+      "lat": -22.26584143593348,
+      "lng": -48.72896442583669
+    },
+    "cod": "35",
+    "nome": "São Paulo"
+  },
+  "TO": {
+    "centroides": {
+      "lat": -10.14807634055782,
+      "lng": -48.33129894908186
+    },
+    "cod": "17",
+    "nome": "Tocantins"
   }
 }
