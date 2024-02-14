@@ -1,18 +1,20 @@
 import { GeoInfoData } from '../@types/data';
 
 interface GeoInfo250Props {
-    ct_c1: string;
-    ct_c2: string;
-    ct_c3: string;
-    ct_c4: string;
-    ct_c5: string;
-    classe_terra: string;
-    lat: number;
-    lng: number;
-    region: string
+    ct_c1?: string;
+    ct_c2?: string;
+    ct_c3?: string;
+    ct_c4?: string;
+    ct_c5?: string;
+    classe_terra?: string;
+    lat?: number;
+    lng?: number;
+    region?: string
 }
 
 class RequestCoordsService {
+
+    static geoInfo250: GeoInfo250Props | null = null;
 
     private static changeColor(ad: number | null) {
         const colorRanges = [
@@ -36,48 +38,6 @@ class RequestCoordsService {
         return colorRange ? colorRange.color : "transparent";
     }
 
-    // private static async fetch_data_SGB(lat: number, lng: number): Promise<GeoInfoData | null> {
-    //     try {
-    //         const url_sgb = this.url_sgb(lat, lng);
-    //         const response_sgb = await fetch(url_sgb);
-    //         const data_sgb = await response_sgb.json();
-
-    //         return {
-    //             ad_um: data_sgb.features[0].attributes.total_ad,
-    //             c1_class: `${data_sgb.features[0].attributes.ordem} ${data_sgb.features[0].attributes.subordem}`,
-    //             relevo_c1: data_sgb.features[0].attributes.relevo,
-    //             textura_c1: data_sgb.features[0].attributes.textura,
-    //             ID: data_sgb.features[0].attributes.objectid_1,
-    //             Latitude: Number(lat.toPrecision(5)),
-    //             Longitude: Number(lng.toPrecision(5)),
-    //             color: this.changeColor(data_sgb.features[0]?.attributes?.total_ad),
-    //             resposta: 200,
-    //             geojson: {
-    //                 name: `Estimativa de AD: ${data_sgb.features[0].attributes.objectid_1}`,
-
-    //                 features: [{
-
-    //                     type: 'Feature',
-    //                     properties: {
-    //                         name: data_sgb.features[0].attributes.ordem
-    //                     },
-    //                     geometry: {
-    //                         type: 'MultiPolygon',
-    //                         coordinates: [data_sgb.features[0].geometry.rings],
-    //                     },
-    //                 }]
-    //             }
-    //         }
-
-    //     } catch (error) {
-    //         console.error('Error na segunda solicitação', error);
-    //         return { resposta: 500 };
-    //     }
-
-    // }
-
-
-
     private static async fetch_region(url: string) {
         const response = await fetch(url);
         const data = await response.json();
@@ -96,7 +56,7 @@ class RequestCoordsService {
             const contentType = data_adbrasil_malha.response.headers.get('content-type');
 
             const { ct_c1, ct_c2, ct_c3, ct_c4, ct_c5, pti_um } = data_pti_geoinfo.data.features[0].properties
-            const GeoInfo250 = {
+            this.geoInfo250 = {
                 ct_c1,
                 ct_c2,
                 ct_c3,
@@ -176,9 +136,11 @@ class RequestCoordsService {
 
                             }
                         } catch (err) {
+                            if (this.geoInfo250) {
 
-                            GeoInfo250['region'] = 'Brasil'
-                            return await this.fetchFeatureGeoinfo250(GeoInfo250)
+                                this.geoInfo250['region'] = 'Brasil';
+                                return await this.fetchFeatureGeoinfo250(this.geoInfo250)
+                            } return null;
                         }
 
 
@@ -242,14 +204,17 @@ class RequestCoordsService {
                             }
 
                         } catch (err) {
-                            GeoInfo250['region'] = 'Brasil'
-                            return await this.fetchFeatureGeoinfo250(GeoInfo250)
+                            if (this.geoInfo250) {
+
+                                this.geoInfo250['region'] = 'Brasil';
+                                return await this.fetchFeatureGeoinfo250(this.geoInfo250)
+                            } return null;
                         }
 
                     case 'SP':
                         try {
                             const data_sp = await this.fetch_region(await this.url_geinfo_sp_ad_clip_wfs(lat, lng));
-                            
+
                             return {
                                 resposta: 200,
                                 geojson: {
@@ -307,16 +272,22 @@ class RequestCoordsService {
 
                             }
                         } catch (err) {
-                            GeoInfo250['region'] = 'Brasil'
-                            return await this.fetchFeatureGeoinfo250(GeoInfo250)
+                            if (this.geoInfo250) {
+
+                                this.geoInfo250['region'] = 'Brasil';
+                                return await this.fetchFeatureGeoinfo250(this.geoInfo250)
+                            } return null
                         }
 
                     case 'RJ':
                         break;
 
                     default:
+                        if (this.geoInfo250) {
 
-                        return await this.fetchFeatureGeoinfo250(GeoInfo250)
+                            this.geoInfo250['region'] = 'Brasil';
+                            return await this.fetchFeatureGeoinfo250(this.geoInfo250)
+                        } return null
                 }
 
             }
@@ -330,12 +301,7 @@ class RequestCoordsService {
         }
     }
 
-    // private static url_sgb(lat: number, lng: number) {
-    //     return `https://geoportal.sgb.gov.br/server/rest/services/pronasolos/agua_disponivel/MapServer/0/query?f=json&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&geometry={"x": ${lng}, "y": ${lat}, "spatialReference": {"wkid": 4326}}&outFields=ordem,subordem,grande_gru,subgrupos,textura,horizonte,relevo,total_ad,legad,objectid_1&outSR=4326&tolerance=10`;
-    // }
-
-
-    private static url_geinfo_adbrasil_wfs(lat: number, lng: number) {
+    private static url_geinfo_adbrasil_wfs(lat?: number, lng?: number) {
         const cqlFilter = `INTERSECTS(geometry,POINT(${lng} ${lat}))`;
         const baseUrl = 'https://geoinfo.dados.embrapa.br/geoserver/geonode/wfs?&version=1.0.0&request=GetFeature&typeNames=geonode:adbrasil&outputFormat=application%2Fjson';
 
@@ -429,8 +395,9 @@ class RequestCoordsService {
 
 
     private static async fetchFeatureGeoinfo250(GeoInfo250: GeoInfo250Props) {
-        const data_geoinfo_adbrasil_wfs = await this.fetch_region(this.url_geinfo_adbrasil_wfs(GeoInfo250.lat, GeoInfo250.lng));
 
+
+        const data_geoinfo_adbrasil_wfs = await this.fetch_region(this.url_geinfo_adbrasil_wfs(GeoInfo250.lat, GeoInfo250.lng));
         return {
             resposta: 200,
             region: GeoInfo250.region,
@@ -449,7 +416,7 @@ class RequestCoordsService {
                     },
                 }]
             },
-            Latitude: Number(GeoInfo250.lat.toPrecision(5)), Longitude: Number(GeoInfo250.lng.toPrecision(5)),
+            Latitude: Number(GeoInfo250.lat?.toPrecision(5)), Longitude: Number(GeoInfo250.lng?.toPrecision(5)),
             ID: data_geoinfo_adbrasil_wfs.data.features[0].properties.fid,
             color: this.changeColor(data_geoinfo_adbrasil_wfs.data.features[0].properties.ad_um),
             relevo_c1: data_geoinfo_adbrasil_wfs.data.features[0].properties.c1_relevo,
@@ -491,9 +458,10 @@ class RequestCoordsService {
             ct_c5: GeoInfo250.ct_c5,
             classe_terra: GeoInfo250.classe_terra,
         }
-
     }
 
+
 }
+
 
 export default RequestCoordsService;
