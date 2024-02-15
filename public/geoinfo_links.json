@@ -1,0 +1,180 @@
+{
+    "AC": [
+        {
+            "name": "geonode:todos__ad_capixaba"
+        },
+        {
+            "name": "geonode:todos__ad_plcido_de_castro"
+        },
+        {
+            "name": "geonode:todos__ad_senador_guimardac"
+        },
+        {
+            "name": "geonode:todos__ad_bom_jesus_tocantins"
+        }
+    ],
+    "AL": [
+        {
+            "name": "geonode:alagoas_ad"
+        }
+        
+    ],
+   
+    "CE": [
+        {
+            "name": "geonode:ceara_sul_ad__ad_sul_ce"
+        }
+       
+    ],
+    "DF": [
+        {
+            "name": "geonode:df_100000_ad"
+        }
+    ],
+   
+    "MT": [
+        {
+            "name": ""
+        },
+        {
+            "name": ""
+        }
+    ],
+    "MS": [
+        {
+            "name": "geonode:campo_grande__ad_campo_grande"
+        }
+    ],
+    "MG": [
+        {
+            "name": "geonode:jaiba_ad"
+        },
+        {
+            "name": "geonode:mataseca_30000_ad"
+        },
+        {
+            "name": "geonode:campo_experimental_ad"
+        }
+    ],
+    "PA": [
+        {
+            "name": "geonode:todos__ad_abel_figueiredo"
+        },
+        {
+            "name": "geonode:todos__ad_barcarena"
+        },
+        {
+            "name": "geonode:todos__ad_bujaru"
+        },
+        {
+            "name": "geonode:todos__ad_castanhal"
+        },
+        {
+            "name": "geonode:todos__ad_irituia"
+        },
+        {
+            "name": "geonode:todos__ad_inhangapi"
+        },
+        {
+            "name": "geonode:todos__ad_sto_antonio_taua"
+        },
+        {
+            "name": "geonode:todos__ad_sta_isabel_para"
+        },
+        {
+            "name": "geonode:todos__ad_rondon_do_para"
+        }
+    ],
+    "PB": [
+        {
+            "name": "geonode:paraiba_ad"
+        }
+    ],
+    "PR": [
+        {
+            "name": ""
+        },
+        {
+            "name": ""
+        }
+    ],
+    "PE": [
+        {
+            "name": "geonode:fn_10000_ad"
+        },
+        {
+            "name": "geonode:ad_98a8dcca664f761f5546492208425b3c"
+        }
+    ],
+    "PI": [
+        {
+            "name": ""
+        },
+        {
+            "name": ""
+        }
+    ],
+    "RJ": [
+        {
+            "name": ""
+        },
+        {
+            "name": ""
+        }
+    ],
+    "RN": [
+        {
+            "name": ""
+        },
+        {
+            "name": ""
+        }
+    ],
+    "RS": [
+        {
+            "name": "geonode:ad"
+        }
+    ],
+    "RO": [
+        {
+            "name": ""
+        },
+        {
+            "name": ""
+        }
+    ],
+    "RR": [
+        {
+            "name": ""
+        },
+        {
+            "name": ""
+        }
+    ],
+    "SC": [
+        {
+            "name": ""
+        },
+        {
+            "name": ""
+        }
+    ],
+    "SP": [
+        {
+            "name": "geonode:saopaulo_ad_4109459bd64ccdddc10e3dfa510cc90b"
+        }
+    ],
+    "SE": [
+        {
+            "name": "geonode:ad_se"
+        }
+    ],
+    "TO": [
+        {
+            "name": ""
+        },
+        {
+            "name": ""
+        }
+    ]
+}
