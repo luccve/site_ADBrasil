@@ -238,6 +238,7 @@ interface GeoInfoData extends MyContextProps {
   municipio?: string | null;
   region?: string | null;
   centroides?: LatLng;
+  escala?: string | null;
   setContext?: React.Dispatch<React.SetStateAction<GeoInfoData | null>>;
 }
 
