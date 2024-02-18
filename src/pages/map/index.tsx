@@ -52,7 +52,7 @@ const MapPage = () => {
                 <HandlePositionMap close={modal} />
                 <ScaleControl position="bottomleft" imperial={false} />
                 <LayersMap />
-                <GeoJSONMap />
+                <GeoJSONMap Opacity={elementOpacity}/>
                 <SearchClip opacity={elementOpacity} valueWMSMap={valueWMSMap} onClose={onClose} />
                 {!modal && <MapEvents setLayer={setLayer} setLoading={setModal} />}
                 <MinimapControl position={[0, 0]} zoom={2} />
