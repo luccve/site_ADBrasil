@@ -12,9 +12,15 @@ interface GeoInfo250Props {
     region?: string
 }
 
+interface GeoinfoLinks {
+    [key: string]: { name: string }[]
+}
+import GeoInfoLinks from '../assets/geoinfo_links.json'
+
 class RequestCoordsService {
 
     static geoInfo250: GeoInfo250Props | null = null;
+    static geoinfoLinks: GeoinfoLinks = GeoInfoLinks;
 
     private static changeColor(ad: number | null) {
         const colorRanges = [
@@ -73,6 +79,12 @@ class RequestCoordsService {
                 console.error('Erro na solicitação WFS:', data_adbrasil_malha.response.statusText);
                 throw new Error('Erro ao processar dados da região');
             } else if (contentType && contentType.includes("application/json")) {
+
+                const request_geoinfo = await this.url_wfs_create(this.geoinfoLinks[data_adbrasil_malha.data.features[0].properties.sigla_uf], lat, lng)
+
+                if (request_geoinfo) {
+                    console.log(request_geoinfo)
+                }
 
                 switch (data_adbrasil_malha.data.features[0].properties.sigla_uf) {
                     case 'AL':
@@ -143,6 +155,23 @@ class RequestCoordsService {
                             } return null;
                         }
 
+                    case 'PE':
+                        try {
+                            if(request_geoinfo){
+
+                                const dados_pe = await this.fetch_region(request_geoinfo[1]);
+                                console.log(dados_pe)
+                                
+                            }
+
+                            return {region:data_adbrasil_malha.data.features[0].properties.sigla_uf}
+                        } catch (err) {
+                            if (this.geoInfo250) {
+
+                                this.geoInfo250['region'] = 'Brasil';
+                                return await this.fetchFeatureGeoinfo250(this.geoInfo250)
+                            } return null;
+                        }
 
                     case 'PB':
                         try {
@@ -301,6 +330,27 @@ class RequestCoordsService {
         }
     }
 
+    private static async url_wfs_create(item: { name: string }[], lat: number, lng: number): Promise<string[] | null> {
+        if (item) {
+            const geoLinks: string[] = [];
+            item.map((obg: { name: string }) => {
+                if (obg.name) {
+
+                    const cql_filter = `INTERSECTS(geom,POINT(${lng} ${lat}))`;
+                    const nameEncoded = encodeURIComponent(obg.name);
+                    const baseUrl = `https://geoinfo.dados.embrapa.br/geoserver/geonode/wfs?&version=2.0.0&request=GetFeature&typeNames=${nameEncoded}&SRSNAME=EPSG:4326&outputFormat=application%2Fjson&access_token=gt6RDCOeHIzN0ZyMznAW2LaiCOsN1u`;
+                    geoLinks.push(`${baseUrl}&cql_filter=${cql_filter}`);
+                }
+                return null;
+            })
+
+            console.log(geoLinks)
+            return geoLinks
+        }
+        return null;
+
+    }
+
     private static url_geinfo_adbrasil_wfs(lat?: number, lng?: number) {
         const cqlFilter = `INTERSECTS(geometry,POINT(${lng} ${lat}))`;
         const baseUrl = 'https://geoinfo.dados.embrapa.br/geoserver/geonode/wfs?&version=1.0.0&request=GetFeature&typeNames=geonode:adbrasil&outputFormat=application%2Fjson';
@@ -330,7 +380,7 @@ class RequestCoordsService {
     private static url_geinfo_adbrasil_malha_clip_wfs(lat: number, lng: number) {
         const cqlFilter = `INTERSECTS(geom,POINT(${lng} ${lat}))`;
         const name = encodeURIComponent("geonode:adbrasil_b0f18f25e5eac580ec58488ae35e3918")
-        const baseUrl = `https://geoinfo.dados.embrapa.br/geoserver/geonode/wfs?&version=1.0.0&request=GetFeature&typeNames=${name}&outputFormat=application%2Fjson&access_token=1M2RzHPj2f6WCNqPmNv2xTvCM713ax`;
+        const baseUrl = `https://geoinfo.dados.embrapa.br/geoserver/geonode/wfs?&version=1.0.0&request=GetFeature&typeNames=${name}&SRSNAME=EPSG:4326&outputFormat=application%2Fjson&access_token=1M2RzHPj2f6WCNqPmNv2xTvCM713ax`;
 
 
 
@@ -373,22 +423,24 @@ class RequestCoordsService {
         return `${baseUrl}&${srs}&cql_filter=${encodedCqlFilter}`;
     }
 
-
-    private static async url_geinfo_pb_ad_clip_wfs(old_lat: number, old_lng: number) {
-
+    private static async coords_31985(old_lat: number, old_lng: number) {
         const request = await fetch(`https://epsg.io/srs/transform/${old_lng},${old_lat}.json?key=default&s_srs=4326&t_srs=31985`)
         const transformcoords = await request.json();
         const { x, y } = transformcoords.results[0]
+        return { lat: x, lng: y }
+    }
 
-        const cqlFilter = `INTERSECTS(geom,POINT(${x} ${y}))`;
+    private static async url_geinfo_pb_ad_clip_wfs(old_lat: number, old_lng: number) {
+
+        const { lat, lng } = await this.coords_31985(old_lat, old_lng)
+
+        const cqlFilter = `INTERSECTS(geom,POINT(${lat} ${lng}))`;
         const name = encodeURIComponent("geonode:paraiba_ad")
         const baseUrl = `https://geoinfo.dados.embrapa.br/geoserver/geonode/wfs?&version=2.0.0&request=GetFeature&typeNames=${name}&outputFormat=application%2Fjson`;
 
         const srs = "SRSNAME=EPSG:4326"
 
         const encodedCqlFilter = encodeURIComponent(cqlFilter);
-
-
 
         return `${baseUrl}&${srs}&cql_filter=${encodedCqlFilter}`;
     }
