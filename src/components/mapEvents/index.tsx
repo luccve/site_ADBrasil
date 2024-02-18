@@ -41,9 +41,18 @@ const MapEvents: React.FC<MapEventsProps> = ({ setLoading, setLayer }: MapEvents
                                 map.removeLayer(layer)
                             }
                         });
+
                     } else if (response.region == "SP") {
                         map.eachLayer((layer) => {
                             setLayer("São Paulo AD (EMBRAPA)")
+                            if (layer.options.layers == "geonode:adbrasil" || layer.options.layers == "BDIA:gpc_pedo"
+                                || layer.options.layers == "geonode:pti_28f79bcfe1f418a6219d5af23e8c1c45") {
+                                map.removeLayer(layer)
+                            }
+                        });
+                    } else if (response.region == "PE") {
+                        map.eachLayer((layer) => {
+                            setLayer("Pernambuco AD (EMBRAPA)")
                             if (layer.options.layers == "geonode:adbrasil" || layer.options.layers == "BDIA:gpc_pedo"
                                 || layer.options.layers == "geonode:pti_28f79bcfe1f418a6219d5af23e8c1c45") {
                                 map.removeLayer(layer)
