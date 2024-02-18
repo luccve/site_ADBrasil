@@ -2,8 +2,9 @@ import { useContext, useEffect, useState } from "react";
 import { ContextMap, } from "../../contexts";
 import { GeoJSON } from "react-leaflet";
 import type { GeoJSON as GJtypes } from "../../@types/data";
+import { LayersMapProps } from "../../@types/components";
 
-const GeoJSONMap: React.FC = () => {
+const GeoJSONMap: React.FC<LayersMapProps> = ({Opacity}: LayersMapProps) => {
 
     var geojsonFeature = {
         "type": "Feature",
@@ -44,7 +45,7 @@ const GeoJSONMap: React.FC = () => {
             setData(geojsonFeature);
             setColor('transparent');
         }
-
+     
         delayedFunction()
 
     }, [context?.geojson]);
@@ -53,7 +54,7 @@ const GeoJSONMap: React.FC = () => {
         <> <div key={uniqueKey}>{loading && (
             <GeoJSON
                 data={data}
-                style={{ fillColor: color, color: "#000", weight: 1, fillOpacity: 1 }}
+                style={{ fillColor: color, color: "#000", weight: 1, fillOpacity: Opacity }}
             />
         )}</div></>
     );
