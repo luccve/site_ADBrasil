@@ -14,6 +14,7 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
     const [collapsedMobile, setCollapsedMobile] = useState(false);
     const [alagoas, setAlagoas] = useState(false);
     const [paraiba, setParaiba] = useState(false);
+    const [pernambuco, setPernambuco] = useState(false);
     const [saopaulo, setSaoPaulo] = useState(false);
     useEffect(() => {
         const handleWindowResize = () => {
@@ -41,26 +42,35 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
         if (context?.region === "AL") {
             setAlagoas(true);
             setParaiba(false);
+            setPernambuco(false);
             setSaoPaulo(false);
         } else if (context?.region === "PB") {
             setAlagoas(false);
             setParaiba(true);
+            setPernambuco(false);
             setSaoPaulo(false);
         } else if (context?.region === "SP") {
             setAlagoas(false);
             setParaiba(false);
+            setPernambuco(false);
             setSaoPaulo(true);
+        } else if (context?.region === "PE") {
+            setPernambuco(true);
+
+            setAlagoas(false);
+            setParaiba(false);
+            setSaoPaulo(false);
         }
     }, [context?.region])
 
     return (
 
+        <div id="container-wms">
+            <LayersControl position="bottomright" sortLayers={true} collapsed={collapsedMobile}  >
 
-        <LayersControl position="bottomright" sortLayers={true} collapsed={collapsedMobile}  >
+                <LayerGroup>
 
-            <LayerGroup>
-
-                {/* <LayersControl.Overlay name="Estimativa de água disponível (SGB - 1 Aproximação)"
+                    {/* <LayersControl.Overlay name="Estimativa de água disponível (SGB - 1 Aproximação)"
                 >
                     <WMSTileLayer
 
@@ -81,140 +91,183 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
                     />
                 </LayersControl.Overlay> */}
 
-                <LayersControl.Overlay name="Potencial de terras para irrigação (EMBRAPA)"
-                >
-                    <WMSTileLayer
+                    <LayersControl.Overlay name="Potencial de terras para irrigação (EMBRAPA)"
+                    >
+                        <WMSTileLayer
 
-                        format='image/png'
-                        transparent
-                        layers='geonode:pti_28f79bcfe1f418a6219d5af23e8c1c45'
-                        url='https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true'
-                        version='1.3.0'
-                        crs={CRS.EPSG3857}
-                        tileSize={256}
-                        tms={true}
-                        updateInterval={2000}
-                        pane='overlayPane'
-                        updateWhenIdle={true}
-                        keepBuffer={10}
-                        opacity={Opacity}
+                            format='image/png'
+                            transparent
+                            layers='geonode:pti_28f79bcfe1f418a6219d5af23e8c1c45'
+                            url='https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true'
+                            version='1.3.0'
+                            crs={CRS.EPSG3857}
+                            tileSize={256}
+                            tms={true}
+                            updateInterval={2000}
+                            pane='overlayPane'
+                            updateWhenIdle={true}
+                            keepBuffer={10}
+                            opacity={Opacity}
 
-                    />
-                </LayersControl.Overlay>
-
-                <LayersControl.Overlay name="São Paulo AD (EMBRAPA)"
-                    checked={saopaulo}>
-                    <WMSTileLayer
-
-                        format='image/png'
-                        transparent
-                        layers='geonode:saopaulo_ad_4109459bd64ccdddc10e3dfa510cc90b'
-                        url='https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true'
-                        version='1.3.0'
-                        crs={CRS.EPSG3857}
-                        tileSize={256}
-                        tms={true}
-                        updateInterval={2000}
-                        pane='overlayPane'
-                        updateWhenIdle={true}
-                        keepBuffer={10}
-                        opacity={Opacity}
-
-                    />
-                </LayersControl.Overlay>
+                        />
+                    </LayersControl.Overlay>
 
 
+                    <LayersControl.Overlay name="São Paulo AD (EMBRAPA)"
+                        checked={saopaulo}>
+                        <WMSTileLayer
 
-                <LayersControl.Overlay checked={alagoas} name="Alagoas AD (EMBRAPA)"
-                >
-                    <WMSTileLayer
+                            format='image/png'
+                            transparent
+                            layers='geonode:saopaulo_ad_4109459bd64ccdddc10e3dfa510cc90b'
+                            url='https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true'
+                            version='1.3.0'
+                            crs={CRS.EPSG3857}
+                            tileSize={256}
+                            tms={true}
+                            updateInterval={2000}
+                            pane='overlayPane'
+                            updateWhenIdle={true}
+                            keepBuffer={10}
+                            opacity={Opacity}
 
-                        format='image/png'
-                        transparent
-                        layers='geonode:alagoas_ad'
-                        url='https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true'
-                        version='1.3.0'
-                        crs={CRS.EPSG3857}
-                        tileSize={256}
-                        tms={true}
-                        updateInterval={2000}
-                        pane='overlayPane'
-                        updateWhenIdle={true}
-                        keepBuffer={10}
-                        opacity={Opacity}
-                        accessToken="vInDUq9Gt1zuamdmxVbp7VdHymKEY2"
+                        />
+                    </LayersControl.Overlay>
 
-                    />
-                </LayersControl.Overlay>
+                    <LayersControl.Overlay name="Pernambuco AD (EMBRAPA)"
+                        checked={pernambuco}>
+                        <WMSTileLayer
 
-                <LayersControl.Overlay name="ZONPB AD (EMBRAPA)"
-                    checked={paraiba}>
-                    <WMSTileLayer
+                            format='image/png'
+                            transparent
+                            layers='geonode:ad_98a8dcca664f761f5546492208425b3c'
+                            url='https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true'
+                            version='1.3.0'
+                            crs={CRS.EPSG3857}
+                            tileSize={256}
+                            tms={true}
+                            updateInterval={2000}
+                            pane='overlayPane'
+                            updateWhenIdle={true}
+                            keepBuffer={10}
+                            opacity={Opacity}
 
-                        format='image/png'
-                        transparent
-                        layers='geonode:paraiba_ad'
-                        url='https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true'
-                        version='1.3.0'
-                        crs={CRS.EPSG3857}
-                        tileSize={256}
-                        tms={true}
-                        updateInterval={2000}
-                        pane='overlayPane'
-                        updateWhenIdle={true}
-                        keepBuffer={10}
-                        opacity={Opacity}
-                        accessToken="vInDUq9Gt1zuamdmxVbp7VdHymKEY2"
+                        />
+                    </LayersControl.Overlay>
+                    <LayersControl.Overlay name="Fernando de Noronha AD (EMBRAPA)"
+                        checked={pernambuco}>
+                        <WMSTileLayer
 
-                    />
-                </LayersControl.Overlay>
+                            format='image/png'
+                            transparent
+                            layers='geonode:fn_10000_ad'
+                            url='https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true'
+                            version='1.3.0'
+                            crs={CRS.EPSG3857}
+                            tileSize={256}
+                            tms={true}
+                            updateInterval={2000}
+                            pane='overlayPane'
+                            updateWhenIdle={true}
+                            keepBuffer={10}
+                            opacity={Opacity}
 
-                <LayersControl.Overlay name="Estimativa de água disponível (EMBRAPA)"
-                    checked>
-                    <WMSTileLayer
-
-                        format='image/png'
-                        transparent
-                        layers='geonode:adbrasil'
-                        url='https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true&titulo=&'
-                        version='1.3.0'
-                        crs={CRS.EPSG3857}
-                        styles="geonode:adbrasil"
-                        tileSize={256}
-                        keepBuffer={10}
-                        tms={true}
-                        updateInterval={2000}
-                        pane='overlayPane'
-                        updateWhenIdle={true}
-                        opacity={Opacity}
+                        />
+                    </LayersControl.Overlay>
 
 
 
-                    />
-                </LayersControl.Overlay>
+                    <LayersControl.Overlay checked={alagoas} name="Alagoas AD (EMBRAPA)"
+                    >
+                        <WMSTileLayer
+
+                            format='image/png'
+                            transparent
+                            layers='geonode:alagoas_ad'
+                            url='https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true'
+                            version='1.3.0'
+                            crs={CRS.EPSG3857}
+                            tileSize={256}
+                            tms={true}
+                            updateInterval={2000}
+                            pane='overlayPane'
+                            updateWhenIdle={true}
+                            keepBuffer={10}
+                            opacity={Opacity}
+                            accessToken="vInDUq9Gt1zuamdmxVbp7VdHymKEY2"
+
+                        />
+                    </LayersControl.Overlay>
+
+                    <LayersControl.Overlay name="ZONPB AD (EMBRAPA)"
+                        checked={paraiba}>
+                        <WMSTileLayer
+
+                            format='image/png'
+                            transparent
+                            layers='geonode:paraiba_ad'
+                            url='https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true'
+                            version='1.3.0'
+                            crs={CRS.EPSG3857}
+                            tileSize={256}
+                            tms={true}
+                            updateInterval={2000}
+                            pane='overlayPane'
+                            updateWhenIdle={true}
+                            keepBuffer={10}
+                            opacity={Opacity}
+                            accessToken="vInDUq9Gt1zuamdmxVbp7VdHymKEY2"
+
+                        />
+                    </LayersControl.Overlay>
+
+                    <LayersControl.Overlay name="Estimativa de água disponível (EMBRAPA)"
+                        checked>
+                        <WMSTileLayer
+
+                            format='image/png'
+                            transparent
+                            layers='geonode:adbrasil'
+                            url='https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true&titulo=&'
+                            version='1.3.0'
+                            crs={CRS.EPSG3857}
+                            styles="geonode:adbrasil"
+                            tileSize={256}
+                            keepBuffer={10}
+                            tms={true}
+                            updateInterval={2000}
+                            pane='overlayPane'
+                            updateWhenIdle={true}
+                            opacity={Opacity}
 
 
 
-                <LayersControl.Overlay name="Mapa de solos do Brasil (IBGE/EMBRAPA)">
-                    <WMSTileLayer
+                        />
+                    </LayersControl.Overlay>
 
-                        format='image/png'
-                        transparent
-                        layers='BDIA:gpc_pedo'
-                        url='https://geoservicos.ibge.gov.br/geoserver/BDIA/wms?service=WMS&tiled=true&titulo=&'
-                        version='1.1.1'
-                        crs={CRS.EPSG3857}
-                        tileSize={256}
-                        tms={true}
-                        updateInterval={2000}
-                        pane='overlayPane'
-                        updateWhenIdle={true}
-                        keepBuffer={10}
-                        opacity={Opacity}
-                    />
-                </LayersControl.Overlay>
 
-                {/* <LayersControl.Overlay name="Biomas do Brasil (IBGE)">
+
+                    <LayersControl.Overlay name="Mapa de solos do Brasil (IBGE/EMBRAPA)">
+                        <WMSTileLayer
+
+                            format='image/png'
+                            transparent
+                            layers='BDIA:gpc_pedo'
+                            url='https://geoservicos.ibge.gov.br/geoserver/BDIA/wms?service=WMS&tiled=true&titulo=&'
+                            version='1.1.1'
+                            crs={CRS.EPSG3857}
+                            tileSize={256}
+                            tms={true}
+                            updateInterval={2000}
+                            pane='overlayPane'
+                            updateWhenIdle={true}
+                            keepBuffer={10}
+                            opacity={Opacity}
+                        />
+                    </LayersControl.Overlay>
+
+
+                    {/* <LayersControl.Overlay name="Biomas do Brasil (IBGE)">
                     <WMSTileLayer
 
                         format='image/png'
@@ -232,7 +285,7 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
                         opacity={Opacity}
                     />
                 </LayersControl.Overlay> */}
-                {/* <LayersControl.Overlay name="Vegetação Brasil">
+                    {/* <LayersControl.Overlay name="Vegetação Brasil">
                     <WMSTileLayer
 
                         format='image/png8'
@@ -251,7 +304,7 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
                     />
                 </LayersControl.Overlay> */}
 
-                {/* <LayersControl.Overlay name="Potencialidades agrícolas">
+                    {/* <LayersControl.Overlay name="Potencialidades agrícolas">
                     <WMSTileLayer
 
                         format='image/png'
@@ -269,10 +322,10 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
                         opacity={Opacity}
                     />
                 </LayersControl.Overlay> */}
-            </LayerGroup>
+                </LayerGroup>
 
 
-        </LayersControl>
-
+            </LayersControl>
+        </div>
     )
 }
