@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import type { BtnLinkProps } from '../../../@types/components';
 
 
-const BtnLink = ({ Title, Path }: BtnLinkProps) => {
+const BtnLink: React.FC<BtnLinkProps> = ({ Title, Path }: BtnLinkProps) => {
     const navigate = useNavigate();
 
     const handleClick = () => {
