@@ -1,10 +1,7 @@
 import '../../../App.css'
 import { useNavigate } from "react-router-dom";
+import type { BtnLinkProps } from '../../../@types/components';
 
-interface BtnLinkProps {
-    Title: string;
-    Path: string;
-}
 
 const BtnLink = ({ Title, Path }: BtnLinkProps) => {
     const navigate = useNavigate();

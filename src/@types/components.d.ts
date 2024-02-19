@@ -144,3 +144,8 @@ interface LayersMapProps {
 interface GetLegendsMapsProps {
     layer: string;
 }
+
+interface BtnLinkProps {
+    Title: string;
+    Path: string;
+}

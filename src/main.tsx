@@ -14,14 +14,8 @@ import Balance from './pages/balance/index.tsx';
 import Educacional from './pages/educacional/index.tsx';
 import ContextMapProvider from './contexts/index.tsx';
 
-// let _basename="/";
 
-// if(import.meta.env._ENV !== "DEV"){
-//   _basename = "/adbrasil_site";
-
-// }
-
-
+// Rota para deploy adbrasil_site
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
