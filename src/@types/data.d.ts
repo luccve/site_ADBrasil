@@ -240,6 +240,7 @@ interface GeoInfoData extends MyContextProps {
   centroides?: LatLng;
   escala?: string | null;
   setContext?: React.Dispatch<React.SetStateAction<GeoInfoData | null>>;
+  filterWMS?: filterWMS;
 }
 
 
@@ -267,3 +268,11 @@ interface MunicipioProps {
   centroides: LatLng;
 }
 
+
+interface filterWMSProps {
+  layer?: string;
+  operator?: string;
+  field?: string;
+  value?: string;
+
+}

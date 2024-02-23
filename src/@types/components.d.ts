@@ -1,5 +1,5 @@
 import { extend, Map, LatLng } from "leaflet";
-import type { MyContextProps, van_genuchtenProps } from "./data";
+import type { MyContextProps, van_genuchtenProps, filterWMS} from "./data";
 import { Dispatch } from "react";
 
 export interface CarrouselRegionProps {
@@ -61,6 +61,7 @@ export interface ModalAlertProps {
 export interface BtnLinkProps {
     Title: string;
     Path: string;
+    children?: React.ReactNode
 }
 
 export interface BtnRegularProps {
@@ -148,4 +149,18 @@ interface GetLegendsMapsProps {
 interface BtnLinkProps {
     Title: string;
     Path: string;
+}
+
+
+interface WMSFilterProps{
+    Opacity: number;
+    setLayer: React.Dispatch<string>;
+}
+
+interface modalSearchType {
+    close: boolean;
+    onClose: React.Dispatch<boolean>;
+    onValue: React.Dispatch<string | null>;
+    handleClear: React.Dispatch<boolean>;
+    
 }
