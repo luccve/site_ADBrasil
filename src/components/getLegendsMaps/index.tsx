@@ -57,6 +57,11 @@ const GetLegendsMaps = ({ layer }: GetLegendsMapsProps) => {
             link: 'https://geoinfo.dados.embrapa.br/geoserver/ows?service=WMS&request=GetLegendGraphic&format=image%2Fpng&height=12&width=12&layer=geonode:paraiba_ad&style=geonode:paraiba_ad&version=1.3.0&SLD_VERSION=1.1.0&LEGEND_OPTIONS=forceLabels%3Aon&_v_=1705617220186&access_token=lfnlYSGeZ1HLFVKDYYr79hNYQoN9TQ&legend_options=forceLabels;labelMargin:10;fontAntiAliasing:true;fontName:sans-serif;fontSize:16'
         },
         {
+            name: 'Pernambuco AD (EMBRAPA)',
+            escala: "Escala 1:100.000",
+            link: 'https://geoinfo.dados.embrapa.br/geoserver/ows?service=WMS&request=GetLegendGraphic&format=image%2Fpng&height=12&width=12&layer=geonode:paraiba_ad&style=geonode:paraiba_ad&version=1.3.0&SLD_VERSION=1.1.0&LEGEND_OPTIONS=forceLabels%3Aon&_v_=1705617220186&access_token=lfnlYSGeZ1HLFVKDYYr79hNYQoN9TQ&legend_options=forceLabels;labelMargin:10;fontAntiAliasing:true;fontName:sans-serif;fontSize:16'
+        },
+        {
             name: 'Vegetação Brasil',
             escala: "Escala 1:250.000",
             link: 'https://geoservicos.ibge.gov.br/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=14&HEIGHT=14&LAYER=CREN:vegetacao_radambrasil&legend_options=labelMargin:10;fontAntiAliasing:true;fontName:sans-serif;fontSize:16'
@@ -143,7 +148,7 @@ const GetLegendsMaps = ({ layer }: GetLegendsMapsProps) => {
 
     const legendaSolos = (): JSX.Element => {
         return (
-            <div className='flex justify-around p-5 flex-col absolute top-1/5 right-4 bg-white max-w-[300px] h-auto rounded-md shadow border border-gray'
+            <div className='flex justify-between p-5 flex-col absolute top-1/5 right-4 bg-white max-w-[300px] max-md:max-h-[300px] max-h-[500px] overflow-hidden overflow-y-auto rounded-md shadow border border-gray'
                 style={{ transform: `translate(${position.x}px, ${position.y}px)`, cursor: dragging ? 'grabbing' : 'grab' }}
                 onMouseDown={handleMouseDown}>
                 <button onClick={handleChangeIcon} className='absolute hover:scale-110 top-0 right-0 p-2'>
@@ -151,8 +156,9 @@ const GetLegendsMaps = ({ layer }: GetLegendsMapsProps) => {
                 </button>
 
 
-                <div className='leading-tight text-blue  pb-[20px]' style={{ display: icon ? 'none' : 'initial' }}>
-                    <h1 className='font-bold text-lg max-md:text-md'>Legenda</h1>
+
+                <div className='leading-tight text-blue' style={{ display: icon ? 'none' : 'initial' }}>
+                    
                     <h3 className='text-md max-md:text-sm'>Solos do Brasil</h3>
                     <h5 className='text-md text-black max-md:text-sm'>{escala}</h5>
                 </div>
@@ -166,6 +172,7 @@ const GetLegendsMaps = ({ layer }: GetLegendsMapsProps) => {
 
                     })}
                 </div>
+
             </div>
 
         )
@@ -173,53 +180,53 @@ const GetLegendsMaps = ({ layer }: GetLegendsMapsProps) => {
 
     const legendaADBrasil = (): JSX.Element => {
         return (
-            <div className='flex justify-around p-5 flex-col absolute top-1/5 right-4 bg-white max-w-[300px] h-auto rounded-md shadow border border-gray'
+            <div title='A legenda se comporta dinamicamente sempre relacionado ao último layer adicionado' className=' overflow-y-auto flex justify-between p-5 flex-col absolute top-[15%] right-4 bg-white max-w-[300px] max-h-[400px] rounded-md shadow border border-gray'
                 style={{ transform: `translate(${position.x}px, ${position.y}px)`, cursor: dragging ? 'grabbing' : 'grab' }}
                 onMouseDown={handleMouseDown}>
                 <button onClick={handleChangeIcon} className='absolute hover:scale-110 top-0 right-0 p-2'>
                     {icon ? <MdMenuBook className={'text-blue text-[22px]'} /> : <BiSolidFoodMenu className={'text-blue text-[22px]'} />}
                 </button>
 
-                <div>
 
-                    <div className='leading-tight text-blue' style={{ display: icon ? 'none' : 'initial' }}>
-                        <h1 className='font-bold text-lg max-md:text-md'>Legenda</h1>
-                        <h5 className='text-md text-black max-md:text-sm pb-5'>{layer}</h5>
-                        <h3 className='text-md max-md:text-sm '>Água disponível no solo (mm/cm)</h3>
-                        <h5 className='text-md text-black max-md:text-sm pb-5'>{layer === 'Estimativa de água disponível (EMBRAPA)' ? 'Escala: 1:250.000' : escala}</h5>
-                    </div>
 
-                    <div className='self-center flex flex-col justify-between h-auto text-sm space-y-2' style={{ display: icon ? 'none' : 'initial' }}>
-                        {colorRanges.map((item, index) => {
-                            return (
-                                <ul key={`${index}-${item.min + item.color}`} className='flex flex-row justify-between items-center space-x-2'>
-                                    <li style={{ background: item.color, width: "25px", height: "25px" }} />
-                                    <li style={{ width: "50px", textAlign: "right" }}>{item.min.toFixed(2)}</li>
-                                    <li style={{ width: "100px" }}>{item.text}</li>
-                                    <li style={{ width: "50px", textAlign: "left" }}>{item.max.toFixed(2)}</li>
-                                </ul>
-                            );
-                        })}
-                        <ul className='flex flex-row justify-between items-center space-x-2'>
-                            <li style={{ background:"#717171", width: "25px", height: "25px" }} />
-                            <li style={{ width: "150px" }}> Tipo de terrenos</li>
-                        </ul>
-                    </div>
+                <div className='leading-tight text-blue' style={{ display: icon ? 'none' : 'initial' }}>
+                    <h1 className='font-bold text-lg max-md:text-md'>Legenda</h1>
+                    <h5 className='text-md text-black max-md:text-sm pb-5'>{layer}</h5>
+                    <h3 className='text-md max-md:text-sm '>Água disponível no solo (mm/cm)</h3>
+                    <h5 className='text-md text-black max-md:text-sm pb-5'>{layer === 'Estimativa de água disponível (EMBRAPA)' ? 'Escala: 1:250.000' : escala}</h5>
                 </div>
+
+                <div className='self-center flex flex-col justify-between h-auto text-sm space-y-2' style={{ display: icon ? 'none' : 'initial' }}>
+                    {colorRanges.map((item, index) => {
+                        return (
+                            <ul key={`${index}-${item.min + item.color}`} className='flex flex-row justify-between items-center space-x-2'>
+                                <li style={{ background: item.color, width: "25px", height: "25px" }} />
+                                <li style={{ width: "50px", textAlign: "right" }}>{item.min.toFixed(2)}</li>
+                                <li style={{ width: "100px" }}>{item.text}</li>
+                                <li style={{ width: "50px", textAlign: "left" }}>{item.max.toFixed(2)}</li>
+                            </ul>
+                        );
+                    })}
+                    <ul className='flex flex-row justify-between items-center space-x-2'>
+                        <li style={{ background: "#717171", width: "25px", height: "25px" }} />
+                        <li style={{ width: "150px" }}> Tipo de terrenos</li>
+                    </ul>
+                </div>
+
 
             </div >)
     }
 
     const legendaPTI = (): JSX.Element => {
         return (
-            <div className='flex justify-around p-5 flex-col absolute top-1/5 right-4 bg-white max-w-[300px] h-auto rounded-md shadow border border-gray'
+            <div className='flex justify-around p-5 flex-col absolute top-1/5 right-4 bg-white max-w-[300px] max-h-[400px] overflow-y-auto rounded-md shadow border border-gray'
                 style={{ transform: `translate(${position.x}px, ${position.y}px)`, cursor: dragging ? 'grabbing' : 'grab' }}
                 onMouseDown={handleMouseDown}>
                 <button onClick={handleChangeIcon} className='absolute hover:scale-110 top-0 right-0 p-2'>
                     {icon ? <MdMenuBook className={'text-blue text-[22px]'} /> : <BiSolidFoodMenu className={'text-blue text-[22px]'} />}
                 </button>
 
-                <div>
+               
 
                     <div className='leading-tight text-blue' style={{ display: icon ? 'none' : 'initial' }}>
                         <h1 className='font-bold text-lg max-md:text-md'>Legenda</h1>
@@ -238,8 +245,7 @@ const GetLegendsMaps = ({ layer }: GetLegendsMapsProps) => {
                             );
                         })}
                     </div>
-                </div>
-
+               
             </div >)
     }
 
