@@ -1,10 +1,9 @@
 
-import { CRS } from "leaflet"
 import {
     LayerGroup,
     LayersControl,
     TileLayer,
-    WMSTileLayer
+    
 } from "react-leaflet"
 
 
@@ -24,8 +23,6 @@ export default function TilerLayersMapControl() {
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
                 </LayersControl.BaseLayer>
-
-
 
                 <LayersControl.BaseLayer name="Nat Geo Relevo">
                     <TileLayer
@@ -52,57 +49,6 @@ export default function TilerLayersMapControl() {
                     />
                 </LayersControl.BaseLayer>
 
-                <LayersControl.BaseLayer name="Unidades Federativas">
-                    <WMSTileLayer
-                        format='image/png'
-                        transparent
-                        layers='geonode:estados_br'
-                        url='https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true'
-                        version='1.3.0'
-                        crs={CRS.EPSG3857}
-                        tileSize={256}
-                        tms={true}
-                        updateInterval={2000}
-                        
-                        updateWhenIdle={true}
-                        keepBuffer={10}
-                       
-                    />
-                </LayersControl.BaseLayer>
-                <LayersControl.BaseLayer name="Limites Municipais">
-                    <WMSTileLayer
-                        format='image/png'
-                        transparent
-                        layers='geonode:municipio_2020'
-                        url='https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true'
-                        version='1.3.0'
-                        crs={CRS.EPSG3857}
-                        tileSize={256}
-                        tms={true}
-                        updateInterval={2000}
-                        
-                        updateWhenIdle={true}
-                        keepBuffer={10}
-                       
-                    />
-                </LayersControl.BaseLayer>
-                <LayersControl.BaseLayer name="Limites de Mesorregiões">
-                    <WMSTileLayer
-                        format='image/png'
-                        transparent
-                        layers='geonode:mesorregioes_br'
-                        url='https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true'
-                        version='1.3.0'
-                        crs={CRS.EPSG3857}
-                        tileSize={256}
-                        tms={true}
-                        updateInterval={2000}
-                        pane="tilePane"
-                        updateWhenIdle={true}
-                        keepBuffer={10}
-                       
-                    />
-                </LayersControl.BaseLayer>
             </LayerGroup>
 
 
