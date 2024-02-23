@@ -23,6 +23,7 @@ const GetPosition = () => {
     iconRef.current.style.boxShadow = '0 0 15px rgba(0,0,0,0.2)';
     iconRef.current.style.fontStretch = 'normal';
     iconRef.current.style.borderRadius = '5px';
+    iconRef.current.title = 'Encontre sua geolocalização';
     const iconHtml = ReactDOMServer.renderToString(
       <MdPlace style={{ fontSize: '25px', color: 'black' }} />
     );
