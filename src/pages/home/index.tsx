@@ -100,34 +100,32 @@ const Home = () => {
                 <div className='flex flex-row p-5 w-[150px] h-auto items-center justify-around 
                 max-lg:flex-col max-lg:space-x-0 max-lg:space-y-5 max-lg:w-auto font-bold sm:flex-row sm:space-y-0 sm:space-x-0'>
 
-                    <div className='flex flex-col items-center'>
+
+                    <BtnLink Title='Mapa' Path={"/map"} >
                         <img className=' w-28 max-lg:w-16' src={Mapa} alt="Icone do Mapa" />
-                        <BtnLink Title='Mapa' Path={"/map"} />
+                    </BtnLink>
 
-
-                    </div>
-
-                    <div className=' flex flex-col items-center '>
+                    <BtnLink Title='Catálogo' Path={"/catalogo"} >
                         <img src={Catalog} className='w-28 max-lg:w-16' alt="Icone da ferramenta do catalogo" />
-                        <BtnLink Title='Catálogo' Path={"/catalogo"} />
-                    </div>
 
-                    <div className='flex flex-col items-center '>
+                    </BtnLink>
+
+
+                    <BtnLink Title='Pedotransferência' Path={"/ptf"} >
                         <img className=' w-28 max-lg:w-16' src={Ptf} alt="Icone da ferramenta de pedotransferencia" />
-                        <BtnLink Title='Pedotransferência' Path={"/ptf"} />
-                    </div>
 
-                    <div className='flex flex-col items-center '>
-                        {/* <img className=' w-28 max-lg:w-16' src={Ptf} alt="Icone da aba de educação" /> */}
+                    </BtnLink>
+
+                    <BtnLink Title='Educação' Path={"/edu"} >
                         <SiGooglescholar className='text-white w-16 h-28 max-lg:w-16 max-lg:h-28' />
-                        <BtnLink Title='Educação' Path={"/edu"} />
-                    </div>
 
-                    <div className='flex flex-col items-center '>
-                        {/* <img className=' w-28 max-lg:w-16' src={Ptf} alt="Icone da ferramenta de IA" /> */}
+                    </BtnLink>
+
+                    <BtnLink Title='IA' Path={"/balance"} >
                         <SiSmartthings className='text-white w-16 h-28 max-lg:w-16 max-lg:h-28' />
-                        <BtnLink Title='IA' Path={"/balance"} />
-                    </div>
+
+                    </BtnLink>
+
 
 
                 </div>
@@ -145,22 +143,24 @@ const Home = () => {
 
                 <div className='flex flex-row space-x-24 items-center max-lg:flex-col max-lg:space-x-0 max-lg:space-y-5 font-bold sm:flex-row sm:space-y-0  sm:space-x-0'>
 
-                    <div className=' flex flex-col items-center '>
+
+                    <BtnLink Title='Água disponível' Path={"/"} >
                         <img className=' w-28 max-lg:w-16' src={Logo} alt="Icone de água disponivel" />
-                        <BtnLink Title='Água disponível' Path={"/"} />
-                    </div>
 
+                    </BtnLink>
 
-
-                    <div className='flex flex-col items-center '>
+                    <BtnLink Title='Pedotransferência' Path={"/ptf"} >
                         <img className=' w-28 max-lg:w-16' src={Ptf} alt="Icone da ferramenta de pedotransferencia" />
-                        <BtnLink Title='Pedotransferência' Path={"/ptf"} />
-                    </div>
 
-                    <div className=' flex flex-col items-center '>
+                    </BtnLink>
+
+
+
+                    <BtnLink Title='AI Soil' Path={"/balance"} >
                         <img src={Balaco} className='w-28 max-lg:w-16' alt="Icone da ferramenta do catalogo" />
-                        <BtnLink Title='AI Soil' Path={"/balance"} />
-                    </div>
+
+                    </BtnLink>
+
 
                 </div>
 
