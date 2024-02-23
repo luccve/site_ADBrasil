@@ -9,7 +9,7 @@ import MapEvents from '../../components/mapEvents';
 import { MapContainer, ScaleControl } from 'react-leaflet';
 import { useRef, useState } from 'react';
 import GetPosition from '../../components/getPosition';
-
+import ClearLayers from '../../components/clearLayers';
 import HandlePositionMap from '../../components/handlePositionMap';
 import OpacitySliderMap from '../../components/opacitySliderMap';
 import WMSTileLayersControl from '../../components/WMSTileLayersControl';
@@ -17,6 +17,7 @@ import GetLegendsMaps from '../../components/getLegendsMaps';
 import SearchClip from '../../components/SearchClip';
 import ModalSearch from '../../components/modal/modalSearch';
 import ModalAlert from '../../components/modal/modalAlert';
+import WMSFilter from '../../components/WMSFilter';
 
 
 const MapPage = () => {
@@ -25,6 +26,7 @@ const MapPage = () => {
     const mapContainerRef = useRef(null);
     const [elementOpacity, setElementOpacity] = useState<number>(1);
     const [layer, setLayer] = useState("Estimativa de água disponível");
+
     const [valueWMSMap, setValue] = useState<string | null>(null);
     const instrucoes = {
         "Camadas": "Os mapas no seu canto inferior direito contém escalas e bases cartograficas diferentes, observe na legenda a escala do mesmo. Por padrão a camada da Estimativa de água disponível do Brasil inicia habilitada.",
@@ -32,7 +34,7 @@ const MapPage = () => {
         "Eventos": "O usuário poderá clicar no mapa que retornará informações da Unidade de Mapeamento do solo, e sobretudo, informações de água disponível e potencial para irrigação de cada componente."
     }
     const [close, onClose] = useState(false);
-
+    const [clearLayers, setClearLayers] = useState(false);
 
     return (
         <div className={`flex items-center overflow-y-hidden h-screen relative bg-white`}>
@@ -52,16 +54,18 @@ const MapPage = () => {
                 <HandlePositionMap close={modal} />
                 <ScaleControl position="bottomleft" imperial={false} />
                 <LayersMap />
-                <GeoJSONMap Opacity={elementOpacity}/>
+                <WMSFilter setLayer={setLayer} Opacity={elementOpacity} />
+                <GeoJSONMap Opacity={elementOpacity} />
                 <SearchClip opacity={elementOpacity} valueWMSMap={valueWMSMap} onClose={onClose} />
                 {!modal && <MapEvents setLayer={setLayer} setLoading={setModal} />}
                 <MinimapControl position={[0, 0]} zoom={2} />
                 <GetCoordinates />
                 <GetPosition />
+                <ClearLayers clear={clearLayers}  setClear={setClearLayers}/>
                 <WMSTileLayersControl Opacity={elementOpacity} />
             </MapContainer>
             <GetLegendsMaps layer={layer} />
-            <ModalSearch onValue={setValue} close={close} onClose={onClose} />
+            <ModalSearch handleClear={setClearLayers} onValue={setValue} close={close} onClose={onClose} />
             <ModalAlert onClose={setAlert} message={instrucoes} title='Intruções de uso' visible={alert} />
             {modal && <ModalMap onClose={setModal} visible={modal} />}
         </div>
