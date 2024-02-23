@@ -66,31 +66,43 @@ html{
 }
 .leaflet-right > .leaflet-control-layers{
   background-color: #ffffff;
-  scroll-behavior: smooth;
-  overflow: auto;
+ 
   text-align: start;
-  font-size: smaller;
-  max-height: 150px;
-  padding: 5px 20px;
-  overflow-y: scroll;
+  
+  max-height: 250px;
+  
+  padding: 5px 10px;
+  overflow-y: auto;
 }
 
 .leaflet-control-layers-overlays label input {
-  margin-right: 5px;
+  
   cursor: pointer;
 }
 
 .leaflet-control-layers-overlays label{
   cursor: pointer;
-  font-weight: 900;
-  
+  font-weight: 400;
+  color: #000000;
+  font-size: larger;
 }
 
-.leaflet-left > .leaflet-control-layers label{
-  text-align: start;
-  padding: 0 20px;
-  
+
+.leaflet-bottom.leaflet-right .leaflet-control-layers-list .leaflet-control-layers-base label span{
+  display: flex;
+  color: blue;
+  justify-content: space-between;
+  margin: 3px 5px;
 }
+.leaflet-bottom.leaflet-right .leaflet-control-layers-list .leaflet-control-layers-overlays label span{
+  display: flex;
+  color: blue;
+  font-size: smaller;
+  justify-content: space-between;
+  margin: 8px 5px;
+}
+
+
 
 .leaflet-left > .leaflet-control-layers{
   background-color: #ffffff;
@@ -98,13 +110,50 @@ html{
   overflow: auto;
   font-size: smaller;
   max-height: 150px;
-  overflow-y: scroll;
+  overflow-y: auto;
+}
+
+
+.leaflet-bottom.leaflet-right .leaflet-control-layers-toggle {
+  background-image: url(../src/assets/library_add.svg);
+  background-size: 40px 40px; /* Defina o tamanho do seu ícone conforme necessário */
+  background-repeat: no-repeat;
+  
+}
+
+.leaflet-bottom.leaflet-right .leaflet-control-layers-base input{
+  cursor: pointer !important;
+}
+
+.leaflet-bottom.leaflet-right .leaflet-control-layers-base label{
+  font-weight: 400;
+  font-size: larger;
+  color: #000000;
+}
+
+.leaflet-bottom.leaflet-right .leaflet-control-layers-list .leaflet-control-layers-base::before{
+  content: 'Limites do Brasil';
+  color: #000000;
+  font-weight: 900;
+  font-size: larger;
+
+}
+
+.leaflet-bottom.leaflet-right .leaflet-control-layers-toggle span {
+  display: none;
+}
+
+.leaflet-bottom.leaflet-right .leaflet-control-layers-list .leaflet-control-layers-overlays::before{
+  content: 'Camadas';
+  color: #000000;
+  font-weight: 900;
+  font-size: larger;
 }
 
 
 .leaflet-control-layers-selector {
-  width: 20px; /* Largura da caixa de seleção */
-  height: 20px; /* Altura da caixa de seleção */
+  width: 20px; 
+  height: 20px; 
   margin-top: 5px;
 }
 
