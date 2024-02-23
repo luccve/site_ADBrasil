@@ -83,7 +83,7 @@ class RequestCoordsService {
                 const request_geoinfo = await this.url_wfs_create(this.geoinfoLinks[data_adbrasil_malha.data.features[0].properties.sigla_uf], lat, lng)
 
                 if (request_geoinfo) {
-                    console.log(request_geoinfo)
+                    // console.log(request_geoinfo)
                 }
 
                 switch (data_adbrasil_malha.data.features[0].properties.sigla_uf) {
@@ -160,7 +160,7 @@ class RequestCoordsService {
                             if(request_geoinfo){
 
                                 const dados_pe = await this.fetch_region(request_geoinfo[1]);
-                                console.log(dados_pe)
+                                dados_pe
                                 
                             }
 
@@ -344,7 +344,7 @@ class RequestCoordsService {
                 return null;
             })
 
-            console.log(geoLinks)
+            // console.log(geoLinks)
             return geoLinks
         }
         return null;
