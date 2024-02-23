@@ -11,32 +11,12 @@ import { ContextMap } from "../../contexts"
 
 export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
     const context = useContext(ContextMap);
-    const [collapsedMobile, setCollapsedMobile] = useState(false);
+    
     const [alagoas, setAlagoas] = useState(false);
     const [paraiba, setParaiba] = useState(false);
     const [pernambuco, setPernambuco] = useState(false);
     const [saopaulo, setSaoPaulo] = useState(false);
-    useEffect(() => {
-        const handleWindowResize = () => {
-            const windowWidth = window.innerWidth;
-            if (windowWidth < 400) {
-                setCollapsedMobile(true);
-            } else {
-                setCollapsedMobile(false);
-            }
-        };
-
-        // Adiciona o ouvinte de evento de redimensionamento
-        window.addEventListener('resize', handleWindowResize);
-
-        // Chama a função de manipulação do redimensionamento para definir o estado inicial
-        handleWindowResize();
-
-        // Remove o ouvinte de evento de redimensionamento quando o componente é desmontado
-        return () => {
-            window.removeEventListener('resize', handleWindowResize);
-        };
-    }, []);
+  
 
     useEffect(() => {
         if (context?.region === "AL") {
@@ -56,7 +36,6 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
             setSaoPaulo(true);
         } else if (context?.region === "PE") {
             setPernambuco(true);
-
             setAlagoas(false);
             setParaiba(false);
             setSaoPaulo(false);
@@ -65,31 +44,54 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
 
     return (
 
-        <div id="container-wms">
-            <LayersControl position="bottomright" sortLayers={true} collapsed={collapsedMobile}  >
+        <div id="container-wms" title="Adicione camadas para o mapa">
+            <LayersControl position="bottomright" sortLayers={true} >
 
                 <LayerGroup>
+                    
 
-                    {/* <LayersControl.Overlay name="Estimativa de água disponível (SGB - 1 Aproximação)"
-                >
-                    <WMSTileLayer
+                    <LayersControl.Overlay  name="Estimativa de água disponível (EMBRAPA)"
+                        checked>
+                        <WMSTileLayer
+                            
+                            format='image/png'
+                            transparent
+                            layers='geonode:adbrasil'
+                            url='https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true&titulo=&'
+                            version='1.3.0'
+                            crs={CRS.EPSG3857}
+                            styles="geonode:adbrasil"
+                            tileSize={256}
+                            keepBuffer={10}
+                            tms={true}
+                            updateInterval={2000}
+                            pane='overlayPane'
+                            updateWhenIdle={true}
+                            opacity={Opacity}
 
-                        format='image/png'
-                        transparent
-                        layers='0'
-                        url='https://geoportal.sgb.gov.br/server/services/pronasolos/agua_disponivel/MapServer/WMSServer?&tiled=true&titulo=&styles&bgcolor=white'
-                        version='1.1.0'
-                        crs={CRS.EPSG3857}
-                        tileSize={256}
-                        tms={true}
-                        updateInterval={2000}
-                        pane='overlayPane'
-                        updateWhenIdle={true}
-                        keepBuffer={10}
-                        opacity={Opacity}
+                        />
+                    </LayersControl.Overlay>
 
-                    />
-                </LayersControl.Overlay> */}
+
+
+                    <LayersControl.Overlay name="Mapa de solos do Brasil (IBGE/EMBRAPA)">
+                        <WMSTileLayer
+
+                            format='image/png'
+                            transparent
+                            layers='BDIA:gpc_pedo'
+                            url='https://geoservicos.ibge.gov.br/geoserver/BDIA/wms?service=WMS&tiled=true&titulo=&'
+                            version='1.1.1'
+                            crs={CRS.EPSG3857}
+                            tileSize={256}
+                            tms={true}
+                            updateInterval={2000}
+                            pane='overlayPane'
+                            updateWhenIdle={true}
+                            keepBuffer={10}
+                            opacity={Opacity}
+                        />
+                    </LayersControl.Overlay>
 
                     <LayersControl.Overlay name="Potencial de terras para irrigação (EMBRAPA)"
                     >
@@ -111,7 +113,6 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
 
                         />
                     </LayersControl.Overlay>
-
 
                     <LayersControl.Overlay name="São Paulo AD (EMBRAPA)"
                         checked={saopaulo}>
@@ -221,111 +222,67 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
                         />
                     </LayersControl.Overlay>
 
-                    <LayersControl.Overlay name="Estimativa de água disponível (EMBRAPA)"
-                        checked>
-                        <WMSTileLayer
-
-                            format='image/png'
-                            transparent
-                            layers='geonode:adbrasil'
-                            url='https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true&titulo=&'
-                            version='1.3.0'
-                            crs={CRS.EPSG3857}
-                            styles="geonode:adbrasil"
-                            tileSize={256}
-                            keepBuffer={10}
-                            tms={true}
-                            updateInterval={2000}
-                            pane='overlayPane'
-                            updateWhenIdle={true}
-                            opacity={Opacity}
 
 
 
-                        />
-                    </LayersControl.Overlay>
-
-
-
-                    <LayersControl.Overlay name="Mapa de solos do Brasil (IBGE/EMBRAPA)">
-                        <WMSTileLayer
-
-                            format='image/png'
-                            transparent
-                            layers='BDIA:gpc_pedo'
-                            url='https://geoservicos.ibge.gov.br/geoserver/BDIA/wms?service=WMS&tiled=true&titulo=&'
-                            version='1.1.1'
-                            crs={CRS.EPSG3857}
-                            tileSize={256}
-                            tms={true}
-                            updateInterval={2000}
-                            pane='overlayPane'
-                            updateWhenIdle={true}
-                            keepBuffer={10}
-                            opacity={Opacity}
-                        />
-                    </LayersControl.Overlay>
-
-
-                    {/* <LayersControl.Overlay name="Biomas do Brasil (IBGE)">
-                    <WMSTileLayer
-
-                        format='image/png'
-                        transparent
-                        layers='CREN:lm_bioma_250'
-                        url='https://geoservicos.ibge.gov.br/geoserver/CREN/wms?&tiled=true&titulo=&'
-                        version='1.0.0'
-                        crs={CRS.EPSG3857}
-                        tileSize={256}
-                        tms={true}
-                        updateInterval={2000}
-                        pane='overlayPane'
-                        updateWhenIdle={true}
-                        keepBuffer={10}
-                        opacity={Opacity}
-                    />
-                </LayersControl.Overlay> */}
-                    {/* <LayersControl.Overlay name="Vegetação Brasil">
-                    <WMSTileLayer
-
-                        format='image/png8'
-                        transparent
-                        layers='CREN:vegetacao_radambrasil'
-                        url='https://geoservicos.ibge.gov.br/geoserver/CREN/wms?&tiled=true&titulo=&'
-                        version='1.0.0'
-                        crs={CRS.EPSG3857}
-                        tileSize={256}
-                        tms={true}
-                        updateInterval={2000}
-                        pane='overlayPane'
-                        updateWhenIdle={true}
-                        keepBuffer={10}
-                        opacity={Opacity}
-                    />
-                </LayersControl.Overlay> */}
-
-                    {/* <LayersControl.Overlay name="Potencialidades agrícolas">
-                    <WMSTileLayer
-
-                        format='image/png'
-                        transparent
-                        layers='CREN:potencialidade_agricola'
-                        url='https://geoservicos.ibge.gov.br/geoserver/CREN/wms?&tiled=true&titulo=&'
-                        version='1.0.0'
-                        crs={CRS.EPSG3857}
-                        tileSize={256}
-                        tms={true}
-                        updateInterval={2000}
-                        pane='overlayPane'
-                        updateWhenIdle={true}
-                        keepBuffer={10}
-                        opacity={Opacity}
-                    />
-                </LayersControl.Overlay> */}
                 </LayerGroup>
 
+                <LayerGroup >
 
+                    <LayersControl.BaseLayer name="Unidades Federativas">
+                        <WMSTileLayer
+                            format='image/png'
+                            transparent
+                            layers='geonode:estados_br'
+                            url='https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true'
+                            version='1.3.0'
+                            crs={CRS.EPSG3857}
+                            tileSize={256}
+                            tms={true}
+                            updateInterval={2000}
+
+                            updateWhenIdle={true}
+                            keepBuffer={10}
+
+                        />
+
+                    </LayersControl.BaseLayer>
+                    <LayersControl.BaseLayer name="Limites Municipais">
+                        <WMSTileLayer
+                            format='image/png'
+                            transparent
+                            layers='geonode:municipio_2020'
+                            url='https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true'
+                            version='1.3.0'
+                            crs={CRS.EPSG3857}
+                            tileSize={256}
+                            tms={true}
+                            updateInterval={2000}
+
+                            updateWhenIdle={true}
+                            keepBuffer={10}
+
+                        />
+                    </LayersControl.BaseLayer>
+                    <LayersControl.BaseLayer name="Limites de Mesorregiões">
+                        <WMSTileLayer
+                            format='image/png'
+                            transparent
+                            layers='geonode:mesorregioes_br'
+                            url='https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true'
+                            version='1.3.0'
+                            crs={CRS.EPSG3857}
+                            tileSize={256}
+                            tms={true}
+                            updateInterval={2000}
+                            pane="tilePane"
+                            updateWhenIdle={true}
+                            keepBuffer={10}
+
+                        />
+                    </LayersControl.BaseLayer>
+                </LayerGroup>
             </LayersControl>
-        </div>
+        </div >
     )
 }
