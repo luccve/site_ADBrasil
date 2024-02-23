@@ -19,7 +19,7 @@ const SearchClip = ({ onClose, valueWMSMap, opacity }: SearchClip) => {
   const [url, setUrl] = useState("");
 
   useEffect(() => {
-    console.log(valueWMSMap)
+
     if (valueWMSMap && valueWMSMap?.length > 2) {
       setUrl(`https://geoinfo.dados.embrapa.br/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&TILED=true&access_token=1M2RzHPj2f6WCNqPmNv2xTvCM713ax&cql_filter=cd_mun == ${valueWMSMap}`)
     } else {
@@ -28,15 +28,18 @@ const SearchClip = ({ onClose, valueWMSMap, opacity }: SearchClip) => {
   }, [valueWMSMap])
 
   const IconComponent = ({ handleClick }: any) => (
-    <button onClick={handleClick}>
+    <button onClick={handleClick} title="Funcionalidade de filtro" >
       <TbZoomInAreaFilled className={'text-4xl hover:opacity-70 hover:scale-125 max-md-text-sm'} />
     </button>
   );
 
 
   useEffect(() => {
-    setmapRender(false);
-    setTimeout(() => { setmapRender(true) }, 1000);
+    if (valueWMSMap) {
+
+      setmapRender(false);
+      setTimeout(() => { setmapRender(true) }, 1000);
+    }
 
   },
     [valueWMSMap]);
@@ -56,6 +59,7 @@ const SearchClip = ({ onClose, valueWMSMap, opacity }: SearchClip) => {
     infoRef.current.style.boxShadow = '0 0 15px rgba(0,0,0,0.2)';
     infoRef.current.style.fontStretch = 'normal';
     infoRef.current.style.borderRadius = '5px';
+    infoRef.current.title = 'Funcionalidade de filtro';
 
     const positionControl = L.Control.extend({
       options: {
