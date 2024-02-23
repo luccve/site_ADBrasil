@@ -4,16 +4,12 @@ import { TbZoomInAreaFilled } from "react-icons/tb";
 import { ContextMap } from "../../../contexts";
 import dados_uf from '../../../assets/dados_uf.json';
 import dados_um from '../../../assets/dados_municipios.json';
-import type { DadosUF, dados_um_props, MunicipioProps } from "../../../@types/data";
+import type { DadosUF, dados_um_props, MunicipioProps, filterWMSProps } from "../../../@types/data";
+import type { modalSearchType } from "../../../@types/components";
+import { AiOutlineClear } from "react-icons/ai";
 
 
-interface modalSearchType {
-    close: boolean;
-    onClose: React.Dispatch<boolean>;
-    onValue: React.Dispatch<string | null>;
-}
-
-const ModalSearch = ({ close, onClose, onValue }: modalSearchType) => {
+const ModalSearch = ({ close, onClose, onValue, handleClear }: modalSearchType) => {
 
     const [state, setState] = useState("");
     const [openFilterMunicipio, setOpenFilterMunicipio] = useState<boolean>(false);
@@ -22,8 +18,38 @@ const ModalSearch = ({ close, onClose, onValue }: modalSearchType) => {
     const context = useContext(ContextMap);
     const dados_uf_types: DadosUF | any = dados_uf;
     const dados_um_types: dados_um_props | any = dados_um;
+    const [closedFilterWMS, setClosedFilterWMS] = useState<boolean>(false);
+    const [filterValue, setFilterValue] = useState('');
+    const [FILTER_WMS_OBJ, SETFILTERWMS] = useState<filterWMSProps | null>()
 
+    const clearDefault = () => {
+        setOpenFilterMunicipio(false);
+        setState("");
+        onClose(false);
+        setRecorte(null);
+        handleClear(true);
+    }
 
+    const updateFilterWMS = (newValues: Partial<filterWMSProps>) => {
+        SETFILTERWMS(prevState => ({
+            ...prevState,
+            ...newValues
+        }));
+    }
+
+    const handleInputChange = (event: any) => {
+        const inputValue = event.target.value;
+        if (isValidInput(inputValue)) {
+            setFilterValue(inputValue);
+            updateFilterWMS({ value: inputValue });
+        }
+    };
+
+    const isValidInput = (value: string) => {
+        // Verificar se o valor é um número entre 0 e 2.3
+        const numericValue = parseFloat(value);
+        return !isNaN(numericValue) && numericValue >= 0 && numericValue <= 2.3;
+    };
 
     const handleWMSCHange = () => {
 
@@ -40,7 +66,14 @@ const ModalSearch = ({ close, onClose, onValue }: modalSearchType) => {
                 context.setContext({ filter: objMunicipioSelect.cod_mun, centroides: objMunicipioSelect.centroides });
             }
 
+        } else if (FILTER_WMS_OBJ && context?.setContext) {
+
+            context.setContext({
+                filterWMS: FILTER_WMS_OBJ
+            });
         }
+
+
         setOpenFilterMunicipio(false);
         setState("");
         onClose(false);
@@ -74,12 +107,69 @@ const ModalSearch = ({ close, onClose, onValue }: modalSearchType) => {
                 </select>
                 {openFilterMunicipio && <select
                     onChange={(e) => { setObjMunicipioSelect(JSON.parse(e.currentTarget.value)) }}
-                    className="bg-white border rounded p-2 text-sm ">
+                    className="bg-white border rounded p-2 text-sm">
                     <option value={""}>---</option>;
                     {dados_um_types[state].map((key: MunicipioProps, index: number) => {
                         return <option key={index + key.nome} value={JSON.stringify(key)}>{key.nome}</option>
                     })}
                 </select>}
+            </div>)
+        } else if (recorte == 2) {
+            return (<div className="flex flex-col space-y-10">
+                <div className="flex flex-col text-start">
+                    <label className="font-bold text-sm" htmlFor="layer">Layer</label>
+                    <select
+                        id="layer"
+                        onChange={(e) => { setClosedFilterWMS(true); updateFilterWMS({ layer: e.currentTarget.value }) }}
+                        className="bg-white border rounded p-2 text-sm ">
+                        <option value={""}>---</option>
+                        <option value="geonode:adbrasil_b0f18f25e5eac580ec58488ae35e3918">Água Disponível</option>
+                        {/* <option value="geonode:pti_28f79bcfe1f418a6219d5af23e8c1c45">Potencial de Terras para irrigação</option> */}
+                    </select>
+                </div>
+                {closedFilterWMS && <div className="flex flex-col text-start">
+                    <label className="font-bold text-sm" htmlFor="field">Campo</label>
+                    <select
+                        id="field"
+                        onChange={(e) => { updateFilterWMS({ field: e.currentTarget.value }) }}
+                        className="bg-white border rounded p-2 text-sm ">
+                        <option value={""}>---</option>
+                        <option value="ad_um">AD (mm/cm)</option>
+                        {/* <option value="geonode:pti_28f79bcfe1f418a6219d5af23e8c1c45">Potencial de Terras para irrigação</option> */}
+                    </select>
+                </div>}
+
+                {closedFilterWMS && <div className="flex flex-col text-start">
+                    <label className="font-bold text-sm" htmlFor="opr">Operador</label>
+                    <select
+                        id="opr"
+                        onChange={(e) => { updateFilterWMS({ operator: e.currentTarget.value }) }}
+                        className="bg-white border rounded p-2 text-sm ">
+                        <option value={""}>---</option>
+                        <option value="=">IGUAL (=)</option>
+                        <option value=">">MAIOR {('(>)')}</option>
+                        <option value="<">MENOR {'(<)'}</option>
+                        <option value="<=">MENOR OU IGUAL {'((<=)'}</option>
+                        <option value=">=">MAIOR OU IGUAL {'(>=)'}</option>
+
+                    </select>
+                </div>}
+
+                {closedFilterWMS && <div className="flex flex-col text-start">
+                    <label className="font-bold text-sm" htmlFor="filter">Valor do filtro</label>
+                    <input className="border rounded-sm"
+                        id="filter"
+                        type="number"
+                        step="0.1"
+                        min="0"
+                        max="2.3"
+                        pattern="\d+(\.\d{1})?"
+                        title="Por favor, insira um número de 0 a 2.3"
+                        required
+                        value={filterValue}
+                        onChange={handleInputChange}
+                    />
+                </div>}
             </div>)
         }
 
@@ -100,21 +190,29 @@ const ModalSearch = ({ close, onClose, onValue }: modalSearchType) => {
                         <option value={-1}>Selecione um recorte</option>
                         <option value={0}>Limite Federativo</option>
                         <option value={1}>Limite Municipal</option>
+                        <option value={2}>Filtro Personalizado</option>
 
                     </select>
 
                     {selectDinamically()}
                 </div>
 
-                <div>
-                    <button className='text-blue  h-10 w-10 ' onClick={() => onClose(false)}>
+                <div className="flex flex-row justify-center space-x-10">
+                    <button className=' flex flex-col items-center text-blue  h-10 w-10 ' onClick={clearDefault}>
+
+                        <AiOutlineClear className={'text-2xl hover:opacity-70 hover:scale-125 max-md-text-sm'} />
+                        <h5 className="text-[10px]">Limpar</h5>
+                    </button>
+                    <button className='flex flex-col items-center text-blue  h-10 w-10 ' onClick={() => onClose(false)}>
 
                         <IoMdCloseCircle className={'text-2xl hover:opacity-70 hover:scale-125 max-md-text-sm'} />
-
+                        <h5 className="text-[10px]">Cancelar</h5>
                     </button>
-                    <button className='text-blue  h-10 w-10 ' onClick={handleWMSCHange}>
+
+                    <button className=' flex flex-col items-center text-blue  h-10 w-10 ' onClick={handleWMSCHange}>
 
                         <TbZoomInAreaFilled className={'text-2xl hover:opacity-70 hover:scale-125 max-md-text-sm'} />
+                        <h5 className="text-[10px]">Buscar</h5>
                     </button>
                 </div>
             </div>
