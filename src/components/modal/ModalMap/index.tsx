@@ -17,6 +17,8 @@ const ModalMap: React.FC<ModalAlertProps> = ({ onClose, visible }: ModalAlertPro
 
     const context = useContext<GeoInfoData | null>(ContextMap);
 
+   
+
     useEffect(() => {
         try {
             setIsLoading(true);

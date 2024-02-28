@@ -11,12 +11,12 @@ import { ContextMap } from "../../contexts"
 
 export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
     const context = useContext(ContextMap);
-    
+
     const [alagoas, setAlagoas] = useState(false);
     const [paraiba, setParaiba] = useState(false);
     const [pernambuco, setPernambuco] = useState(false);
     const [saopaulo, setSaoPaulo] = useState(false);
-  
+
 
     useEffect(() => {
         if (context?.region === "AL") {
@@ -47,13 +47,15 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
         <div id="container-wms" title="Adicione camadas para o mapa">
             <LayersControl position="bottomright" sortLayers={true} >
 
-                <LayerGroup>
-                    
 
-                    <LayersControl.Overlay  name="Estimativa de água disponível (EMBRAPA)"
+
+                <LayerGroup>
+
+
+                    <LayersControl.Overlay name="Estimativa de água disponível (EMBRAPA)"
                         checked>
                         <WMSTileLayer
-                            
+
                             format='image/png'
                             transparent
                             layers='geonode:adbrasil'
@@ -223,8 +225,6 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
                     </LayersControl.Overlay>
 
 
-
-
                 </LayerGroup>
 
                 <LayerGroup >
@@ -240,13 +240,14 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
                             tileSize={256}
                             tms={true}
                             updateInterval={2000}
-
+                            pane='overlayPane'
                             updateWhenIdle={true}
                             keepBuffer={10}
 
                         />
 
                     </LayersControl.BaseLayer>
+
                     <LayersControl.BaseLayer name="Limites Municipais">
                         <WMSTileLayer
                             format='image/png'
@@ -258,7 +259,7 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
                             tileSize={256}
                             tms={true}
                             updateInterval={2000}
-
+                            pane='overlayPane'
                             updateWhenIdle={true}
                             keepBuffer={10}
 
@@ -275,13 +276,15 @@ export default function WMSTileLayersControl({ Opacity }: LayersMapProps) {
                             tileSize={256}
                             tms={true}
                             updateInterval={2000}
-                            pane="tilePane"
+                            pane='overlayPane'
                             updateWhenIdle={true}
                             keepBuffer={10}
 
                         />
                     </LayersControl.BaseLayer>
                 </LayerGroup>
+//Virando baselayers
+
             </LayersControl>
         </div >
     )

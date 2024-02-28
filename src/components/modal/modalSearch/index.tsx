@@ -7,7 +7,7 @@ import dados_um from '../../../assets/dados_municipios.json';
 import type { DadosUF, dados_um_props, MunicipioProps, filterWMSProps } from "../../../@types/data";
 import type { modalSearchType } from "../../../@types/components";
 import { AiOutlineClear } from "react-icons/ai";
-
+// import SelectModalSearch from "../../input/SelectModalSearch";
 
 const ModalSearch = ({ close, onClose, onValue, handleClear }: modalSearchType) => {
 
@@ -30,7 +30,28 @@ const ModalSearch = ({ close, onClose, onValue, handleClear }: modalSearchType) 
         handleClear(true);
     }
 
+    // const valoresFiltroPersonalizado = {
+    //     ad: {
+    //         layer: { "Água Disponível (mm/cm)": "geonode:adbrasil_b0f18f25e5eac580ec58488ae35e3918" },
+    //         values: "",
+    //         field: ["ad_um", "nm_mun"],
+
+    //     },
+    //     operator_num: [{ desc: ["Igual (=)", "="] }, { desc: ["Maior (>)", ">"] }, { desc: ["Menor (<)", "<"] }, { desc: ["Entre", "BETWEEN"] }, { desc: ["Maior ou Igual (>=)", ">="] }, {
+    //         desc: ["Menor ou Igual (<=)", "<="]
+    //     }
+    //     ],
+    //     opertator_tex: [{ desc: ["Inicia com", "LIKE %"] }, { desc: ["Contém", "LIKE %"] }, { desc: ["Igual (=)", "="] }],
+    //     pti: {
+    //         layer: { "PTI - Pot. Terras para Irrigação": "geonode:pti_28f79bcfe1f418a6219d5af23e8c1c45" },
+    //         values: ["MUITO ALTO", "ALTO", "MÉDIO", "BAIXO", "MUITO BAIXO"],
+    //         field: ["pti_um"],
+
+    //     }
+    // }
+
     const updateFilterWMS = (newValues: Partial<filterWMSProps>) => {
+      
         SETFILTERWMS(prevState => ({
             ...prevState,
             ...newValues
@@ -117,14 +138,16 @@ const ModalSearch = ({ close, onClose, onValue, handleClear }: modalSearchType) 
         } else if (recorte == 2) {
             return (<div className="flex flex-col space-y-10">
                 <div className="flex flex-col text-start">
-                    <label className="font-bold text-sm" htmlFor="layer">Layer</label>
+                    {/* <label className="font-bold text-sm" htmlFor="layer">Layer</label> */}
+
+                    {/* <SelectModalSearch values={valoresFiltroPersonalizado.ad.layer} title="Selecione o Mapa" id={"layer"} /> */}
                     <select
                         id="layer"
                         onChange={(e) => { setClosedFilterWMS(true); updateFilterWMS({ layer: e.currentTarget.value }) }}
                         className="bg-white border rounded p-2 text-sm ">
                         <option value={""}>---</option>
                         <option value="geonode:adbrasil_b0f18f25e5eac580ec58488ae35e3918">Água Disponível</option>
-                        {/* <option value="geonode:pti_28f79bcfe1f418a6219d5af23e8c1c45">Potencial de Terras para irrigação</option> */}
+                        <option value="geonode:pti_28f79bcfe1f418a6219d5af23e8c1c45">Potencial de Terras para irrigação</option>
                     </select>
                 </div>
                 {closedFilterWMS && <div className="flex flex-col text-start">
