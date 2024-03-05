@@ -5,11 +5,13 @@ import icon from "../icon";
 
 interface handlePositionProps {
     close: boolean;
+
 }
 
 const HandlePositionMap: React.FC<handlePositionProps> = ({ close }: handlePositionProps) => {
 
     const [position, setPosition] = useState<LatLngExpression | null>(null);
+
 
 
     useMapEvents(
