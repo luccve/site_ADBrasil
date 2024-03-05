@@ -1,7 +1,7 @@
 import { LatLngLiteral, LatLngExpression } from "leaflet";
 import { useContext, useEffect, useState } from "react";
 import { Marker, useMap } from "react-leaflet";
-import icon from "../icon";
+import IconRender from "../iconRender";
 import { ContextMap } from "../../contexts";
 import RequestCoordsService from "../../services";
 
@@ -9,7 +9,8 @@ interface handlePositionProps {
 
     coords: LatLngLiteral | null;
     setLoading: React.Dispatch<boolean>;
-    setLayer: React.Dispatch<React.SetStateAction<string>>
+    setLayer: React.Dispatch<React.SetStateAction<string>>;
+    
 }
 
 const LatLngRender: React.FC<handlePositionProps> = ({ coords, setLoading, setLayer }: handlePositionProps) => {
@@ -45,14 +46,15 @@ const LatLngRender: React.FC<handlePositionProps> = ({ coords, setLoading, setLa
         if (coords) {
 
             setPosition([coords?.lat, coords?.lng])
-            map.flyTo([coords?.lat, coords?.lng], 5)
+            map.flyTo([coords?.lat, coords?.lng], 8)
 
             setMarker(
-                <Marker position={[coords?.lat, coords?.lng]} icon={icon} />
+                <Marker position={[coords?.lat, coords?.lng]} icon={IconRender} />
             )
             fetchCoords(coords?.lat, coords?.lng)
             return
         }
+        setPosition(null)
         setMarker(null)
         return
 
