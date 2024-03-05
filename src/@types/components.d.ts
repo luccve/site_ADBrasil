@@ -1,5 +1,5 @@
-import { extend, Map, LatLng } from "leaflet";
-import type { MyContextProps, van_genuchtenProps, filterWMS} from "./data";
+import { extend, Map, LatLng, LatLngLiteral} from "leaflet";
+import type { MyContextProps, van_genuchtenProps, filterWMS } from "./data";
 import { Dispatch } from "react";
 
 export interface CarrouselRegionProps {
@@ -55,7 +55,7 @@ export interface ModalAlertProps {
     title?: string;
     visible: boolean;
     onClose: React.Dispatch<React.SetStateAction<boolean>>;
-    localStorage?: ()=>void;
+    localStorage?: () => void;
 }
 
 export interface BtnLinkProps {
@@ -72,8 +72,8 @@ export interface BtnRegularProps {
 }
 export interface InputTextProps {
     Title: string;
-    handleFocus: () => void;
-    handleBlur: () => void;
+    handleFocus?: () => void;
+    handleBlur?: () => void;
     handleTextChange: (state: React.Dispatch<React.SetStateAction<string>>, e: EventTarget & HTMLInputElement) => void;
     state: React.Dispatch<React.SetStateAction<string>>;
     value: string;
@@ -152,7 +152,7 @@ interface BtnLinkProps {
 }
 
 
-interface WMSFilterProps{
+interface WMSFilterProps {
     Opacity: number;
     setLayer: React.Dispatch<string>;
 }
@@ -161,6 +161,7 @@ interface modalSearchType {
     close: boolean;
     onClose: React.Dispatch<boolean>;
     onValue: React.Dispatch<string | null>;
+    setCoordenada: React.Dispatch<LatLngLiteral | null>;
     handleClear: React.Dispatch<boolean>;
-    
+
 }
