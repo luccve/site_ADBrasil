@@ -18,7 +18,8 @@ import SearchClip from '../../components/SearchClip';
 import ModalSearch from '../../components/modal/modalSearch';
 import ModalAlert from '../../components/modal/modalAlert';
 import WMSFilter from '../../components/WMSFilter';
-
+import { LatLngLiteral } from 'leaflet';
+import LatLngRender from '../../components/LatLngRender';
 
 const MapPage = () => {
     const [alert, setAlert] = useState(true);
@@ -26,7 +27,7 @@ const MapPage = () => {
     const mapContainerRef = useRef(null);
     const [elementOpacity, setElementOpacity] = useState<number>(1);
     const [layer, setLayer] = useState("Estimativa de água disponível");
-
+    const [coords, setCoords] = useState<LatLngLiteral | null>(null);
     const [valueWMSMap, setValue] = useState<string | null>(null);
     const instrucoes = {
         "Camadas": "Os mapas no seu canto inferior direito contém escalas e bases cartograficas diferentes, observe na legenda a escala do mesmo. Por padrão a camada da Estimativa de água disponível do Brasil inicia habilitada.",
@@ -54,6 +55,7 @@ const MapPage = () => {
                 <HandlePositionMap close={modal} />
                 <ScaleControl position="bottomleft" imperial={false} />
                 <LayersMap />
+                <LatLngRender coords={coords} setLayer={setLayer} setLoading={setModal}/>
                 <WMSFilter setLayer={setLayer} Opacity={elementOpacity} />
                 <GeoJSONMap Opacity={elementOpacity} />
                 <SearchClip opacity={elementOpacity} valueWMSMap={valueWMSMap} onClose={onClose} />
@@ -61,11 +63,11 @@ const MapPage = () => {
                 <MinimapControl position={[0, 0]} zoom={2} />
                 <GetCoordinates />
                 <GetPosition />
-                <ClearLayers clear={clearLayers}  setClear={setClearLayers}/>
+                <ClearLayers clear={clearLayers} setClear={setClearLayers} />
                 <WMSTileLayersControl Opacity={elementOpacity} />
             </MapContainer>
             <GetLegendsMaps layer={layer} />
-            <ModalSearch handleClear={setClearLayers} onValue={setValue} close={close} onClose={onClose} />
+            <ModalSearch setCoordenada={setCoords} handleClear={setClearLayers} onValue={setValue} close={close} onClose={onClose} />
             <ModalAlert onClose={setAlert} message={instrucoes} title='Intruções de uso' visible={alert} />
             {modal && <ModalMap onClose={setModal} visible={modal} />}
         </div>
