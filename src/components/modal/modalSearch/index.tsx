@@ -7,9 +7,11 @@ import dados_um from '../../../assets/dados_municipios.json';
 import type { DadosUF, dados_um_props, MunicipioProps, filterWMSProps } from "../../../@types/data";
 import type { modalSearchType } from "../../../@types/components";
 import { AiOutlineClear } from "react-icons/ai";
+import InputText from "../../input/inputText";
+
 // import SelectModalSearch from "../../input/SelectModalSearch";
 
-const ModalSearch = ({ close, onClose, onValue, handleClear }: modalSearchType) => {
+const ModalSearch = ({ setCoordenada, close, onClose, onValue, handleClear }: modalSearchType) => {
 
     const [state, setState] = useState("");
     const [openFilterMunicipio, setOpenFilterMunicipio] = useState<boolean>(false);
@@ -20,6 +22,9 @@ const ModalSearch = ({ close, onClose, onValue, handleClear }: modalSearchType) 
     const dados_um_types: dados_um_props | any = dados_um;
     const [closedFilterWMS, setClosedFilterWMS] = useState<boolean>(false);
     const [filterValue, setFilterValue] = useState('');
+    const [coords, setCoords] = useState<boolean>(false);
+    const [latitude, setSelectLatitude] = useState("");
+    const [longitude, setSelectLongitude] = useState("");
     const [FILTER_WMS_OBJ, SETFILTERWMS] = useState<filterWMSProps | null>()
 
     const clearDefault = () => {
@@ -28,6 +33,10 @@ const ModalSearch = ({ close, onClose, onValue, handleClear }: modalSearchType) 
         onClose(false);
         setRecorte(null);
         handleClear(true);
+        setCoords(false);
+        setSelectLatitude("");
+        setSelectLongitude("");
+        setCoordenada(null)
     }
 
     // const valoresFiltroPersonalizado = {
@@ -50,12 +59,28 @@ const ModalSearch = ({ close, onClose, onValue, handleClear }: modalSearchType) 
     //     }
     // }
 
+    const updateCoords = (state: React.Dispatch<React.SetStateAction<string>>, e: EventTarget & HTMLInputElement) => {
+        const newValue = e.value.replace(/[^\d,.-]/g, '').replace(',', '.');
+        state(newValue);
+
+    };
+
+
     const updateFilterWMS = (newValues: Partial<filterWMSProps>) => {
-      
-        SETFILTERWMS(prevState => ({
-            ...prevState,
-            ...newValues
-        }));
+
+        if (newValues.layer != "coords") {
+            SETFILTERWMS(prevState => ({
+                ...prevState,
+                ...newValues
+            }));
+            setCoords(false);
+            setClosedFilterWMS(true);
+
+            return
+        }
+        setClosedFilterWMS(false);
+        setCoords(true);
+        return
     }
 
     const handleInputChange = (event: any) => {
@@ -92,6 +117,8 @@ const ModalSearch = ({ close, onClose, onValue, handleClear }: modalSearchType) 
             context.setContext({
                 filterWMS: FILTER_WMS_OBJ
             });
+        } else if (coords && latitude != "" && longitude != "") {
+            setCoordenada({ lat: Number(latitude), lng: Number(longitude) })
         }
 
 
@@ -143,13 +170,22 @@ const ModalSearch = ({ close, onClose, onValue, handleClear }: modalSearchType) 
                     {/* <SelectModalSearch values={valoresFiltroPersonalizado.ad.layer} title="Selecione o Mapa" id={"layer"} /> */}
                     <select
                         id="layer"
-                        onChange={(e) => { setClosedFilterWMS(true); updateFilterWMS({ layer: e.currentTarget.value }) }}
+                        onChange={(e) => { updateFilterWMS({ layer: e.currentTarget.value }) }}
                         className="bg-white border rounded p-2 text-sm ">
                         <option value={""}>---</option>
+                        <option value="coords">Latitude | Longitude EPGS:3857 </option>
                         <option value="geonode:adbrasil_b0f18f25e5eac580ec58488ae35e3918">Água Disponível</option>
                         <option value="geonode:pti_28f79bcfe1f418a6219d5af23e8c1c45">Potencial de Terras para irrigação</option>
                     </select>
                 </div>
+
+                {coords && <div className="flex flex-col text-start">
+
+                    <InputText handleTextChange={updateCoords} value={latitude} state={setSelectLatitude} Title="Latitude" />
+                    <InputText handleTextChange={updateCoords} value={longitude} state={setSelectLongitude} Title="Longitude" />
+                </div>}
+
+
                 {closedFilterWMS && <div className="flex flex-col text-start">
                     <label className="font-bold text-sm" htmlFor="field">Campo</label>
                     <select
