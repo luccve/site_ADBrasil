@@ -30,13 +30,13 @@ const ModalSearch = ({ setCoordenada, close, onClose, onValue, handleClear }: mo
     const clearDefault = () => {
         setOpenFilterMunicipio(false);
         setState("");
-        onClose(false);
         setRecorte(null);
         handleClear(true);
         setCoords(false);
         setSelectLatitude("");
         setSelectLongitude("");
         setCoordenada(null)
+        onClose(false);
     }
 
     // const valoresFiltroPersonalizado = {
@@ -65,6 +65,16 @@ const ModalSearch = ({ setCoordenada, close, onClose, onValue, handleClear }: mo
 
     };
 
+    const handleCancel = () => {
+        setRecorte(-1);
+        onClose(false);
+        setOpenFilterMunicipio(false);
+        setState("");
+        setCoords(false);
+        setSelectLatitude("");
+        setSelectLongitude("");
+        setCoordenada(null)
+    }
 
     const updateFilterWMS = (newValues: Partial<filterWMSProps>) => {
 
@@ -112,11 +122,12 @@ const ModalSearch = ({ setCoordenada, close, onClose, onValue, handleClear }: mo
                 context.setContext({ filter: objMunicipioSelect.cod_mun, centroides: objMunicipioSelect.centroides });
             }
 
-        } else if (FILTER_WMS_OBJ && context?.setContext) {
+        } else if (!coords && FILTER_WMS_OBJ && context?.setContext) {
 
             context.setContext({
                 filterWMS: FILTER_WMS_OBJ
             });
+            setCoordenada(null)
         } else if (coords && latitude != "" && longitude != "") {
             setCoordenada({ lat: Number(latitude), lng: Number(longitude) })
         }
@@ -126,7 +137,10 @@ const ModalSearch = ({ setCoordenada, close, onClose, onValue, handleClear }: mo
         setState("");
         onClose(false);
         setRecorte(null);
+
     }
+
+    
 
 
     function selectDinamically() {
@@ -165,9 +179,7 @@ const ModalSearch = ({ setCoordenada, close, onClose, onValue, handleClear }: mo
         } else if (recorte == 2) {
             return (<div className="flex flex-col space-y-10">
                 <div className="flex flex-col text-start">
-                    {/* <label className="font-bold text-sm" htmlFor="layer">Layer</label> */}
-
-                    {/* <SelectModalSearch values={valoresFiltroPersonalizado.ad.layer} title="Selecione o Mapa" id={"layer"} /> */}
+                   
                     <select
                         id="layer"
                         onChange={(e) => { updateFilterWMS({ layer: e.currentTarget.value }) }}
@@ -175,7 +187,7 @@ const ModalSearch = ({ setCoordenada, close, onClose, onValue, handleClear }: mo
                         <option value={""}>---</option>
                         <option value="coords">Latitude | Longitude EPGS:3857 </option>
                         <option value="geonode:adbrasil_b0f18f25e5eac580ec58488ae35e3918">Água Disponível</option>
-                        <option value="geonode:pti_28f79bcfe1f418a6219d5af23e8c1c45">Potencial de Terras para irrigação</option>
+                       
                     </select>
                 </div>
 
@@ -229,6 +241,7 @@ const ModalSearch = ({ setCoordenada, close, onClose, onValue, handleClear }: mo
                         onChange={handleInputChange}
                     />
                 </div>}
+
             </div>)
         }
 
@@ -262,7 +275,7 @@ const ModalSearch = ({ setCoordenada, close, onClose, onValue, handleClear }: mo
                         <AiOutlineClear className={'text-2xl hover:opacity-70 hover:scale-125 max-md-text-sm'} />
                         <h5 className="text-[10px]">Limpar</h5>
                     </button>
-                    <button className='flex flex-col items-center text-blue  h-10 w-10 ' onClick={() => onClose(false)}>
+                    <button className='flex flex-col items-center text-blue  h-10 w-10 ' onClick={handleCancel}>
 
                         <IoMdCloseCircle className={'text-2xl hover:opacity-70 hover:scale-125 max-md-text-sm'} />
                         <h5 className="text-[10px]">Cancelar</h5>
