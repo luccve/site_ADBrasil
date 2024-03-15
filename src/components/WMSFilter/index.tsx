@@ -40,7 +40,7 @@ const WMSFilter: React.FC<WMSFilterProps> = ({ Opacity, setLayer }: WMSFilterPro
                 setmapRender(true);
                 map.eachLayer((layer) => {
 
-                    if (layer.options.layers?.includes('geonode')) {
+                    if (layer.options.layers?.includes('geonode') || layer.options.layers?.includes('BDIA')) {
                         map.removeLayer(layer)
                     }
                 });
