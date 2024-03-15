@@ -6,8 +6,8 @@ import FormPTf from "../../components/formPTF";
 const Ptf = () => {
 
     const Array = [
-        { type: 'Areia + Silte + Argila - ASA', name: "SIM", tab: 0 },
-        { type: 'ASA + Densidade - ASAD', name: "ITM", tab: 1 },
+        { type: 'Areia + Silte + Argila (ASA)', name: "SIM", tab: 0 },
+        { type: 'ASA + Densidade (ASAD)', name: "ITM", tab: 1 },
         { type: 'ASAD + Complementos', name: "AVC", tab: 2 },
     ]
 
