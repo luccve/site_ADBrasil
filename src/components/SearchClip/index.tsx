@@ -120,7 +120,7 @@ const SearchClip = ({ onClose, valueWMSMap, opacity }: SearchClip) => {
     updateWhenIdle={true}
     keepBuffer={10}
     opacity={opacity}
-
+   zIndex={1000}
 
   /> : null
 
