@@ -1,4 +1,4 @@
-import { LeafletMouseEvent } from "leaflet";
+import L, { LeafletMouseEvent } from "leaflet";
 import { useContext } from "react";
 import { ContextMap } from "../../contexts";
 
@@ -87,8 +87,11 @@ const MapEvents: React.FC<MapEventsProps> = ({ setLoading, setLayer }: MapEvents
             },
             overlayadd(e) {
                 setLayer(e.name);
-
-
+                map.eachLayer((layer) => {
+                    if (layer instanceof L.Marker || layer instanceof L.GeoJSON) {
+                        map.removeLayer(layer);
+                    }
+                });
 
             },
             layeradd(e) {
@@ -101,9 +104,14 @@ const MapEvents: React.FC<MapEventsProps> = ({ setLoading, setLayer }: MapEvents
                         map.eachLayer((layer) => {
 
                             if (layer.options.layers == "geonode:adbrasil" || layer.options.layers == "BDIA:gpc_pedo"
-                                || layer.options.layers == "geonode:pti_28f79bcfe1f418a6219d5af23e8c1c45") {
+                                || layer.options.layers == "geonode:pti_28f79bcfe1f418a6219d5af23e8c1c45" ||
+                                layer.options.layers == "geonode:ad_98a8dcca664f761f5546492208425b3c") {
                                 map.removeLayer(layer)
                             }
+
+
+
+
                         });
 
                         const z = Number(cod) ? 10 : 6
