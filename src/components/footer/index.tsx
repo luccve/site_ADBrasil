@@ -16,7 +16,7 @@ const footer = () => {
 
 
                     <p className=" w-1/4 py-4 max-sm:w-2/4 ">
-                        Empresa Brasileira de Pesquisa Agropecuária - Embrapa
+                        Empresa Brasileira de Pesquisa Agropecuária - 
                         Embrapa Solos UEP Recife</p>
 
 

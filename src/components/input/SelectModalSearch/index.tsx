@@ -23,7 +23,7 @@ const SelectModalSearch: React.FC<SelectModalSearch> = ({ title, id, values }: S
             <label className="font-semibold text-turquoise text-sm" htmlFor={id}>{title}</label>
             <select className="rounded-sm bg-white border " name={id} id={id}
             >
-                <option className="text-sm" value={undefined}>{'---'}</option>
+                <option disabled className="text-sm" value={undefined}>{'---'}</option>
                 {Object.keys(values).map((value, index) =>
                     <option key={index + Math.random() * 1000} className="text-sm" value={values[value]}>{value}</option>
                 )}
