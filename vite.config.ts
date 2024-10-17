@@ -12,6 +12,6 @@ export default defineConfig({
 
   },
 
-  base: "/site_ADBrasil"
+  base: "/site_ADBrasil/"
 
 })
