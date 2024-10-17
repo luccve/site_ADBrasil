@@ -15,7 +15,7 @@ const ClearLayers = ({ clear, setClear }: ClearLayersProps) => {
     useEffect(() => {
         if (clear) {
             map.eachLayer((layer) => {
-                if (layer.options.layers?.includes('geonode') || layer.options.layers === ('BDIA:gpc_pedo')) {
+                if (layer.options.attribution?.includes('geonode') || layer.options.attribution === ('BDIA:gpc_pedo')) {
 
                     map.removeLayer(layer);
                 }
