@@ -97,7 +97,7 @@ const Home = () => {
                 </h1>
 
 
-                <div className='flex flex-row p-5 w-[150px] h-auto items-center justify-around 
+                <div className='flex flex-row p-5  h-auto items-center justify-around 
                 max-lg:flex-col max-lg:space-x-0 max-lg:space-y-5 max-lg:w-auto font-bold sm:flex-row sm:space-y-0 sm:space-x-0'>
 
 
