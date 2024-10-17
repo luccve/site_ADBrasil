@@ -276,3 +276,20 @@ interface filterWMSProps {
   value?: string;
 
 }
+
+export interface ComplexLayer {
+  format: string;
+  transparent: boolean;
+  layers: string;
+  version: string;
+  crs: object; 
+  styles: string;
+  tileSize: number;
+  keepBuffer: number;
+  tms: boolean;
+  updateInterval: number;
+  pane: string;
+  updateWhenIdle: boolean;
+  opacity: number;
+  zIndex: number;
+}

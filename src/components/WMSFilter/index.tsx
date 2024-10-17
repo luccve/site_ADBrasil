@@ -3,6 +3,7 @@ import { WMSTileLayer, useMap } from "react-leaflet";
 import type { WMSFilterProps } from "../../@types/components";
 import { useContext, useEffect, useState } from "react";
 import { ContextMap } from "../../contexts";
+import { ComplexLayer } from "../../@types/data";
 
 const WMSFilter: React.FC<WMSFilterProps> = ({ Opacity, setLayer }: WMSFilterProps) => {
     const [wmsLayer, setWmsLayer] = useState<JSX.Element | null>(null);
@@ -39,8 +40,8 @@ const WMSFilter: React.FC<WMSFilterProps> = ({ Opacity, setLayer }: WMSFilterPro
             setTimeout(() => {
                 setmapRender(true);
                 map.eachLayer((layer) => {
-
-                    if (layer.options.layers?.includes('geonode') || layer.options.layers?.includes('BDIA')) {
+                    const camada = layer.options as ComplexLayer;
+                    if (camada.layers?.includes('geonode') || camada.layers?.includes('BDIA')) {
                         map.removeLayer(layer)
                     }
                 });

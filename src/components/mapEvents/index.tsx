@@ -6,6 +6,7 @@ import { useMap, useMapEvents } from "react-leaflet";
 import type { MapEventsProps } from "../../@types/components";
 
 import RequestCoordsService from "../../services";
+import { ComplexLayer } from "../../@types/data";
 
 
 
@@ -26,35 +27,39 @@ const MapEvents: React.FC<MapEventsProps> = ({ setLoading, setLayer }: MapEvents
                     setLayer("Estimativa de água disponível (EMBRAPA)")
                     if (response.region == "AL") {
                         map.eachLayer((layer) => {
+                            const camada = layer.options as ComplexLayer;
                             setLayer("Alagoas AD (EMBRAPA)")
-                            if (layer.options.layers == "geonode:adbrasil" || layer.options.layers == "BDIA:gpc_pedo"
-                                || layer.options.layers == "geonode:pti_28f79bcfe1f418a6219d5af23e8c1c45") {
+                            if (camada.layers as string == "geonode:adbrasil" || camada.layers == "BDIA:gpc_pedo"
+                                || camada.layers == "geonode:pti_28f79bcfe1f418a6219d5af23e8c1c45") {
                                 map.removeLayer(layer)
                             }
                         });
 
                     } else if (response.region == "PB") {
                         map.eachLayer((layer) => {
+                            const camada = layer.options as ComplexLayer;
                             setLayer("ZONPB AD (EMBRAPA)")
-                            if (layer.options.layers == "geonode:adbrasil" || layer.options.layers == "BDIA:gpc_pedo"
-                                || layer.options.layers == "geonode:pti_28f79bcfe1f418a6219d5af23e8c1c45") {
+                            if (camada.layers == "geonode:adbrasil" || camada.layers == "BDIA:gpc_pedo"
+                                || camada.layers == "geonode:pti_28f79bcfe1f418a6219d5af23e8c1c45") {
                                 map.removeLayer(layer)
                             }
                         });
 
                     } else if (response.region == "SP") {
                         map.eachLayer((layer) => {
+                            const camada = layer.options as ComplexLayer;
                             setLayer("São Paulo AD (EMBRAPA)")
-                            if (layer.options.layers == "geonode:adbrasil" || layer.options.layers == "BDIA:gpc_pedo"
-                                || layer.options.layers == "geonode:pti_28f79bcfe1f418a6219d5af23e8c1c45") {
+                            if (camada.layers == "geonode:adbrasil" || camada.layers == "BDIA:gpc_pedo"
+                                || camada.layers == "geonode:pti_28f79bcfe1f418a6219d5af23e8c1c45") {
                                 map.removeLayer(layer)
                             }
                         });
                     } else if (response.region == "PE") {
                         map.eachLayer((layer) => {
+                            const camada = layer.options as ComplexLayer;
                             setLayer("Pernambuco AD (EMBRAPA)")
-                            if (layer.options.layers == "geonode:adbrasil" || layer.options.layers == "BDIA:gpc_pedo"
-                                || layer.options.layers == "geonode:pti_28f79bcfe1f418a6219d5af23e8c1c45") {
+                            if (camada.layers == "geonode:adbrasil" || camada.layers == "BDIA:gpc_pedo"
+                                || camada.layers == "geonode:pti_28f79bcfe1f418a6219d5af23e8c1c45") {
                                 map.removeLayer(layer)
                             }
                         });
@@ -95,17 +100,18 @@ const MapEvents: React.FC<MapEventsProps> = ({ setLoading, setLayer }: MapEvents
 
             },
             layeradd(e) {
-
-                if (context?.centroides && e.layer.options.layers) {
+                const camada1 = e.layer.options as ComplexLayer;
+                if (context?.centroides && camada1.layers) {
                     const { lat, lng } = context.centroides;
                     const cod = context.filter;
-                    const verify = layers.includes(e.layer.options.layers)
+
+                    const verify = layers.includes(camada1.layers)
                     if (verify) {
                         map.eachLayer((layer) => {
-
-                            if (layer.options.layers == "geonode:adbrasil" || layer.options.layers == "BDIA:gpc_pedo"
-                                || layer.options.layers == "geonode:pti_28f79bcfe1f418a6219d5af23e8c1c45" ||
-                                layer.options.layers == "geonode:ad_98a8dcca664f761f5546492208425b3c") {
+                            const camada = layer.options as ComplexLayer;
+                            if (camada.layers == "geonode:adbrasil" || camada.layers == "BDIA:gpc_pedo"
+                                || camada.layers == "geonode:pti_28f79bcfe1f418a6219d5af23e8c1c45" ||
+                                camada.layers == "geonode:ad_98a8dcca664f761f5546492208425b3c") {
                                 map.removeLayer(layer)
                             }
 
