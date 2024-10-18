@@ -14,6 +14,9 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
+      - name: Set up environment variables
+        run: echo "VITE_BASENAME_GITHUB=/site_ADBrasil/" >> $GITHUB_ENV
+
       - name: Setup Node
         uses: actions/setup-node@v3
 
@@ -41,6 +44,9 @@ jobs:
         with:
           name: production-files
           path: ./dist
+
+      - name: Copy index.html to 404.html
+        run: cp ./dist/index.html ./dist/404.html
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
