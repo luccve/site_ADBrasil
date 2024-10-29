@@ -55,7 +55,7 @@ const MapPage = () => {
                 <HandlePositionMap close={modal} />
                 <ScaleControl position="bottomleft" imperial={false} />
                 <LayersMap />
-                <LatLngRender coords={coords} setLayer={setLayer} setLoading={setModal}/>
+                <LatLngRender coords={coords} setLayer={setLayer} setLoading={setModal} />
                 <WMSFilter setLayer={setLayer} Opacity={elementOpacity} />
                 <GeoJSONMap Opacity={elementOpacity} />
                 <SearchClip opacity={elementOpacity} valueWMSMap={valueWMSMap} onClose={onClose} />
